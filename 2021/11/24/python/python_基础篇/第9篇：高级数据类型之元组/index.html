@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第9篇：高级数据类型之元组">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC9%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-24T11:37:35.459Z">
+<meta property="article:modified_time" content="2021-11-24T11:36:29.588Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC9%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第9篇：高级数据类型之元组 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC9%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第9篇：高级数据类型之元组
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:36:29" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+基础数据类型：
+
+<ul>
+<li><span style="color:gray">int，整数类型（整形）</span></li>
+<li><span style="color:gray">float，浮点类型（浮点型）</span></li>
+<li><span style="color:gray">complex,复数类型</span></li>
+<li><span style="color:gray">bool，布尔类型</span></li>
+<li><span style="color:gray">str，字符串类型</span></li>
+</ul>
+<p>高级数据类型</p>
+<ul>
+<li><span style="color:gray">list，列表类型</span></li>
+<li><strong>tuple，元组类型</strong></li>
+<li><span style="color:gray">dict，字典类型</span></li>
+<li><span style="color:gray">set，集合类型</span></li>
+</ul>
+<p><strong>学习目标：掌握元组的各种操作（知识点应用案例）</strong></p>
+<p><strong>本节问题</strong>：</p>
+<ul>
+<li>问题1：元组的定义是什么？和列表相比有什么不同？</li>
+<li>问题2：元组如何创建，有什么注意点？</li>
+<li>问题3：元组有哪些方法和运算？对元素进行增删改查有哪些相关的方法？</li>
+<li>问题4：元组的打包和解包如何操作？</li>
+<li>问题4：元组的元素是否可以改变？有什么注意点？</li>
+</ul>
+<p>之前我们学习了Python中的列表，它是一种容器型数据类型，我们可以通过定义列表类型的变量来保存和操作多个元素。当然，Python中容器型的数据类型肯定不止列表一种，接下来我们为大家讲解另一种重要的容器型数据类型，它的名字叫元组（tuple）。</p>
+<h2 id="元组的定义"><a href="#元组的定义" class="headerlink" title="元组的定义"></a>元组的定义</h2><p>我们通过对比列表，看一下元组的定义：</p>
+<ul>
+<li><p>列表（list），是一个<strong>有序</strong>且<strong>可变</strong>的容器，在里面可以存放<strong>多个不同类型</strong>、<strong>数据元素可重复</strong>的元素。</p>
+</li>
+<li><p>元组（tuple），是一个<strong>有序</strong>且<strong>不可变</strong>的容器，在里面可以存放<strong>多个不同类型</strong>、<strong>数据元素可重复</strong>的元素。</p>
+</li>
+</ul>
+<blockquote>
+<p>如何体现不可变呢？<br>记住一句话：《”我儿子永远不能换成是别人，但我儿子可以长大”》</p>
+</blockquote>
+<ul>
+<li>元组的特点：<ol>
+<li>以<code>()</code>包裹，<code>,</code>为分隔符</li>
+<li>内部元素有序</li>
+<li>内部元素可变</li>
+<li>内部元素类型可不同</li>
+<li>内部元素可重复</li>
+</ol>
+</li>
+</ul>
+<h2 id="元组的创建"><a href="#元组的创建" class="headerlink" title="元组的创建"></a>元组的创建</h2><p>在Python中，元组也是多个元素按照一定的顺序构成的序列。元组和列表的不同之处在于，元组是不可变类型，这就意味着元组类型的变量一旦定义，其中的元素不能再添加或删除，而且元素的值也不能进行修改。定义元组通常使用<code>()</code>字面量语法，也建议大家使用这种方式来创建元组。元组类型支持的运算符跟列表是一样。下面的代码演示了元组的定义和运算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个空元祖, 没有实际意义</span></span><br><span class="line">v1 = tuple()</span><br><span class="line">v2 = ()</span><br><span class="line"><span class="comment"># 定义一个非空元组 不可改变</span></span><br><span class="line">v1 = (<span class="number">1</span>,)</span><br><span class="line">v2 = (<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>)</span><br><span class="line">v3 = (<span class="string">"李连杰"</span>,<span class="string">"Michael"</span>)</span><br><span class="line">v4 = ((<span class="string">'小明'</span>, <span class="number">18</span>), (<span class="string">'小张'</span>, <span class="number">19</span>), (<span class="string">'小红'</span>, <span class="number">20</span>))</span><br><span class="line"><span class="comment"># 建议：在元组的最后多加一个逗号</span></span><br><span class="line"><span class="comment"># 查看变量的类型</span></span><br><span class="line">print(type(v1)) <span class="comment"># &lt;class 'tuple'&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>一个元组中如果有两个元素，我们就称之为二元组；一个元组中如果五个元素，我们就称之为五元组。需要提醒大家注意的是，<code>()</code>表示空元组，但是如果元组中只有一个元素，需要加上一个逗号，否则<code>()</code>就不是代表元组的字面量语法，而是改变运算优先级的圆括号，所以<code>(&#39;hello&#39;, )</code>和<code>(100, )</code>才是一元组，而<code>(&#39;hello&#39;)</code>和<code>(100)</code>只是字符串和整数。我们可以通过下面的代码来加以验证。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 空元组</span></span><br><span class="line">a = ()</span><br><span class="line">print(type(a))    <span class="comment"># &lt;class 'tuple'&gt;</span></span><br><span class="line"><span class="comment"># 不是元组</span></span><br><span class="line">b = (<span class="string">'hello'</span>)</span><br><span class="line">print(type(b))    <span class="comment"># &lt;class 'str'&gt;</span></span><br><span class="line">c = (<span class="number">100</span>)</span><br><span class="line">print(type(c))    <span class="comment"># &lt;class 'int'&gt;</span></span><br><span class="line"><span class="comment"># 一元组</span></span><br><span class="line">d = (<span class="string">'hello'</span>, )</span><br><span class="line">print(type(d))    <span class="comment"># &lt;class 'tuple'&gt;</span></span><br><span class="line">e = (<span class="number">100</span>, )</span><br><span class="line">print(type(e))    <span class="comment"># &lt;class 'tuple'&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>建议在元组的最后多加一个逗号，用于标识他是一个元组。</p>
+<h2 id="元组的方法"><a href="#元组的方法" class="headerlink" title="元组的方法"></a>元组的方法</h2><p>由于元组最大的特点就是不可变，即不可修改，因此它的功能相比列表就少的多，下面是元组仅有的几个内置功能。</p>
+<ul>
+<li><p>count(value)：判断元组中value的个数</p>
+</li>
+<li><p>index(value, start=0, stop=9223372036854775807)：判断value在元组中的索引位置，可以指定查找范围start和stop</p>
+</li>
+<li><p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>)</span><br><span class="line">print(a.count(<span class="number">2</span>))   <span class="comment"># 2</span></span><br><span class="line">print(a.index(<span class="number">2</span>))   <span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="元组的运算"><a href="#元组的运算" class="headerlink" title="元组的运算"></a>元组的运算</h2><p>和字符串和列表一样，元组也支持列表也支持拼接、重复、成员运算、索引和切片以及比较运算，这里将列表常见的运算总结如下，请大家参考。</p>
+<p><strong>元组支持的运算</strong></p>
+<ul>
+<li><code>() + ()</code>, 相加，两个元组相加生成新元组</li>
+<li><code>() * int</code>,相乘，元组*整型 将元组中的元素再创建N份并生成一个新的元组</li>
+<li><code>in/not in</code>，成员运算，判断元素是否在元组中</li>
+<li><code>len</code>, 获取元组的长度</li>
+<li><code>[index]</code>，索引</li>
+<li><code>[start:end]</code>，切片</li>
+<li><code>[start:end:step​]</code>，步长</li>
+<li><code>比较运算</code>：比的是对应索引位置上的元素的大小</li>
+</ul>
+<p><strong>使用示例</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">t1 = (<span class="string">'乔丹'</span>, <span class="string">'科比'</span>, <span class="string">'詹姆斯'</span>)  <span class="comment"># 定义一个三元组</span></span><br><span class="line">t2 = (<span class="string">'姚明'</span>, <span class="string">'易建联'</span>)    <span class="comment"># 定义一个二元组</span></span><br><span class="line"><span class="comment"># 获取长度</span></span><br><span class="line">print(len(t1), len(t2))  <span class="comment"># 3, 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 元组拼接 +  加法</span></span><br><span class="line">t3 = t1 + t2</span><br><span class="line">print(t3) <span class="comment"># ('乔丹', '科比', '詹姆斯',  '姚明', '易建联')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 元组复制 *  乘法</span></span><br><span class="line">t4 = t2 * <span class="number">2</span></span><br><span class="line">print(t4)  <span class="comment"># ('姚明', '易建联', '姚明', '易建联')  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 成员运算</span></span><br><span class="line">print(<span class="string">'乔丹'</span> <span class="keyword">in</span> t3)  <span class="comment"># True</span></span><br><span class="line">print(<span class="string">'孙悦'</span> <span class="keyword">in</span> t3)  <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 索引</span></span><br><span class="line">print(t3[<span class="number">0</span>], t3[<span class="number">-5</span>]) <span class="comment"># 乔丹 乔丹</span></span><br><span class="line">print(t3[<span class="number">4</span>], t3[<span class="number">-1</span>]) <span class="comment"># 易建联 易建联</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 切片</span></span><br><span class="line">print(t3[:<span class="number">3</span>])   <span class="comment"># ('乔丹', '科比', '詹姆斯')</span></span><br><span class="line">print(t3[<span class="number">1</span>:<span class="number">3</span>])  <span class="comment"># ('科比', '詹姆斯')</span></span><br><span class="line">print(t3[<span class="number">1</span>:])   <span class="comment"># ('科比', '詹姆斯',  '姚明', '易建联')</span></span><br><span class="line">print(t3[::<span class="number">2</span>])  <span class="comment"># ('乔丹', '詹姆斯', '易建联')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 反转元组</span></span><br><span class="line">print(t3[::<span class="number">-1</span>])  <span class="comment"># ('易建联', '姚明', '詹姆斯', '科比', '乔丹')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 比较</span></span><br><span class="line">t5 = (<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>)</span><br><span class="line">t6 = (<span class="number">44</span>, <span class="number">55</span>, <span class="number">66</span>)</span><br><span class="line">print(t5 == t6) <span class="comment"># False</span></span><br><span class="line">print(t5 &gt; t6)  <span class="comment"># False</span></span><br><span class="line">print(t5 &lt; t6)  <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="元组的遍历"><a href="#元组的遍历" class="headerlink" title="元组的遍历"></a>元组的遍历</h2><p>和列表一样，想取出元组中的元素，可以使用for循环，有以下两种方式</p>
+<p>方法一：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">items = (<span class="string">'Python'</span>, <span class="string">'Java'</span>, <span class="string">'Go'</span>, <span class="string">'Kotlin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> range(len(items)):</span><br><span class="line">    print(items[index])</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">items = (<span class="string">'Python'</span>, <span class="string">'Java'</span>, <span class="string">'Go'</span>, <span class="string">'Kotlin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">    print(item)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="元组类型转换"><a href="#元组类型转换" class="headerlink" title="元组类型转换"></a>元组类型转换</h2><p>其他类型转换为元组，使用<code>tuple(其他类型数据)</code>，具体示例不再介绍，参考列表类型转化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tuple(其他类型数据)</span><br></pre></td></tr></table></figure>
+
+<h2 id="元组嵌套"><a href="#元组嵌套" class="headerlink" title="元组嵌套"></a>元组嵌套</h2><p>由于元组和列表都可以充当<strong>容器</strong>，他们内部可以放很多元素，并且也支持元素内的各种嵌套。下面有三个练习题，可以对比一下列表和元组的区别。</p>
+<p>练习题1：判断是否可以实现，如果可以请写代码实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">li = [<span class="string">"Michael"</span>, [<span class="number">11</span>,<span class="number">22</span>,(<span class="number">88</span>,<span class="number">99</span>,<span class="number">100</span>,),<span class="number">33</span>],  <span class="string">"James"</span>,  (<span class="string">"Kobe"</span>, <span class="string">"Thomas"</span>,),  <span class="string">"David"</span>]</span><br><span class="line"><span class="comment">#        0               1                 2                3                4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.请将 "James" 修改成 "张亚飞"</span></span><br><span class="line">li[<span class="number">2</span>] = <span class="string">"张亚飞"</span></span><br><span class="line">index = li.index(<span class="string">"James"</span>)</span><br><span class="line">li[index] = <span class="string">"张亚飞"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.请将 ("Kobe", "Thomas",) 修改为 ['奥巴马','特朗普']</span></span><br><span class="line">li[<span class="number">3</span>] = [<span class="string">'奥巴马'</span>,<span class="string">'特朗普'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.请将 88 修改为 87</span></span><br><span class="line">li[<span class="number">1</span>][<span class="number">2</span>][<span class="number">0</span>] = <span class="number">87</span> <span class="comment"># (报错，)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4.请将 "David" 删除，然后再在列表第0个索引位置插入 "Paul"</span></span><br><span class="line"><span class="comment"># li.remove("David")</span></span><br><span class="line"><span class="comment"># del li[-1]</span></span><br><span class="line">li.insert(<span class="number">0</span>,<span class="string">"Paul"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>练习题2：记住一句话：《”我儿子永远不能换成是别人，但我儿子可以长大”》</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">data = (<span class="string">"123"</span>,<span class="number">666</span>,[<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>], (<span class="string">"Michael"</span>,<span class="string">"李连杰"</span>,[<span class="number">999</span>,<span class="number">666</span>,(<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>)]) )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.将 “123” 替换成 9   报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.将 [11,22,33] 换成 "张亚飞"    报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.将 11 换成 99</span></span><br><span class="line">data[<span class="number">2</span>][<span class="number">0</span>] = <span class="number">99</span></span><br><span class="line">print(data)  <span class="comment"># ("123",666,[99,22,33], ("Michael","李连杰",[999,666,(5,6,7)]) )</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4.在列表 [11,22,33] 追加一个44</span></span><br><span class="line">data[<span class="number">2</span>].append(<span class="number">44</span>)</span><br><span class="line">print(data) <span class="comment"># ("123",666,[11,22,33,44], ("Michael","李连杰",[999,666,(5,6,7)]) )</span></span><br></pre></td></tr></table></figure>
+
+<p>练习题3：动态的创建用户并添加到用户列表中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建用户 5个</span></span><br><span class="line"><span class="comment"># user_list = [] # 用户信息</span></span><br><span class="line">user_list = [ (<span class="string">"Michael"</span>,<span class="string">"132"</span>),(<span class="string">"admin"</span>,<span class="string">"123"</span>),(<span class="string">"Rose"</span>,<span class="string">"123"</span>) ]</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    user = input(<span class="string">"请输入用户名："</span>)</span><br><span class="line">    <span class="keyword">if</span> user == <span class="string">"Q"</span>:</span><br><span class="line">        brek</span><br><span class="line">    pwd = input(<span class="string">"请输入密码："</span>)</span><br><span class="line">    item = (user,pwd,)</span><br><span class="line">    user_list.append(item)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 实现：用户登录案例</span></span><br><span class="line">print(<span class="string">"登录程序"</span>)</span><br><span class="line">username = input(<span class="string">"请输入用户名："</span>)</span><br><span class="line">password = input(<span class="string">"请输入密码："</span>)</span><br><span class="line"></span><br><span class="line">is_success = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> user_list:</span><br><span class="line">    <span class="comment"># item = ("Michael","132")   ("admin","123")    ("Rose","123")</span></span><br><span class="line">    <span class="keyword">if</span> username == item[<span class="number">0</span>] <span class="keyword">and</span> password == item[<span class="number">1</span>]:</span><br><span class="line">        is_success = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> is_success:</span><br><span class="line">    print(<span class="string">"登录成功"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"登录失败"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="知识点扩展"><a href="#知识点扩展" class="headerlink" title="知识点扩展"></a>知识点扩展</h2><h3 id="命名元组"><a href="#命名元组" class="headerlink" title="命名元组"></a>命名元组</h3><p>namedtuple是一个函数，它用来创建一个自定义的tuple对象，并且规定了tuple元素的个数，并可以用属性而不是索引来引用tuple的某个元素。这样一来，我们用namedtuple可以很方便地定义一种数据类型，它具备tuple的不变性，又可以根据属性来引用，使用十分方便。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line">Point = namedtuple(<span class="string">'Point'</span>, [<span class="string">'x'</span>, <span class="string">'y'</span>])</span><br><span class="line">p = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">print(p.x)</span><br><span class="line">print(p.y)</span><br><span class="line"></span><br><span class="line">l1 = [Point(i, j) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>) <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">5</span>)]</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> l1:</span><br><span class="line">    print(p.x, p.y)</span><br></pre></td></tr></table></figure>
+
+<h2 id="元组的应用场景"><a href="#元组的应用场景" class="headerlink" title="元组的应用场景"></a>元组的应用场景</h2><p>讲到这里，相信大家一定迫切的想知道元组有哪些应用场景，我们给大家举几个例子。</p>
+<h3 id="例子1：打包和解包操作"><a href="#例子1：打包和解包操作" class="headerlink" title="例子1：打包和解包操作"></a>例子1：打包和解包操作</h3><p>当我们把多个用逗号分隔的值赋给一个变量时，多个值会打包成一个元组类型；当我们把一个元组赋值给多个变量时，元组会解包成多个值然后分别赋给对应的变量，如下面的代码所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打包</span></span><br><span class="line">a = <span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span></span><br><span class="line">print(type(a), a)    <span class="comment"># &lt;class 'tuple'&gt; (1, 10, 100)</span></span><br><span class="line"><span class="comment"># 解包</span></span><br><span class="line">i, j, k = a</span><br><span class="line">print(i, j, k)       <span class="comment"># 1 10 100</span></span><br></pre></td></tr></table></figure>
+
+<p>在解包时，如果解包出来的元素个数和变量个数不对应，会引发<code>ValueError</code>异常，错误信息为：<code>too many values to unpack</code>（解包的值太多）或<code>not enough values to unpack</code>（解包的值不足）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">1000</span></span><br><span class="line"><span class="comment"># i, j, k = a             # ValueError: too many values to unpack (expected 3)</span></span><br><span class="line"><span class="comment"># i, j, k, l, m, n = a    # ValueError: not enough values to unpack (expected 6, got 4)</span></span><br></pre></td></tr></table></figure>
+
+<p>有一种解决变量个数少于元素的个数方法，就是使用星号表达式，我们之前讲函数的可变参数时使用过星号表达式。有了星号表达式，我们就可以让一个变量接收多个值，代码如下所示。需要注意的是，用星号表达式修饰的变量会变成一个列表，列表中有0个或多个元素。还有在解包语法中，星号表达式只能出现一次。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">1000</span></span><br><span class="line">i, j, *k = a</span><br><span class="line">print(i, j, k)          <span class="comment"># 1 10 [100, 1000]</span></span><br><span class="line">i, *j, k = a</span><br><span class="line">print(i, j, k)          <span class="comment"># 1 [10, 100] 1000</span></span><br><span class="line">*i, j, k = a</span><br><span class="line">print(i, j, k)          <span class="comment"># [1, 10] 100 1000</span></span><br><span class="line">*i, j = a</span><br><span class="line">print(i, j)             <span class="comment"># [1, 10, 100] 1000</span></span><br><span class="line">i, *j = a</span><br><span class="line">print(i, j)             <span class="comment"># 1 [10, 100, 1000]</span></span><br><span class="line">i, j, k, *l = a</span><br><span class="line">print(i, j, k, l)       <span class="comment"># 1 10 100 [1000]</span></span><br><span class="line">i, j, k, l, *m = a</span><br><span class="line">print(i, j, k, l, m)    <span class="comment"># 1 10 100 1000 []</span></span><br></pre></td></tr></table></figure>
+
+<p>需要说明一点，解包语法对所有的序列都成立，这就意味着对字符串、列表以及我们之前讲到的<code>range</code>函数返回的范围序列都可以使用解包语法。大家可以尝试运行下面的代码，看看会出现怎样的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a, b, *c = range(<span class="number">1</span>, <span class="number">10</span>)</span><br><span class="line">print(a, b, c)</span><br><span class="line">a, b, c = [<span class="number">1</span>, <span class="number">10</span>, <span class="number">100</span>]</span><br><span class="line">print(a, b, c)</span><br><span class="line">a, *b, c = <span class="string">'hello'</span></span><br><span class="line">print(a, b, c)</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以反过来思考一下函数的可变参数，可变参数其实就是将多个参数打包成了一个元组，可以通过下面的代码来证明这一点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(*args)</span>:</span></span><br><span class="line">    print(type(args), args)</span><br><span class="line">    total = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> val <span class="keyword">in</span> args:</span><br><span class="line">        total += val</span><br><span class="line">    <span class="keyword">return</span> total</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(<span class="number">1</span>, <span class="number">10</span>, <span class="number">20</span>)        <span class="comment"># &lt;class 'tuple'&gt; (1, 10, 20)</span></span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)    <span class="comment"># &lt;class 'tuple'&gt; (1, 2, 3, 4, 5)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="例子2：交换两个变量的值"><a href="#例子2：交换两个变量的值" class="headerlink" title="例子2：交换两个变量的值"></a>例子2：交换两个变量的值</h3><p>交换两个变量的值是编程语言中的一个经典案例，在很多编程语言中，交换两个变量的值都需要借助一个中间变量才能做到，如果不用中间变量就需要使用比较晦涩的位运算来实现。在Python中，交换两个变量<code>a</code>和<code>b</code>的值只需要使用如下所示的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a, b = b, a</span><br></pre></td></tr></table></figure>
+
+<p>同理，如果要将三个变量<code>a</code>、<code>b</code>、<code>c</code>的值互换，即<code>b</code>赋给<code>a</code>，<code>c</code>赋给<code>b</code>，<code>a</code>赋给<code>c</code>，也可以如法炮制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a, b, c = b, c, a</span><br></pre></td></tr></table></figure>
+
+<p>需要说明的是，上面并没有用到打包和解包语法，Python的字节码指令中有<code>ROT_TWO</code>和<code>ROT_THREE</code>这样的指令可以实现这个操作，效率是非常高的。但是如果有多于三个变量的值要依次互换，这个时候没有直接可用的字节码指令，执行的原理就是我们上面讲解的打包和解包操作。</p>
+<h3 id="例子3：让函数返回多个值"><a href="#例子3：让函数返回多个值" class="headerlink" title="例子3：让函数返回多个值"></a>例子3：让函数返回多个值</h3><p>有的时候一个函数执行完成后可能需要返回多个值，这个时候元组类型应该是比较方便的选择。例如，编写一个找出列表中最大值和最小的函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">find_max_and_min</span><span class="params">(items)</span>:</span></span><br><span class="line">    <span class="string">"""找出列表中最大和最小的元素</span></span><br><span class="line"><span class="string">    :param items: 列表</span></span><br><span class="line"><span class="string">    :return: 最大和最小元素构成的二元组</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    max_one, min_one = items[<span class="number">0</span>], items[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> items:</span><br><span class="line">        <span class="keyword">if</span> item &gt; max_one:</span><br><span class="line">            max_one = item</span><br><span class="line">        <span class="keyword">elif</span> item &lt; min_one:</span><br><span class="line">            min_one = item</span><br><span class="line">    <span class="keyword">return</span> max_one, min_one</span><br></pre></td></tr></table></figure>
+
+<p>上面函数的<code>return</code>语句中有两个值，这两个值会组装成一个二元组然后返回。所以调用<code>find_max_and_min</code>函数会得到这个二元组，如果愿意也可以通过解包语法将二元组中的两个值分别赋给两个变量。</p>
+<h2 id="元组和列表的比较"><a href="#元组和列表的比较" class="headerlink" title="元组和列表的比较"></a>元组和列表的比较</h2><p>这里还有一个非常值得探讨的问题，Python中已经有了列表类型，为什么还需要元组这样的类型呢？这个问题对于初学者来说似乎有点困难，不过没有关系，我们先抛出观点，大家可以一边学习一边慢慢体会。</p>
+<ol>
+<li><p>元组是不可变类型，<strong>不可变类型更适合多线程环境</strong>，因为它降低了并发访问变量的同步化开销。关于这一点，我们会在后面讲解多线程的时候为大家详细论述。</p>
+</li>
+<li><p>元组是不可变类型，通常<strong>不可变类型在创建时间和占用空间上面都优于对应的可变类型</strong>。我们可以使用<code>sys</code>模块的<code>getsizeof</code>函数来检查保存相同元素的元组和列表各自占用了多少内存空间。我们也可以使用<code>timeit</code>模块的<code>timeit</code>函数来看看创建保存相同元素的元组和列表各自花费的时间，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> timeit</span><br><span class="line"></span><br><span class="line">a = list(range(<span class="number">100000</span>))</span><br><span class="line">b = tuple(range(<span class="number">100000</span>))</span><br><span class="line">print(sys.getsizeof(a), sys.getsizeof(b))    <span class="comment"># 900120 800056</span></span><br><span class="line"></span><br><span class="line">print(timeit.timeit(<span class="string">'[1, 2, 3, 4, 5, 6, 7, 8, 9]'</span>))</span><br><span class="line">print(timeit.timeit(<span class="string">'(1, 2, 3, 4, 5, 6, 7, 8, 9)'</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Python中的元组和列表是可以相互转换的，我们可以通过下面的代码来做到。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将元组转换成列表</span></span><br><span class="line">info = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">print(list(info))       <span class="comment"># [1, 2, 3]</span></span><br><span class="line"><span class="comment"># 将列表转换成元组</span></span><br><span class="line">fruits = [<span class="string">'apple'</span>, <span class="string">'banana'</span>, <span class="string">'orange'</span>]</span><br><span class="line">print(tuple(fruits))    <span class="comment"># ('apple', 'banana', 'orange')</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h2><p><strong>列表和元组都是容器型的数据类型</strong>，即一个变量可以保存多个数据。<strong>列表是可变数据类型</strong>，<strong>元组是不可变数据类型</strong>，所以列表添加元素、删除元素、清空、排序等方法对于元组来说是不成立的。但是列表和元组都可以进行<strong>拼接</strong>、<strong>成员运算</strong>、<strong>索引和切片</strong>这些操作，就如同之前讲到的字符串类型一样，因为字符串就是字符按一定顺序构成的序列，在这一点上三者并没有什么区别。我们<strong>推荐大家使用列表的生成式语法来创建列表</strong>，它很好用，也是Python中非常有特色的语法。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第10篇：列表和元组的应用\" rel="bookmark">第10篇：列表和元组的应用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第11篇：高级数据类型之集合\" rel="bookmark">第11篇：高级数据类型之集合</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC9%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/" title="第9篇：高级数据类型之元组">https://tongsiying.github.io/2021/11/24/python/python_基础篇/第9篇：高级数据类型之元组/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC8%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%88%97%E8%A1%A8/" rel="prev" title="第8篇：高级数据类型之列表">
+      <i class="fa fa-chevron-left"></i> 第8篇：高级数据类型之列表
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC10%E7%AF%87%EF%BC%9A%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%BA%94%E7%94%A8/" rel="next" title="第10篇：列表和元组的应用">
+      第10篇：列表和元组的应用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#元组的定义"><span class="nav-text">元组的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组的创建"><span class="nav-text">元组的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组的方法"><span class="nav-text">元组的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组的运算"><span class="nav-text">元组的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组的遍历"><span class="nav-text">元组的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组类型转换"><span class="nav-text">元组类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组嵌套"><span class="nav-text">元组嵌套</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识点扩展"><span class="nav-text">知识点扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#命名元组"><span class="nav-text">命名元组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组的应用场景"><span class="nav-text">元组的应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例子1：打包和解包操作"><span class="nav-text">例子1：打包和解包操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子2：交换两个变量的值"><span class="nav-text">例子2：交换两个变量的值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子3：让函数返回多个值"><span class="nav-text">例子3：让函数返回多个值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元组和列表的比较"><span class="nav-text">元组和列表的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的总结"><span class="nav-text">简单的总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

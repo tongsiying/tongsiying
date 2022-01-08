@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第10篇：列表和元组的应用">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC10%E7%AF%87%EF%BC%9A%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-24T11:37:35.463Z">
+<meta property="article:modified_time" content="2021-11-24T11:34:40.270Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC10%E7%AF%87%EF%BC%9A%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第10篇：列表和元组的应用 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC10%E7%AF%87%EF%BC%9A%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第10篇：列表和元组的应用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:34:40" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+列表和元组在编写应用程序时都非常有用，我们通过下面几个案例帮助大家熟悉列表和元组的使用方法。
+
+<h3 id="经典的案例"><a href="#经典的案例" class="headerlink" title="经典的案例"></a>经典的案例</h3><h4 id="案例1：成绩表和平均分统计。"><a href="#案例1：成绩表和平均分统计。" class="headerlink" title="案例1：成绩表和平均分统计。"></a>案例1：成绩表和平均分统计。</h4><blockquote>
+<p><strong>说明</strong>：录入5个学生3门课程的考试成绩，计算每个学生的平均分和每门课的平均分。</p>
+</blockquote>
+<p>这个案例我们在之前说到过，而且提醒过大家在使用嵌套列表时应该避开的坑，下面我们给出完整的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">录入5个学生3门课程的考试成绩</span></span><br><span class="line"><span class="string">计算每个学生的平均分和每门课的平均分</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">names = [<span class="string">'关羽'</span>, <span class="string">'张飞'</span>, <span class="string">'赵云'</span>, <span class="string">'马超'</span>, <span class="string">'黄忠'</span>]</span><br><span class="line">courses = [<span class="string">'语文'</span>, <span class="string">'数学'</span>, <span class="string">'英语'</span>]</span><br><span class="line"><span class="comment"># 用生成式创建嵌套的列表保存5个学生3门课程的成绩</span></span><br><span class="line">scores = [[<span class="number">0</span>] * len(courses) <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(names))]</span><br><span class="line"><span class="comment"># 录入数据</span></span><br><span class="line"><span class="keyword">for</span> i, name <span class="keyword">in</span> enumerate(names):</span><br><span class="line">    print(<span class="string">f'请输入<span class="subst">&#123;name&#125;</span>的成绩 ===&gt;'</span>)</span><br><span class="line">    <span class="keyword">for</span> j, course <span class="keyword">in</span> enumerate(courses):</span><br><span class="line">        scores[i][j] = float(input(<span class="string">f'<span class="subst">&#123;course&#125;</span>: '</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'-'</span> * <span class="number">5</span>, <span class="string">'学生平均成绩'</span>, <span class="string">'-'</span> * <span class="number">5</span>)</span><br><span class="line"><span class="comment"># 计算每个人的平均成绩</span></span><br><span class="line"><span class="keyword">for</span> index, name <span class="keyword">in</span> enumerate(names):</span><br><span class="line">    avg_score = sum(scores[index]) / len(courses)</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;name&#125;</span>的平均成绩为: <span class="subst">&#123;avg_score:<span class="number">.1</span>f&#125;</span>分'</span>)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'-'</span> * <span class="number">5</span>, <span class="string">'课程平均成绩'</span>, <span class="string">'-'</span> * <span class="number">5</span>)</span><br><span class="line"><span class="comment"># 计算每门课的平均成绩</span></span><br><span class="line"><span class="keyword">for</span> index, course <span class="keyword">in</span> enumerate(courses):</span><br><span class="line">    <span class="comment"># 用生成式从scores中取出指定的列创建新列表</span></span><br><span class="line">    curr_course_scores = [score[index] <span class="keyword">for</span> score <span class="keyword">in</span> scores]</span><br><span class="line">    avg_score = sum(curr_course_scores) / len(names)</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;course&#125;</span>的平均成绩为：<span class="subst">&#123;avg_score:<span class="number">.1</span>f&#125;</span>分'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面对列表进行遍历的时候，使用了<code>enumerate</code>函数，这个函数非常有用。我们之前讲过循环遍历列表的两种方法，一种是通过索引循环遍历，一种是直接遍历列表元素。通过<code>enumerate</code>处理后的列表在循环遍历时会取到一个二元组，解包之后第一个值是索引，第二个值是元素，下面是一个简单的对比。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">items = [<span class="string">'Python'</span>, <span class="string">'Java'</span>, <span class="string">'Go'</span>, <span class="string">'Swift'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> range(len(items)):</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;index&#125;</span>: <span class="subst">&#123;items[index]&#125;</span>'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> index, item <span class="keyword">in</span> enumerate(items):</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;index&#125;</span>: <span class="subst">&#123;item&#125;</span>'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="案例2：设计一个函数返回指定日期是这一年的第几天。"><a href="#案例2：设计一个函数返回指定日期是这一年的第几天。" class="headerlink" title="案例2：设计一个函数返回指定日期是这一年的第几天。"></a>案例2：设计一个函数返回指定日期是这一年的第几天。</h4><blockquote>
+<p><strong>说明</strong>：这个案例源于著名的<em>The C Programming Language</em>上的例子。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">计算指定的年月日是这一年的第几天</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_leap_year</span><span class="params">(year)</span>:</span></span><br><span class="line">    <span class="string">"""判断指定的年份是不是闰年，平年返回False，闰年返回True"""</span></span><br><span class="line">    <span class="keyword">return</span> year % <span class="number">4</span> == <span class="number">0</span> <span class="keyword">and</span> year % <span class="number">100</span> != <span class="number">0</span> <span class="keyword">or</span> year % <span class="number">400</span> == <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">which_day</span><span class="params">(year, month, date)</span>:</span></span><br><span class="line">    <span class="string">"""计算传入的日期是这一年的第几天</span></span><br><span class="line"><span class="string">    :param year: 年</span></span><br><span class="line"><span class="string">    :param month: 月</span></span><br><span class="line"><span class="string">    :param date: 日</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 用嵌套的列表保存平年和闰年每个月的天数</span></span><br><span class="line">    days_of_month = [</span><br><span class="line">        [<span class="number">31</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>],</span><br><span class="line">        [<span class="number">31</span>, <span class="number">29</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>]</span><br><span class="line">    ]</span><br><span class="line">    <span class="comment"># 布尔值False和True可以转换成整数0和1，因此</span></span><br><span class="line">    <span class="comment"># 平年会选中嵌套列表中的第一个列表(2月是28天)</span></span><br><span class="line">    <span class="comment"># 闰年会选中嵌套列表中的第二个列表(2月是29天)</span></span><br><span class="line">    days = days_of_month[is_leap_year(year)]</span><br><span class="line">    total = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(month - <span class="number">1</span>):</span><br><span class="line">        total += days[index]</span><br><span class="line">    <span class="keyword">return</span> total + date</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(which_day(<span class="number">1980</span>, <span class="number">11</span>, <span class="number">28</span>))    <span class="comment"># 333</span></span><br><span class="line">print(which_day(<span class="number">1981</span>, <span class="number">12</span>, <span class="number">31</span>))    <span class="comment"># 365</span></span><br><span class="line">print(which_day(<span class="number">2018</span>, <span class="number">1</span>, <span class="number">1</span>))      <span class="comment"># 1</span></span><br><span class="line">print(which_day(<span class="number">2016</span>, <span class="number">3</span>, <span class="number">1</span>))      <span class="comment"># 61</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="案例3：实现双色球随机选号。"><a href="#案例3：实现双色球随机选号。" class="headerlink" title="案例3：实现双色球随机选号。"></a>案例3：实现双色球随机选号。</h4><blockquote>
+<p><strong>说明</strong>：双色球属乐透型彩票范畴，由中国福利彩票发行管理中心统一组织发行，在全国范围内销售。红球号码范围为01～33，蓝球号码范围为01～16。双色球每期从33个红球中开出6个号码，从16个蓝球中开出1个号码作为中奖号码，双色球玩法即是竞猜开奖号码的6个红球号码和1个蓝球号码。</p>
+</blockquote>
+<p>这个题目的思路是用一个列表保存红色球的号码，然后通过<code>random</code>模块的<code>sample</code>函数实现无放回抽样，这样就可以抽中6个不重复的红色球号码。红色球需要排序，可以使用列表的<code>sort</code>方法，显示的时候一位数前面需要做补<code>0</code>的操作，可以用字符串格式化的方式来处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">双色球随机选号</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint, sample</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">display</span><span class="params">(balls)</span>:</span></span><br><span class="line">    <span class="string">"""输出列表中的双色球号码"""</span></span><br><span class="line">    <span class="keyword">for</span> index, ball <span class="keyword">in</span> enumerate(balls):</span><br><span class="line">        <span class="keyword">if</span> index == len(balls) - <span class="number">1</span>:</span><br><span class="line">            print(<span class="string">'|'</span>, end=<span class="string">' '</span>)</span><br><span class="line">        print(<span class="string">f'<span class="subst">&#123;ball:<span class="number">0</span>&gt;<span class="number">2</span>d&#125;</span>'</span>, end=<span class="string">' '</span>)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">random_select</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""随机选择一组号码"""</span></span><br><span class="line">    <span class="comment"># 用生成式生成1到33号的红色球</span></span><br><span class="line">    red_balls = [x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">34</span>)]</span><br><span class="line">    <span class="comment"># 通过无放回随机抽样的方式选中6个红色球</span></span><br><span class="line">    selected_balls = sample(red_balls, <span class="number">6</span>)</span><br><span class="line">    <span class="comment"># 对红色球进行排序</span></span><br><span class="line">    selected_balls.sort()</span><br><span class="line">    <span class="comment"># 用1到16的随机数表示选中的蓝色球并追加到列表中</span></span><br><span class="line">    selected_balls.append(randint(<span class="number">1</span>, <span class="number">16</span>))</span><br><span class="line">    <span class="keyword">return</span> selected_balls</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">n = int(input(<span class="string">'机选几注: '</span>))</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</span><br><span class="line">    display(random_select())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提示</strong>：彩票的本质是：<strong>虚构一个不劳而获的事，去忽悠一群想不劳而获的人，最终养活一批真正不劳而获的人</strong>。所以，<strong>珍爱生命，远离各种形式的赌博</strong>。</p>
+</blockquote>
+<h4 id="案例4：幸运的女人。"><a href="#案例4：幸运的女人。" class="headerlink" title="案例4：幸运的女人。"></a>案例4：幸运的女人。</h4><blockquote>
+<p><strong>说明</strong>：有15个男人和15个女人乘船在海上遇险，为了让一部分人活下来，不得不将其中15个人扔到海里，有个人想了个办法让大家围成一个圈，由某个人开始从1报数，报到9的人就扔到海里面，他后面的人接着从1开始报数，报到9的人继续扔到海里面，直到将15个人扔到海里。最后15个女人都幸免于难，15个男人都被扔到了海里。问这些人最开始是怎么站的，哪些位置是男人，哪些位置是女人。</p>
+</blockquote>
+<p>上面这个问题其实就是著名的约瑟夫环问题。我们可以通过一个列表来保存这30个人是死是活的状态，例如用布尔值<code>True</code>表示活着的人，用<code>False</code>表示被扔到海里的人。最开始的时候列表中的30个元素都是<code>True</code>，然后我们通过循环的方式去执行报数，找到要扔到海里的人并将对应的列表元素标记为<code>False</code>，循环会执行到将列表中的15个元素标记为<code>False</code>，循环的过程中，列表的索引始终在<code>0</code>到<code>29</code>的范围，超过<code>29</code>就回到<code>0</code>，这样刚好可以形成一个闭环。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">幸运的女人(约瑟夫环问题)</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">persons = [<span class="literal">True</span>] * <span class="number">30</span></span><br><span class="line"><span class="comment"># counter - 扔到海里的人数</span></span><br><span class="line"><span class="comment"># index - 访问列表的索引</span></span><br><span class="line"><span class="comment"># number - 报数的数字</span></span><br><span class="line">counter, index, number = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> counter &lt; <span class="number">15</span>:</span><br><span class="line">    <span class="keyword">if</span> persons[index]:</span><br><span class="line">        number += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> number == <span class="number">9</span>:</span><br><span class="line">            persons[index] = <span class="literal">False</span></span><br><span class="line">            counter += <span class="number">1</span></span><br><span class="line">            number = <span class="number">0</span></span><br><span class="line">    index += <span class="number">1</span></span><br><span class="line">    index %= <span class="number">30</span></span><br><span class="line"><span class="keyword">for</span> person <span class="keyword">in</span> persons:</span><br><span class="line">    print(<span class="string">'女'</span> <span class="keyword">if</span> person <span class="keyword">else</span> <span class="string">'男'</span>, end=<span class="string">''</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h3><h4 id="练习1：创建一副扑克牌（排除大小王）"><a href="#练习1：创建一副扑克牌（排除大小王）" class="headerlink" title="练习1：创建一副扑克牌（排除大小王）"></a>练习1：创建一副扑克牌（排除大小王）</h4><p>要求：花色为红桃、黑桃、梅花、方片，数字包含A-K共13个数字，生成花色和数字相互组合的52张牌。</p>
+<h4 id="练习2：摇骰子游戏升级版"><a href="#练习2：摇骰子游戏升级版" class="headerlink" title="练习2：摇骰子游戏升级版"></a>练习2：摇骰子游戏升级版</h4><p>题目说明：</p>
+<blockquote>
+<p>用五个六面骰子玩的骰子游戏，每投骰子组一次，就会出现5个数字的数组（数字：1-6），统计数组里每个数字出现的次数，将每个数字出现的次数拆分成 3次 和 1次 的组合，然后按照下面的规则进行计数。 注意：如果出现次数大于或者等于3次，那么必须至少有一个按照3次来计算，不能全部按照1次来计算<br>3次1 = = 1000分 3次6 = = 600分<br>3次5 = = 500分 3次4 = = 400分<br>3次3 = = 300分 3次2 = = 200分<br>1次1 =&gt; 100分 1次5 =&gt; 50分<br>1次2 =&gt; 0分 1次3 =&gt; 0分<br>1次4 =&gt; 0分 1次6 =&gt; 0分<br>例如，5出现了5次，那么应当做作3个5、1个5和1个5来计算得分；5出现了6次，那么应当作3个5、3个5来计算得分，其他数字同理。<br>扔骰子计算得分<br> 5 1 3 4 1 50 + 2 * 100 = 250<br> 1 1 1 3 1 1000 + 100 = 1100<br> 2 4 4 5 4 400 + 50 = 450</p>
+</blockquote>
+<h4 id="练习3：名字管理系统"><a href="#练习3：名字管理系统" class="headerlink" title="练习3：名字管理系统"></a>练习3：名字管理系统</h4><p>要求：实现一个名字管理系统，实现名字的添加、删除、修改、查询操作。</p>
+<h3 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h3><p><strong>列表和元组都很重要</strong>，学会这两种数据类型，我们能做的事情又多了很多。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第11篇：高级数据类型之集合\" rel="bookmark">第11篇：高级数据类型之集合</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第12篇：高级数据类型之字典\" rel="bookmark">第12篇：高级数据类型之字典</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC10%E7%AF%87%EF%BC%9A%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%BA%94%E7%94%A8/" title="第10篇：列表和元组的应用">https://tongsiying.github.io/2021/11/24/python/python_基础篇/第10篇：列表和元组的应用/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC9%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%85%83%E7%BB%84/" rel="prev" title="第9篇：高级数据类型之元组">
+      <i class="fa fa-chevron-left"></i> 第9篇：高级数据类型之元组
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/" rel="next" title="第11篇：高级数据类型之集合">
+      第11篇：高级数据类型之集合 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#经典的案例"><span class="nav-text">经典的案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#案例1：成绩表和平均分统计。"><span class="nav-text">案例1：成绩表和平均分统计。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例2：设计一个函数返回指定日期是这一年的第几天。"><span class="nav-text">案例2：设计一个函数返回指定日期是这一年的第几天。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例3：实现双色球随机选号。"><span class="nav-text">案例3：实现双色球随机选号。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例4：幸运的女人。"><span class="nav-text">案例4：幸运的女人。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小试牛刀"><span class="nav-text">小试牛刀</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#练习1：创建一副扑克牌（排除大小王）"><span class="nav-text">练习1：创建一副扑克牌（排除大小王）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练习2：摇骰子游戏升级版"><span class="nav-text">练习2：摇骰子游戏升级版</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练习3：名字管理系统"><span class="nav-text">练习3：名字管理系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的总结"><span class="nav-text">简单的总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

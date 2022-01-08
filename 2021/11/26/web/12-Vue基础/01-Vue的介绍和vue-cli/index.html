@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="01-Vue的介绍和vue-cli">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/26/web/12-Vue%E5%9F%BA%E7%A1%80/01-Vue%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8Cvue-cli/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20180420_2150.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1645.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1651.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1652.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1658.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1701.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190624_163626.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190624_160726.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190624_160229.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190624_163726.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190624_164305.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190624_165001.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180501_2100.png">
+<meta property="og:image" content="http://img.smyhvae.com/20160401_01.jpg">
+<meta property="article:published_time" content="2021-11-26T11:35:17.102Z">
+<meta property="article:modified_time" content="2021-11-25T15:22:51.160Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20180420_2150.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/26/web/12-Vue%E5%9F%BA%E7%A1%80/01-Vue%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8Cvue-cli/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01-Vue的介绍和vue-cli | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/26/web/12-Vue%E5%9F%BA%E7%A1%80/01-Vue%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8Cvue-cli/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01-Vue的介绍和vue-cli
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-26 19:35:17" itemprop="dateCreated datePublished" datetime="2021-11-26T19:35:17+08:00">2021-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-25 23:22:51" itemprop="dateModified" datetime="2021-11-25T23:22:51+08:00">2021-11-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+
+
+
+<h2 id="MVVM模式"><a href="#MVVM模式" class="headerlink" title="MVVM模式"></a>MVVM模式</h2><p><img src="http://img.smyhvae.com/20180420_2150.png" alt></p>
+<ul>
+<li><p>Model：负责数据存储</p>
+</li>
+<li><p>View：负责页面展示</p>
+</li>
+<li><p>View Model：负责业务逻辑处理（比如Ajax请求等），对数据进行加工后交给视图展示</p>
+</li>
+</ul>
+<h2 id="关于框架"><a href="#关于框架" class="headerlink" title="关于框架"></a>关于框架</h2><h3 id="为什么要学习流行框架"><a href="#为什么要学习流行框架" class="headerlink" title="为什么要学习流行框架"></a>为什么要学习流行框架</h3><p><strong>1、企业为了提高开发效率</strong>：在企业中，时间就是效率，效率就是金钱；企业中，使用框架，能够提高开发的效率。</p>
+<p><strong>提高开发效率的发展历程</strong>：</p>
+<p>原生JS -&gt; Jquery之类的类库 -&gt; 前端模板引擎 -&gt; Angular.js / Vue.js（能够帮助我们减少不必要的DOM操作；提高渲染效率；双向数据绑定的概念）</p>
+<p>2、在Vue中，一个核心的概念就是：数据驱动，避免手动操作DOM元素。这样的话，可以让前端程序员可以更多的时间去关注数据的业务逻辑，而不是关心 DOM 是如何渲染的了。</p>
+<h3 id="框架和库的区别"><a href="#框架和库的区别" class="headerlink" title="框架和库的区别"></a>框架和库的区别</h3><p><strong>框架</strong>：</p>
+<p>框架是一套完整的解决方案。</p>
+<p>对项目的<strong>侵入性</strong>较大，项目如果需要更换框架，则需要重新架构整个项目。但是优点也很明显：功能完善、提供了一整套的解决方案。</p>
+<p><strong>库（插件）</strong>：</p>
+<p>只是提供某一个小功能。</p>
+<p>对项目的侵入性较小，如果某个库无法完成某些需求，可以很容易切换到其它库实现需求。</p>
+<p>举例：</p>
+<ul>
+<li><p>从Jquery 切换到 Zepto</p>
+</li>
+<li><p>从 EJS 切换到 art-template</p>
+</li>
+</ul>
+<h2 id="前端的各种框架"><a href="#前端的各种框架" class="headerlink" title="前端的各种框架"></a>前端的各种框架</h2><h3 id="Vue-和-React-的相同点"><a href="#Vue-和-React-的相同点" class="headerlink" title="Vue 和 React 的相同点"></a>Vue 和 React 的相同点</h3><ul>
+<li><p>利用虚拟DOM实现快速渲染</p>
+</li>
+<li><p>轻量级</p>
+</li>
+<li><p>响应式组件</p>
+</li>
+<li><p>支持服务器端渲染</p>
+</li>
+<li><p>易于集成路由工具、打包工具以及状态管理工具</p>
+</li>
+</ul>
+<p>PS：Vue 在国内很受欢迎；React 在国内和国外都很受欢迎，适合做大型网站。</p>
+<h3 id="什么是虚拟-DOM"><a href="#什么是虚拟-DOM" class="headerlink" title="什么是虚拟 DOM"></a>什么是虚拟 DOM</h3><p>传统的web开发，是利用 jQuery操作DOM，这是非常耗资源的。</p>
+<p>我们可以在 JS 的内存里构建类似于DOM的对象，去拼装数据，拼装完整后，把数据整体解析，一次性插入到html里去。这就形成了虚拟 DOM。</p>
+<p>Vue1.0没有虚拟DOM，Vue2.0改成了基于虚拟DOM。</p>
+<h3 id="前端框架回顾"><a href="#前端框架回顾" class="headerlink" title="前端框架回顾"></a>前端框架回顾</h3><p><img src="http://img.smyhvae.com/20180302_1645.png" alt></p>
+<p><img src="http://img.smyhvae.com/20180302_1651.png" alt></p>
+<p><img src="http://img.smyhvae.com/20180302_1652.png" alt></p>
+<p>Vue框架中，没有控制器。</p>
+<h2 id="Vue-框架"><a href="#Vue-框架" class="headerlink" title="Vue 框架"></a>Vue 框架</h2><h3 id="发展历史"><a href="#发展历史" class="headerlink" title="发展历史"></a>发展历史</h3><ul>
+<li><p>2013年底作为尤雨溪个人实验项目开始开发</p>
+</li>
+<li><p>2014年2月公开发布。</p>
+</li>
+<li><p>2014年11月发布0.11版本</p>
+</li>
+<li><p>2016年10月发布2.0版本。</p>
+</li>
+</ul>
+<h3 id="相关网址"><a href="#相关网址" class="headerlink" title="相关网址"></a>相关网址</h3><ul>
+<li><p><a href="https://cn.vuejs.org/" target="_blank" rel="noopener external nofollow noreferrer">中文官网</a></p>
+</li>
+<li><p><a href="https://forum.vuejs.org/" target="_blank" rel="noopener external nofollow noreferrer">vuejs官方论坛</a></p>
+</li>
+<li><p>GitHub地址：<a href="https://github.com/vuejs/vue" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/vuejs/vue</a></p>
+</li>
+</ul>
+<ul>
+<li><p>Vue1.0 在线文档：<a href="http://v1-cn.vuejs.org/guide/" target="_blank" rel="noopener external nofollow noreferrer">http://v1-cn.vuejs.org/guide/</a></p>
+</li>
+<li><p>Vue2.x 在线文档：<a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener external nofollow noreferrer">https://cn.vuejs.org/v2/guide/</a></p>
+</li>
+<li><p>Vue1下载地址：<a href="http://v1-cn.vuejs.org/js/vue.js" target="_blank" rel="noopener external nofollow noreferrer">http://v1-cn.vuejs.org/js/vue.js</a></p>
+</li>
+<li><p>Vue2下载地址：<a href="https://cdn.jsdelivr.net/npm/vue/" target="_blank" rel="noopener external nofollow noreferrer">https://cdn.jsdelivr.net/npm/vue/</a></p>
+</li>
+</ul>
+<p><img src="http://img.smyhvae.com/20180302_1658.png" alt></p>
+<p>上方截图的时间：2018-03-02。</p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p> Vue 本身并不是一个框架，Vue结合周边生态构成一个灵活的、渐进式的框架。</p>
+<p> Vue 以及大型 Vue 项目所需的周边技术，构成了生态。</p>
+<p>渐进式框架图：</p>
+<p><img src="http://img.smyhvae.com/20180302_1701.png" alt></p>
+<h3 id="Vue框架的特点"><a href="#Vue框架的特点" class="headerlink" title="Vue框架的特点"></a>Vue框架的特点</h3><ul>
+<li><p>模板渲染：基于 html 的模板语法，学习成本低。</p>
+</li>
+<li><p>响应式的更新机制：数据改变之后，视图会自动刷新。【重要】</p>
+</li>
+<li><p>渐进式框架</p>
+</li>
+<li><p>组件化/模块化</p>
+</li>
+<li><p>轻量：开启 gzip压缩后，可以达到 20kb 大小。（React 达到 35kb，AngularJS 达到60kb）。</p>
+</li>
+</ul>
+<h2 id="Vue-的环境搭建"><a href="#Vue-的环境搭建" class="headerlink" title="Vue 的环境搭建"></a>Vue 的环境搭建</h2><blockquote>
+<p>我们首先要安装好 NVM、Node.js环境，然后再来做下面的操作。</p>
+</blockquote>
+<h3 id="常见的插件"><a href="#常见的插件" class="headerlink" title="常见的插件"></a>常见的插件</h3><ul>
+<li><p>Webpack：代码模块化构建打包工具。</p>
+</li>
+<li><p>Gulp：基于流的自动化构建工具。</p>
+</li>
+<li><p>Babel：使用最新的 规范来编写 js。</p>
+</li>
+<li><p>Vue：构建数据驱动的Web界面的渐进式框架</p>
+</li>
+<li><p>Express：基于 Node.js 平台，快速、开放、极简的 Web 开发框架。</p>
+</li>
+</ul>
+<p>以上这些包，都可以通过 NPM 这个包管理工具来安装。</p>
+<h3 id="引用-Vue-js-文件"><a href="#引用-Vue-js-文件" class="headerlink" title="引用 Vue.js 文件"></a>引用 Vue.js 文件</h3><p>1、<strong>方式一</strong>：（CDN的方式进行引用）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、方式二：（下载 vue.js 文件）</p>
+<p>去网站 <a href="https://cdn.jsdelivr.net/npm/vue/" target="_blank" rel="noopener external nofollow noreferrer">https://cdn.jsdelivr.net/npm/vue/</a> 下载 vue.js 文件，直接放到工程文件里，然后引用。</p>
+<p>3、方式三：（NPM的方式安装vue）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最新稳定版</span></span><br><span class="line">$ npm install vue</span><br></pre></td></tr></table></figure>
+
+<p>如果网络不稳定，可以采用下面的方式安装：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cnpm i vue <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在代码中通过下面这种方式进行引用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="利用-vue-cli-新建一个空的项目"><a href="#利用-vue-cli-新建一个空的项目" class="headerlink" title="利用 vue-cli 新建一个空的项目"></a>利用 vue-cli 新建一个空的项目</h2><p>Vue 提供一个官方命令行工具，可用于快速搭建大型单页应用。该工具为现代化的前端开发工作流提供了开箱即用的构建配置。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。</p>
+<h3 id="官方代码参考"><a href="#官方代码参考" class="headerlink" title="官方代码参考"></a>官方代码参考</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm install -<span class="keyword">g</span> @vue/<span class="keyword">cli</span></span><br><span class="line"></span><br><span class="line">vue create my-<span class="keyword">app</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">cd</span> my-<span class="keyword">app</span></span><br><span class="line"></span><br><span class="line">npm <span class="keyword">run</span> serve</span><br></pre></td></tr></table></figure>
+
+<p>我们根据上方的参考代码，来看看“利用 vue-cli 新建一个空的项目”的步骤。</p>
+<h3 id="安装-vue-cli（命令行工具）"><a href="#安装-vue-cli（命令行工具）" class="headerlink" title="安装 vue-cli（命令行工具）"></a>安装 vue-cli（命令行工具）</h3><p>安装命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局安装 vue-cli</span></span><br><span class="line">$ npm install -g @vue/cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="初始化一个-simple-项目"><a href="#初始化一个-simple-项目" class="headerlink" title="初始化一个 simple 项目"></a>初始化一个 simple 项目</h3><p>（1）首先执行：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue create <span class="keyword">my</span>-app</span><br></pre></td></tr></table></figure>
+
+<p>输入上方命令后，会弹出一个选项：</p>
+<p><img src="http://img.smyhvae.com/20190624_163626.png" alt></p>
+<p>如果是初学者，直接选<code>default</code>就行。之后会自动生成一个空的初始化项目，包含了项目目录、以及项目依赖的脚本。</p>
+<p>这个空项目的工程文件如下：（请务必仔细研究这个项目的写法和目录结构）</p>
+<ul>
+<li><a href="https://download.csdn.net/download/smyhvae/11256220" target="_blank" rel="noopener external nofollow noreferrer">2019-06-21-vue-my-app.zip</a></li>
+</ul>
+<p>我们可以看到这个项目的结构：</p>
+<p><img src="http://img.smyhvae.com/20190624_160726.png" alt></p>
+<ul>
+<li><p>src：项目源码</p>
+</li>
+<li><p>.babelrc：ES6编译插件的配置</p>
+</li>
+<li><p>index.html：单页面的入口</p>
+</li>
+</ul>
+<p>上方截图中，<code>npm install</code>指的是下载各种依赖包，<code>npm run dev</code>指的是打开发包，<code>npm run build</code>指的是打生产包。</p>
+<p>（2）本地运行项目：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cd</span> my-<span class="keyword">app</span></span><br><span class="line"></span><br><span class="line">npm <span class="keyword">run</span> serve</span><br></pre></td></tr></table></figure>
+
+<p>浏览器输入<code>http://localhost:8080/</code>，就可以让这个空的项目在本地跑起来：</p>
+<p><img src="http://img.smyhvae.com/20190624_160229.png" alt></p>
+<p>备注：我们在 GitHub上下载的任何Vue有关的项目，第一步都是要首先执行 npm install，安装依赖的 mode_modules，然后再运行。我们发给同事的工程文件，建议不要包含 <code>node_modules</code>。</p>
+<h3 id="构建一个-非-simple-项目"><a href="#构建一个-非-simple-项目" class="headerlink" title="构建一个 非 simple 项目"></a>构建一个 非 simple 项目</h3><p>构建一个空的项目，首先执行：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>vue create vuedemo2</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.smyhvae.com/20190624_163726.png" alt></p>
+<p>上图中，选择 <code>Manually select features</code>，然后根据提示依次输入：</p>
+<p><img src="http://img.smyhvae.com/20190624_164305.png" alt></p>
+<ul>
+<li><p>project name：<strong>要求小写</strong>。</p>
+</li>
+<li><p>description：默认即可。</p>
+</li>
+<li><p>vue-router：需要。</p>
+</li>
+<li><p>ESlint：语法检查，初学者可以暂时不需要。</p>
+</li>
+<li><p>单元测试：暂时也不需要。</p>
+</li>
+<li><p>e2e test：不需要。</p>
+</li>
+</ul>
+<p>选择 eslint 的配置：</p>
+<p><img src="http://img.smyhvae.com/20190624_165001.png" alt></p>
+<p>然后让这个空的项目就可以在浏览器上跑起来。</p>
+<h2 id="vue-项目结构分析"><a href="#vue-项目结构分析" class="headerlink" title="vue 项目结构分析"></a>vue 项目结构分析</h2><p><img src="http://img.smyhvae.com/20180501_2100.png" alt></p>
+<ul>
+<li><p>buid：打包配置的文件夹</p>
+</li>
+<li><p>config：webpack对应的配置</p>
+</li>
+<li><p>src：开发项目的源码</p>
+<ul>
+<li>App.vue：入口组件。<code>.vue</code>文件都是组件。</li>
+<li>main.js：项目入口文件。</li>
+</ul>
+</li>
+<li><p>static：存放静态资源</p>
+</li>
+<li><p><code>.babelrc</code>：解析ES6的配置文件</p>
+</li>
+<li><p><code>.editorcofnig</code>：编辑器的配置</p>
+</li>
+<li><p><code>.postcssrc.js</code>：html添加前缀的配置</p>
+</li>
+<li><p><code>index.html</code>：单页面的入口。通过 webpack打包后，会把 src 源码进行编译，插入到这个 html 里面来。</p>
+</li>
+<li><p><code>package.json</code>：项目的基础配置，包含版本号、脚本命令、项目依赖库、开发依赖库、引擎等。</p>
+</li>
+</ul>
+<h3 id="图片的base64编码"><a href="#图片的base64编码" class="headerlink" title="图片的base64编码"></a>图片的base64编码</h3><p>默认是10k以下，建议都通过 base64编码。在配置文件<code>webpack.base.conf.js</code>中进行修改：</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: /\.(<span class="name">png</span>|jpe?g|gif|svg)(\?.*)?$/,</span><br><span class="line">  loader: 'url-loader',</span><br><span class="line">  options: &#123;</span><br><span class="line">    limit: <span class="number">10000</span>,</span><br><span class="line">    name: utils.assetsPath(<span class="name">'img/</span>[name].[hash:7].[ext]')</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<font color="#0000ff"><strong>更多技能</strong></font>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="http://img.smyhvae.com/20160401_01.jpg" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/26/web/12-Vue%E5%9F%BA%E7%A1%80/01-Vue%E7%9A%84%E4%BB%8B%E7%BB%8D%E5%92%8Cvue-cli/" title="01-Vue的介绍和vue-cli">https://tongsiying.github.io/2021/11/26/web/12-Vue基础/01-Vue的介绍和vue-cli/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/26/web/18-%E6%8E%A8%E8%8D%90%E9%93%BE%E6%8E%A5/%E6%B7%B1%E5%9C%B3%E6%9C%89%E5%93%AA%E4%BA%9BIT%E4%BA%92%E8%81%94%E7%BD%91%E5%A4%A7%E5%8E%82/" rel="prev" title="深圳有哪些IT互联网大厂">
+      <i class="fa fa-chevron-left"></i> 深圳有哪些IT互联网大厂
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/26/web/12-Vue%E5%9F%BA%E7%A1%80/02-Vue%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%8C%87%E4%BB%A4/" rel="next" title="02-Vue的系统指令">
+      02-Vue的系统指令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM模式"><span class="nav-text">MVVM模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于框架"><span class="nav-text">关于框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要学习流行框架"><span class="nav-text">为什么要学习流行框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架和库的区别"><span class="nav-text">框架和库的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端的各种框架"><span class="nav-text">前端的各种框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-和-React-的相同点"><span class="nav-text">Vue 和 React 的相同点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是虚拟-DOM"><span class="nav-text">什么是虚拟 DOM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端框架回顾"><span class="nav-text">前端框架回顾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-框架"><span class="nav-text">Vue 框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发展历史"><span class="nav-text">发展历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关网址"><span class="nav-text">相关网址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue框架的特点"><span class="nav-text">Vue框架的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-的环境搭建"><span class="nav-text">Vue 的环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的插件"><span class="nav-text">常见的插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用-Vue-js-文件"><span class="nav-text">引用 Vue.js 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用-vue-cli-新建一个空的项目"><span class="nav-text">利用 vue-cli 新建一个空的项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方代码参考"><span class="nav-text">官方代码参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-vue-cli（命令行工具）"><span class="nav-text">安装 vue-cli（命令行工具）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化一个-simple-项目"><span class="nav-text">初始化一个 simple 项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建一个-非-simple-项目"><span class="nav-text">构建一个 非 simple 项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-项目结构分析"><span class="nav-text">vue 项目结构分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图片的base64编码"><span class="nav-text">图片的base64编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

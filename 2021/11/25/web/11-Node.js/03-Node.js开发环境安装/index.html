@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="03-Node.js开发环境安装">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/11-Node.js/03-Node.js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20180301_1505.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180301_1507.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180301_1603.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180301_1610.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180301_1645.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_2126.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_2111.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_2148.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180301_1900.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1105.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1134.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1137.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1138.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1139.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1210.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1208.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_1215.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180302_2204.png">
+<meta property="og:image" content="https://img.smyhvae.com/20200102.png">
+<meta property="article:published_time" content="2021-11-25T15:22:15.414Z">
+<meta property="article:modified_time" content="2021-11-25T15:22:15.415Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20180301_1505.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/11-Node.js/03-Node.js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>03-Node.js开发环境安装 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/11-Node.js/03-Node.js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          03-Node.js开发环境安装
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:22:15" itemprop="dateCreated datePublished" datetime="2021-11-25T23:22:15+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+
+<h2 id="Node-js-运行环境配置：通过-Node-js-安装包（不推荐）"><a href="#Node-js-运行环境配置：通过-Node-js-安装包（不推荐）" class="headerlink" title="Node.js 运行环境配置：通过 Node.js 安装包（不推荐）"></a>Node.js 运行环境配置：通过 Node.js 安装包（不推荐）</h2><p>去 Node.js 的<a href="https://nodejs.org/en/" target="_blank" rel="noopener external nofollow noreferrer">官网</a>下载安装包：</p>
+<p><img src="http://img.smyhvae.com/20180301_1505.png" alt></p>
+<p>我们也可以在<a href="https://nodejs.org/en/download/releases/" target="_blank" rel="noopener external nofollow noreferrer">https://nodejs.org/en/download/releases/</a> 里下载历史版本。</p>
+<p><img src="http://img.smyhvae.com/20180301_1507.png" alt></p>
+<p>注意，我们以一定要用偶数版（V4、V6 等)，不要用奇数版（比如 V5），因为奇数版不稳定。</p>
+<p>后续如果需要安装其他版本，可以这样做：重新下载最新的安装包，覆盖安装即可。</p>
+<p>但我们并不推荐直接采用 Node.js.msi（windows）或者 Node.js.pkg（Mac） 安装包进行安装，因为会产生如下问题。</p>
+<p><strong>通过 Node.js 安装包产生的问题</strong>：</p>
+<ul>
+<li><p>安装新版本时，需要覆盖就版本；而且以前版本安装的很多全局工具包，需要重新安装。</p>
+</li>
+<li><p>无法回滚到之前的旧版本。</p>
+</li>
+<li><p>无法在多个版本之间切换（很多时候，不同的项目需要使用特定版本。或者，我想临时尝鲜一下新版本的特性）</p>
+</li>
+</ul>
+<p>因此，我们暂时先不用安装 Node.js，稍后用 NVM 的方式来安装 Node.js。通过 NVM 的方式，可以让多个版本的 Node.js 共存，并灵活切换。</p>
+<h3 id="Node-js-版本常识"><a href="#Node-js-版本常识" class="headerlink" title="Node.js 版本常识"></a>Node.js 版本常识</h3><ul>
+<li><p>偶数版本为稳定版（0.6.x ，0.8.x ，8.10.x）</p>
+</li>
+<li><p>奇数版本为非稳定版（0.7.x ，0.9.x ，9.11.x）</p>
+</li>
+<li><p>LTS（Long Term Support）</p>
+</li>
+</ul>
+<p>参考链接：<a href="https://blog.csdn.net/u012532033/article/details/73332099" target="_blank" rel="noopener external nofollow noreferrer">node.js 中 LTS 和 Current 的区别</a></p>
+<h2 id="Node-js-运行环境安装：通过-NVM（推荐）"><a href="#Node-js-运行环境安装：通过-NVM（推荐）" class="headerlink" title="Node.js 运行环境安装：通过 NVM（推荐）"></a>Node.js 运行环境安装：通过 NVM（推荐）</h2><p><strong><a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener external nofollow noreferrer">NVM</a></strong>：node.js version manager，用来管理 node 的版本。</p>
+<p><strong>我们可以先安装 NVM，然后通过 NVM 安装 Node.js</strong>。这是官方推荐的做法。</p>
+<p>Windows 和 Mac 下安装的 Node.js 的步骤如下。</p>
+<h3 id="Windows-系统安装-Node-js"><a href="#Windows-系统安装-Node-js" class="headerlink" title="Windows 系统安装 Node.js"></a>Windows 系统安装 Node.js</h3><p><strong>1、安装 NVM</strong>：</p>
+<p>（1）我们去 <a href="https://github.com/coreybutler/nvm-windows/releases" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/coreybutler/nvm-windows/releases</a> 下载 NVM 的安装包：</p>
+<p><img src="http://img.smyhvae.com/20180301_1603.png" alt></p>
+<p>下载下来后，直接解压到 <code>D:\web</code>目录下：</p>
+<p><img src="http://img.smyhvae.com/20180301_1610.png" alt></p>
+<p>（2）在上面的目录中，新建一个<code>settings.txt</code>文件，里面的内容填充如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root: D:\web\nvm</span><br><span class="line">path: D:\web\nodejs</span><br><span class="line">arch: 64</span><br><span class="line">proxy</span><br></pre></td></tr></table></figure>
+
+<p>上方内容的解释：</p>
+<ul>
+<li><p>root 配置为：当前 nvm.exe 所在的目录</p>
+</li>
+<li><p>path 配置为：node 快捷方式所在的目录</p>
+</li>
+<li><p>arch 配置为：当前操作系统的位数（32/64）</p>
+</li>
+<li><p>proxy 不用配置</p>
+</li>
+</ul>
+<p>（3）配置环境变量：</p>
+<ul>
+<li><p><code>NVM_HOME</code> = <code>D:\web\nvm</code>（当前 nvm.exe 所在目录）</p>
+</li>
+<li><p><code>NVM_SYMLINK</code> = <code>D:\web\nodejs</code> （node 快捷方式所在的目录）</p>
+</li>
+<li><p>PATH += <code>;%NVM_HOME%;%NVM_SYMLINK%</code></p>
+</li>
+</ul>
+<p>配置成功后，重启资源管理器。</p>
+<p><strong>2、验证：</strong>(在 cmd 命令行中输入命令)</p>
+<p>（1）输入<code>nvm</code>命令查看环境变量是否配置成功：</p>
+<p><img src="http://img.smyhvae.com/20180301_1645.png" alt></p>
+<p>（2）输入 <code>nvm ls</code>，查看已安装的所有 node 版本。</p>
+<p>（3）输入 <code>nvm -v</code>，查看 已安装的 nvm 版本。</p>
+<p>（4）输入 <code>node -v</code>，查看正在使用的 node 版本。</p>
+<p>如果 Node 安装失败，可以参考上面这个链接。</p>
+<p><strong>3、安装指定版本的 Node.js</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nvm install 版本号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 举例</span></span><br><span class="line">nvm install 8.10.0</span><br></pre></td></tr></table></figure>
+
+<p>输入 <code>node -v</code>，查看当前使用的 node 版本。</p>
+<p>关于 NVM 的常用命令，详见下一段。</p>
+<p>补充：</p>
+<p>如果 Node 安装失败，可以在上方的 <code>settings.txt</code>文件中，新增如下两行，修改镜像源：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">node_mirror:</span> <span class="string">https:</span><span class="comment">//npm.taobao.org/mirrors/node/</span></span><br><span class="line"><span class="string">npm_mirror:</span> <span class="string">https:</span><span class="comment">//npm.taobao.org/mirrors/npm/</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参考链接：<a href="https://segmentfault.com/a/1190000011114680" target="_blank" rel="noopener external nofollow noreferrer">安装 npm，nvm，node</a></li>
+</ul>
+<h3 id="Mac-系统安装-Node-js"><a href="#Mac-系统安装-Node-js" class="headerlink" title="Mac 系统安装 Node.js"></a>Mac 系统安装 Node.js</h3><p><strong>1、安装 NVM</strong>：</p>
+<p>（1）打开 终端.app，输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>安装成功的界面：</p>
+<p><img src="http://img.smyhvae.com/20180302_2126.png" alt></p>
+<p>完成后，nvm 就被安装在了<code>~/.nvm</code>下。</p>
+<p>如果发现安装失败：</p>
+<p><img src="http://img.smyhvae.com/20180302_2111.png" alt></p>
+<p>原因：Xcode 软件进行过更新。</p>
+<p>解决办法：打开 Xcode 软件，同意相关内容即可。</p>
+<p>（2）配置环境变量：</p>
+<p>编辑器打开<code>~/.bash_profile</code>文件，如果不会就输入<code>open ~/.bash_profile</code>。</p>
+<p>（补充：如果你的 Mac 电脑里找不到<code>~/.bash_profile</code>文件，那就找找有没有<code>~/.profile</code>文件，或者<code>~/.bashrc</code>文件，或者<code>~/.zshrc</code>文件。如果还是没有，那你就手动创建一个<code>~/.bash_profile</code>文件）。</p>
+<p>在最后一行输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">"<span class="variable">$HOME</span>/.nvm"</span></span><br><span class="line">[ -s <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> ] &amp;&amp; . <span class="string">"<span class="variable">$NVM_DIR</span>/nvm.sh"</span> <span class="comment"># This loads nvm</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你发现文件中已经存在了上面这行代码，就不用往里面加了。这一步的作用是每次新打开一个 bash，nvm 都会被自动添加到环境变量中。</p>
+<p>最后，输入 <code>source ~/.bash_profile</code>重启环境变量的配置。</p>
+<p>PS：NVM 现在已经不支持 Homebrew 的方式来安装了。</p>
+<p>参考链接：<a href="https://www.jianshu.com/p/a3f8778bc0a1" target="_blank" rel="noopener external nofollow noreferrer">https://www.jianshu.com/p/a3f8778bc0a1</a></p>
+<p><strong>2、验证：</strong>(在 终端命令行中输入命令)</p>
+<p>（1）输入 <code>nvm</code> 命令查看环境变量是否配置成功：</p>
+<p>（2）输入 <code>nvm ls</code>，查看已安装的所有 node 版本。</p>
+<p>（3）输入 <code>nvm -v</code>，查看 已安装的 nvm 版本。</p>
+<p>（4）输入 <code>node -v</code>，查看正在使用的 node 版本。</p>
+<p><strong>3、安装指定版本的 Node.js</strong>：</p>
+<p>和 Windows 下一样，也是执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nvm install 版本号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 举例</span></span><br><span class="line">nvm install 8.10.0</span><br></pre></td></tr></table></figure>
+
+<p>网速有点慢，要稍等。</p>
+<p><img src="http://img.smyhvae.com/20180302_2148.png" alt></p>
+<p>输入 <code>node -v</code>，查看当前使用的 node 版本。</p>
+<p>安装好 <code>Node</code> 之后，<code>npm</code> 也会自动安装的，输入 <code>npm -v</code>，查看 npm 的版本。</p>
+<p>关于 NVM 的常用命令，详见下一段。</p>
+<h2 id="NVM-的常用命令"><a href="#NVM-的常用命令" class="headerlink" title="NVM 的常用命令"></a>NVM 的常用命令</h2><blockquote>
+<p>注意，这一段说的是 NVM 的常用命令，不是 Node 的常用命令。</p>
+</blockquote>
+<p>查看当前使用的 nvm 版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm --version</span><br></pre></td></tr></table></figure>
+
+<p>查看本地安装的所有的 Node.js 版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式1</span></span><br><span class="line">nvm ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式2</span></span><br><span class="line">nvm list</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装指定版本的 Node.js：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nvm install 版本号</span><br><span class="line"></span><br><span class="line"><span class="comment"># 举例</span></span><br><span class="line">nvm install 8.10.0</span><br></pre></td></tr></table></figure>
+
+<p>卸载指定版本 Node.js：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm uninstall 版本号</span><br></pre></td></tr></table></figure>
+
+<p><strong>切换使用指定版本的 node</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm use 版本号</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置node的默认版本</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm <span class="built_in">alias</span> default 版本号</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>查看全局npm包的安装路径</strong>：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> root -g</span><br></pre></td></tr></table></figure>
+
+
+<p>查看远程服务器端的所有 Node 版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm ls-remote</span><br></pre></td></tr></table></figure>
+
+<p>执行上面的命令后，在列出的版本清单中，凡是用 <code>Latest LTS</code>标注的版本，则表明是<strong>长期维护</strong>的版本。我们在安装时，建议安装这些版本。当然，我们也可以在网址 <a href="https://nodejs.org/en/download/releases/" target="_blank" rel="noopener external nofollow noreferrer">https://nodejs.org/en/download/releases/</a> 查看 LTS 的历史版本。</p>
+<h2 id="Node-js-的常用命令"><a href="#Node-js-的常用命令" class="headerlink" title="Node.js 的常用命令"></a>Node.js 的常用命令</h2><p>查看 node 的版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本字符串：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node -e <span class="string">'console.log("Hello World")'</span></span><br></pre></td></tr></table></figure>
+
+<p>运行脚本文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node index.js</span><br><span class="line"></span><br><span class="line">$ node path/index.js</span><br><span class="line"></span><br><span class="line">$ node path/index</span><br></pre></td></tr></table></figure>
+
+<p>查看帮助：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>进入 REPL 环境：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node</span><br></pre></td></tr></table></figure>
+
+<p>REPL 的全称：Read、Eval、 Print、Loop。类似于浏览器的控制台。</p>
+<p><img src="http://img.smyhvae.com/20180301_1900.png" alt></p>
+<p>如果要退出 REPL 环境，可以输入<code>.exit</code> 或 <code>process.exit()</code>。</p>
+<p>在 VS Code 里，我们可以在菜单栏选择“帮助-&gt;切换开发人员工具”，打开 console 控制台。</p>
+<h2 id="包和-NPM"><a href="#包和-NPM" class="headerlink" title="包和 NPM"></a>包和 NPM</h2><h3 id="什么是包"><a href="#什么是包" class="headerlink" title="什么是包"></a>什么是包</h3><p>由于 Node 是一套轻内核的平台，虽然提供了一系列的内置模块，但是不足以满足开发者的需求，于是乎出现了包（package）的概念：<br>与核心模块类似，就是将一些预先设计好的功能或者说 API 封装到一个文件夹，提供给开发者使用。</p>
+<p>Node 本身并没有太多的功能性 API，所以市面上涌现出大量的第三方人员开发出来的 Package。</p>
+<h3 id="包的加载机制"><a href="#包的加载机制" class="headerlink" title="包的加载机制"></a>包的加载机制</h3><p>如果 Node 中自带的包和第三方的包名冲突了，该怎么处理呢？原则是：</p>
+<ul>
+<li><p>先在系统核心（优先级最高）的模块中找；</p>
+</li>
+<li><p>然后到当前项目中 node_modules 目录中找。</p>
+</li>
+</ul>
+<p>比如说：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requiere(<span class="string">`fs`</span>);</span><br></pre></td></tr></table></figure>
+
+<p>那加载的肯定是系统的包。所以，我们尽量不要创建一些和现有的包重名的包。</p>
+<h3 id="NPM-的概念"><a href="#NPM-的概念" class="headerlink" title="NPM 的概念"></a>NPM 的概念</h3><p><strong>NPM</strong>：Node Package Manager。官方链接： <a href="https://www.npmjs.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/</a></p>
+<p>Node.js 发展到现在，已经形成了一个非常庞大的生态圈。包的生态圈一旦繁荣起来，就必须有工具去来管理这些包。NPM 应运而生。</p>
+<p>举个例子，当我们在使用 Java 语言做开发时，需要用到 JDK 提供的内置库，以及第三方库。同样，在使用 JS 做开发时，我们可以使用 NPM 包管理器，方便地使用成熟的、优秀的第三方框架，融合到我们自己的项目中，极大地加速日常开发的构建过程。</p>
+<p>随着时间的发展，NPM 出现了两层概念：</p>
+<ul>
+<li><p>一层含义是 Node 的开放式模块登记和管理系统，亦可以说是一个生态圈，一个社区。</p>
+</li>
+<li><p>另一层含义是 Node 默认的模块管理器，是一个命令行下的软件，用来安装和管理 Node 模块。</p>
+</li>
+</ul>
+<h3 id="NPM-的安装（不需要单独安装）"><a href="#NPM-的安装（不需要单独安装）" class="headerlink" title="NPM 的安装（不需要单独安装）"></a>NPM 的安装（不需要单独安装）</h3><p>NPM 不需要单独安装。默认在安装 Node 的时候，会连带一起安装 NPM：</p>
+<p><img src="http://img.smyhvae.com/20180302_1105.png" alt></p>
+<p>NVM、Node、NPM 安装之后，目录分布如下：</p>
+<p><img src="http://img.smyhvae.com/20180302_1134.png" alt></p>
+<p><img src="http://img.smyhvae.com/20180302_1137.png" alt></p>
+<p><img src="http://img.smyhvae.com/20180302_1138.png" alt></p>
+<p>输入 <code>npm -v</code>，查看 npm 的版本：</p>
+<p><img src="http://img.smyhvae.com/20180302_1139.png" alt></p>
+<p>如果上方命令无效，可能是之前的 node 并没有完全安装成功。解决办法：<a href="https://segmentfault.com/a/1190000011114680" target="_blank" rel="noopener external nofollow noreferrer">https://segmentfault.com/a/1190000011114680</a></p>
+<p>另外，Node 附带的 NPM 可能不是最新版本，可以用下面的命令，更新到最新版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install npm -g</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-NPM-的全局目录（暂略）"><a href="#配置-NPM-的全局目录（暂略）" class="headerlink" title="配置 NPM 的全局目录（暂略）"></a>配置 NPM 的全局目录（暂略）</h3><p>NPM 默认安装到当前正在使用 Node 版本所在目录下。我们建议重新配置 NPM 的全局目录。</p>
+<p>输入<code>npm config ls</code>，查看：</p>
+<p><img src="http://img.smyhvae.com/20180302_1210.png" alt></p>
+<h2 id="NPM-的常用命令"><a href="#NPM-的常用命令" class="headerlink" title="NPM 的常用命令"></a>NPM 的常用命令</h2><p>查看 npm 当前版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>更新 npm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install npm@latest -g</span><br></pre></td></tr></table></figure>
+
+<p>项目初始化：（执行完成后，会生成<code>package.json</code>文件）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 快速跳过问答式界面，选择默认配置</span></span><br><span class="line">npm init --yes</span><br></pre></td></tr></table></figure>
+
+<p>只在当前工程下安装指定的包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install [package]</span><br></pre></td></tr></table></figure>
+
+<p>在全局安装指定的包：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g [<span class="keyword">package</span>]</span><br></pre></td></tr></table></figure>
+
+<p>安装的包只用于开发环境，不用于生产环境：（会出现在 package.json 文件中的 devDependencies 属性中）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install [package] --save-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">npm install [package] -D</span><br></pre></td></tr></table></figure>
+
+<p>安装的包需要发布到生产环境：（会出现在 package.json 文件中的 dependencies 属性中）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install [package] --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">npm install [package] -S</span><br></pre></td></tr></table></figure>
+
+<p>查看当前目录下已安装的 node 包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm list</span><br></pre></td></tr></table></figure>
+
+<p>查看全局已经安装的 node 包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm list -g</span><br></pre></td></tr></table></figure>
+
+<p>查看 npm 帮助命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<p>查看指定命令的帮助：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm [指定命令] --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<p>更新指定的包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm update [package]</span><br></pre></td></tr></table></figure>
+
+<p>卸载指定的包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall [package]</span><br></pre></td></tr></table></figure>
+
+<p>查看配置信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config list</span><br></pre></td></tr></table></figure>
+
+<p>查看本地安装的指定包的信息，没有则显示 empty：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ls [package]</span><br></pre></td></tr></table></figure>
+
+<p>查看全局安装的指定包的信息，没有则显示 empty：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ls [package] -g</span><br></pre></td></tr></table></figure>
+
+<p>查看远程 npm 上指定包的所有版本信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm info [package]</span><br></pre></td></tr></table></figure>
+
+<p>查看当前包的安装路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm root</span><br></pre></td></tr></table></figure>
+
+<p>查看全局包的安装路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm root -g</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置-npm-镜像源"><a href="#配置-npm-镜像源" class="headerlink" title="配置 npm 镜像源"></a>配置 npm 镜像源</h2><p>由于 npm 默认的下载地址在国外（npmjs.com），有时候会被墙，导致无法下载或者下载很慢。因此，我们可以尝试切换成，从其他的镜像源下载 npm 包。</p>
+<p>切换镜像源，有下面这几种方式：</p>
+<ul>
+<li><p>方式 1：临时切换镜像源。</p>
+</li>
+<li><p>方式 2：切换镜像源</p>
+</li>
+<li><p>方式 3：通过 NRM 切换镜像源（最为推荐的方式）。</p>
+</li>
+<li><p>方式 4：cnpm。</p>
+</li>
+</ul>
+<p>下面来分别讲一下。</p>
+<h3 id="方式-1：临时切换镜像源"><a href="#方式-1：临时切换镜像源" class="headerlink" title="方式 1：临时切换镜像源"></a>方式 1：临时切换镜像源</h3><p>安装指定包的时候，通过追加 <code>--registry</code>参数即可。格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式</span></span><br><span class="line">npm install [package] --registry [https://xxx]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 举例：在下载安装 express 这个包的时候，临时指定镜像源为 https://registry.npm.taobao.org</span></span><br><span class="line">npm install express --registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<h3 id="方式-2：切换镜像源"><a href="#方式-2：切换镜像源" class="headerlink" title="方式 2：切换镜像源"></a>方式 2：切换镜像源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p>执行上述命令后，以后下载所有 npm 包的时候，都会改为使用淘宝的镜像源。</p>
+<h3 id="方式-3：通过-NRM-切换镜像源（推荐）"><a href="#方式-3：通过-NRM-切换镜像源（推荐）" class="headerlink" title="方式 3：通过 NRM 切换镜像源（推荐）"></a>方式 3：通过 NRM 切换镜像源（推荐）</h3><p><strong>NRM</strong>：Node Registry Manager。作用是：<strong>切换和管理 npm 包的镜像源</strong>。</p>
+<ul>
+<li><p>项目地址：<a href="https://www.npmjs.com/package/nrm" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/package/nrm</a></p>
+</li>
+<li><p>GitHub 地址： <a href="https://github.com/Pana/nrm" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/Pana/nrm</a></p>
+</li>
+</ul>
+<p><strong>安装 NRM</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g nrm</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.smyhvae.com/20180302_1208.png" alt></p>
+<p><strong>NRM 的常用命令：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示全部的镜像</span></span><br><span class="line">nrm ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用淘宝的镜像</span></span><br><span class="line">nrm use taobao</span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="http://img.smyhvae.com/20180302_1215.png" alt></p>
+<p>推荐的国内加速镜像淘宝：<a href="https://npm.taobao.org/" target="_blank" rel="noopener external nofollow noreferrer">https://npm.taobao.org/</a></p>
+<h2 id="方式-4：安装-cnpm"><a href="#方式-4：安装-cnpm" class="headerlink" title="方式 4：安装 cnpm"></a>方式 4：安装 cnpm</h2><ul>
+<li>项目地址：<a href="https://npm.taobao.org/" target="_blank" rel="noopener external nofollow noreferrer">https://npm.taobao.org/</a></li>
+</ul>
+<p>安装<code>cnpm</code>替换 npm（npm 由于源服务器在国外，下载包的速度较慢，cnpm 会使用国内镜像）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.smyhvae.com/20180302_2204.png" alt></p>
+<p>以后我们就可以通过 cnpm 命令去安装一个包。举例如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 vue 这个包</span></span><br><span class="line">cnpm install vue</span><br></pre></td></tr></table></figure>
+
+<p>这里的单词 <code>install</code> 可以简写成 <code>i</code>。</p>
+<h2 id="Node-js-的简单使用"><a href="#Node-js-的简单使用" class="headerlink" title="Node.js 的简单使用"></a>Node.js 的简单使用</h2><p>我们可以输入<code>node</code>命令，然后在里面写 js 的代码。</p>
+<p>或者，也可以 通过 node 运行 指定的 js 文件。比如，编写好一个 js 文件<code>01.js</code>，然后在命令行输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node 01.js</span><br></pre></td></tr></table></figure>
+
+<p>就可以执行这个 js 程序，直接在命令行查看运行结果。</p>
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<strong>更多技能</strong>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="https://img.smyhvae.com/20200102.png" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/11-Node.js/03-Node.js%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/" title="03-Node.js开发环境安装">https://tongsiying.github.io/2021/11/25/web/11-Node.js/03-Node.js开发环境安装/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/11-Node.js/02-Node.js%E7%9A%84%E7%89%B9%E7%82%B9/" rel="prev" title="02-Node.js的特点">
+      <i class="fa fa-chevron-left"></i> 02-Node.js的特点
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/11-Node.js/04-Node.js%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83%EF%BC%9ACommonJS/" rel="next" title="04-Node.js模块化规范：CommonJS">
+      04-Node.js模块化规范：CommonJS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-运行环境配置：通过-Node-js-安装包（不推荐）"><span class="nav-text">Node.js 运行环境配置：通过 Node.js 安装包（不推荐）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js-版本常识"><span class="nav-text">Node.js 版本常识</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-运行环境安装：通过-NVM（推荐）"><span class="nav-text">Node.js 运行环境安装：通过 NVM（推荐）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-系统安装-Node-js"><span class="nav-text">Windows 系统安装 Node.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-系统安装-Node-js"><span class="nav-text">Mac 系统安装 Node.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVM-的常用命令"><span class="nav-text">NVM 的常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-的常用命令"><span class="nav-text">Node.js 的常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包和-NPM"><span class="nav-text">包和 NPM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是包"><span class="nav-text">什么是包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包的加载机制"><span class="nav-text">包的加载机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NPM-的概念"><span class="nav-text">NPM 的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NPM-的安装（不需要单独安装）"><span class="nav-text">NPM 的安装（不需要单独安装）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-NPM-的全局目录（暂略）"><span class="nav-text">配置 NPM 的全局目录（暂略）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NPM-的常用命令"><span class="nav-text">NPM 的常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-npm-镜像源"><span class="nav-text">配置 npm 镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式-1：临时切换镜像源"><span class="nav-text">方式 1：临时切换镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式-2：切换镜像源"><span class="nav-text">方式 2：切换镜像源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式-3：通过-NRM-切换镜像源（推荐）"><span class="nav-text">方式 3：通过 NRM 切换镜像源（推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方式-4：安装-cnpm"><span class="nav-text">方式 4：安装 cnpm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-的简单使用"><span class="nav-text">Node.js 的简单使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

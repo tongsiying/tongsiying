@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="32-正则表达式">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/43-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20190101.png">
+<meta property="article:published_time" content="2021-11-25T15:19:32.271Z">
+<meta property="article:modified_time" content="2021-11-25T15:19:32.272Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20190101.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/43-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>32-正则表达式 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/43-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          32-正则表达式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:19:32" itemprop="dateCreated datePublished" datetime="2021-11-25T23:19:32+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+
+<h2 id="正则表达式简介"><a href="#正则表达式简介" class="headerlink" title="正则表达式简介"></a>正则表达式简介</h2><p><strong>定义</strong>：正则表达式用于定义一些字符串的规则。</p>
+<p><strong>作用</strong>：计算机可以根据正则表达式，来检查一个字符串是否符合指定的规则；或者将字符串中符合规则的内容提取出来。</p>
+<p>如果你想查看正则更多的内容，可以查阅官方文档关于 RegExp 这个内置对象的用法。</p>
+<h2 id="创建正则表达式的对象"><a href="#创建正则表达式的对象" class="headerlink" title="创建正则表达式的对象"></a>创建正则表达式的对象</h2><h3 id="方式一：使用构造函数创建正则表达式的对象"><a href="#方式一：使用构造函数创建正则表达式的对象" class="headerlink" title="方式一：使用构造函数创建正则表达式的对象"></a>方式一：使用构造函数创建正则表达式的对象</h3><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"正则表达式"</span>); <span class="comment">// 注意，参数是字符串</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> 变量 = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"正则表达式"</span>, <span class="string">"匹配模式"</span>); <span class="comment">// 注意，两个参数都是字符串</span></span><br></pre></td></tr></table></figure>
+
+<p>备注：<code>RegExp</code>的意思是 <strong>Regular expression</strong>。使用typeof检查正则对象，会返回object。</p>
+<p>上面的语法中，既可以传一个参数，也可以传两个参数。</p>
+<p>创建了正则表达式的对象后，该怎么使用呢？大致分为两个步骤：</p>
+<ul>
+<li><p>（1）创建正则表达式的对象 reg。</p>
+</li>
+<li><p>（2）使用 reg 的test() 方法，判断指定字符串是否符合规则。</p>
+</li>
+</ul>
+<p><strong>正则表达式的<code>test()</code>方法</strong>：【重要】</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myReg.test(str); <span class="comment">// 判断字符串 str 是否符合 指定的 myReg 这个正则表达式的规则</span></span><br></pre></td></tr></table></figure>
+
+<p>解释：使用<code>test()</code>这个方法可以用来检查一个字符串是否符合正则表达式的规则，<strong>如果符合则返回true，否则返回false</strong>。</p>
+<p>我们来看看下面的例子。</p>
+<p><strong>1、传一个参数时</strong>：</p>
+<p>构造函数 RegExp 中，可以只传一个参数。</p>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"a"</span>); <span class="comment">// 定义一个正则表达式：检查一个字符串中是否含有 a</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">"qianguyihao"</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">"smyh"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 test()方法，判断字符串是否符合 上面定义的 reg 规则</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// 打印结果：true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// 打印结果：false</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，上面的例子中，我们是先定义了一个正则表达式的规则，然后通过正则表达式的<code>test()</code>方法来判断字符串是否符合之前定义的规则。</p>
+<p><strong>2、传两个参数时</strong>：匹配模式 【重要】</p>
+<p>构造函数 RegExp 中，也可以传两个参数。我们可以传递一个<strong>匹配模式</strong>作为第二个参数。这个参数可以是：</p>
+<ul>
+<li><p><code>i</code> 忽略大小写。这里的 i 指的是 ignore。</p>
+</li>
+<li><p><code>g</code> 全局匹配模式。这里的 g 指的是 global。</p>
+</li>
+</ul>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'A'</span>, <span class="string">'i'</span>);</span><br><span class="line"><span class="keyword">var</span> str = <span class="string">'qiangu'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str)); <span class="comment">// 打印结果：true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方式二：使用字面量创建正则表达式"><a href="#方式二：使用字面量创建正则表达式" class="headerlink" title="方式二：使用字面量创建正则表达式"></a>方式二：使用字面量创建正则表达式</h3><p>我们可以使用字面量来创建正则表达式。</p>
+<p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量 = <span class="regexp">/正则表达式/</span>;  <span class="comment">// 注意，这个语法里没有引号</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> 变量 = <span class="regexp">/正则表达式/</span>匹配模式;  <span class="comment">// 注意，这个语法里没有引号</span></span><br></pre></td></tr></table></figure>
+
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/A/i</span>; <span class="comment">// 定义正则表达式的规则：检查一个字符串中是否含有 a。忽略大小写。</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"qiangu"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> reg);  <span class="comment">// 打印结果：object</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str)); <span class="comment">// 打印结果：true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="以上两种方式的对比"><a href="#以上两种方式的对比" class="headerlink" title="以上两种方式的对比"></a>以上两种方式的对比</h3><ul>
+<li><p>方式一：使用构造函数创建时，更加灵活，因为参数中还可以传递变量。</p>
+</li>
+<li><p>方式二：使用字面量的方式创建，更加简单。</p>
+</li>
+</ul>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">"a"</span>, <span class="string">"i"</span>); <span class="comment">// 方式一</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/a/i</span>; <span class="comment">// 方式二</span></span><br></pre></td></tr></table></figure>
+
+<p>上面这两行代码的作用是等价的。</p>
+<h3 id="避坑指南：全局匹配-g-慎用test-方法"><a href="#避坑指南：全局匹配-g-慎用test-方法" class="headerlink" title="避坑指南：全局匹配 g 慎用test()方法"></a>避坑指南：全局匹配 g 慎用test()方法</h3><p>对于非全局匹配的正则表达式，<code>test()</code>只会检测<strong>是否存在某个目标字符串</strong>（只要存在就为 true），多次检测的结果都相同。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/test/</span>;</span><br><span class="line"><span class="keyword">const</span> str = <span class="string">'_test_test'</span>;</span><br><span class="line"></span><br><span class="line">reg.test(str) <span class="comment">// true</span></span><br><span class="line">reg.test(str) <span class="comment">// true</span></span><br><span class="line">reg.test(str) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>重点来了。</p>
+<p>当设置全局标志 <code>/g</code> 时，一旦字符串中还存在匹配，test() 方法都将返回 true，同时匹配成功后将把 <code>lastIndex</code> 属性的值<strong>设置为上次匹配成功结果之后的第一个字符所在的位置</strong>，下次匹配将从 <code>lastIndex</code> 指示的位置开始；匹配不成功时返回 false，同时将 lastIndex 属性的值重置为 0。</p>
+<p>举例：（很重要的例子，看仔细）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reg = <span class="regexp">/test/g</span>;</span><br><span class="line"><span class="keyword">const</span> str = <span class="string">'_test_test'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.lastIndex); <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.lastIndex); <span class="comment">// 10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.lastIndex); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong>：</p>
+<p>全局匹配模式<code>g</code>一般用于 <code>exec()</code>、<code>match()</code>、<code>replace()</code>等方法。</p>
+<p>全局匹配模式<code>g</code>如果用于test()方法会有问题。因为g模式会生成一个<code>lastindex</code>参数来存储匹配最后一次的位置。</p>
+<p>参考链接：</p>
+<ul>
+<li><p><a href="https://juejin.im/post/5de9bd5fe51d45582c27b6f3" target="_blank" rel="noopener external nofollow noreferrer">JS正则表达式全局匹配的那些坑</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/Leolu007/article/details/8576490" target="_blank" rel="noopener external nofollow noreferrer">javascript正则全局匹配g慎用test方法</a></p>
+</li>
+<li><p><a href="https://github.com/qianguyihao/Web/issues/69" target="_blank" rel="noopener external nofollow noreferrer">issues</a></p>
+</li>
+</ul>
+<h2 id="正则表达式的简单语法"><a href="#正则表达式的简单语法" class="headerlink" title="正则表达式的简单语法"></a>正则表达式的简单语法</h2><h3 id="检查一个字符串中是否包含-a或b"><a href="#检查一个字符串中是否包含-a或b" class="headerlink" title="检查一个字符串中是否包含 a或b"></a>检查一个字符串中是否包含 a或b</h3><p><strong>写法1</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/a|b/</span>;</span><br></pre></td></tr></table></figure>
+
+<p>解释：使用 <code>|</code> 表示<code>或</code>的意思。</p>
+<p><strong>写法2</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/[ab]/</span>;  <span class="comment">// 跟上面的那行语法，是等价的</span></span><br></pre></td></tr></table></figure>
+
+<p>解释：这里的<code>[]</code>也是表示<code>或</code>的意思。</p>
+<p><code>[]</code>这个符号在正则还是比较常用的。我们接下来看几个例子。</p>
+<h3 id="表示：或"><a href="#表示：或" class="headerlink" title="[]表示：或"></a>[]表示：或</h3><p>一些规则：</p>
+<ul>
+<li><p><code>/[ab]/</code> 等价于 <code>/a|b/</code>：检查一个字符串中是否包含 <strong>a或b</strong></p>
+</li>
+<li><p><code>/[a-z]/</code>：检查一个字符串那种是否包含<strong>任意小写字母</strong></p>
+</li>
+<li><p><code>/[A-Z]/</code>：任意大写字母</p>
+</li>
+<li><p><code>/[A-z]/</code>：任意字母</p>
+</li>
+<li><p><code>/[0-9]/</code>：任意数字</p>
+</li>
+<li><p><code>/a[bde]c/</code>：检查一个字符串中是否包含 abc 或 adc 或 aec</p>
+</li>
+</ul>
+<h3 id="表示：除了"><a href="#表示：除了" class="headerlink" title="[^ ] 表示：除了"></a>[^ ] 表示：除了</h3><p>举例1：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/[^ab]/</span>; <span class="comment">// 规则：字符串中，除了a、b之外，还有没有其他的字符内容？</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"acb"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str)); <span class="comment">// 打印结果：true</span></span><br></pre></td></tr></table></figure>
+
+<p>举例2：（可以用来验证某字符串是否为 纯数字）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/[^0-9]/</span>;  <span class="comment">// 规则：字符串中，除了数字之外，还有没有其他的内容？</span></span><br><span class="line"><span class="keyword">var</span> str1 = <span class="string">"1991"</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">"199a1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str1)); <span class="comment">// 打印结果：false （如果字符串是 纯数字，则返回 false）</span></span><br><span class="line"><span class="built_in">console</span>.log(reg.test(str2)); <span class="comment">// 打印结果：true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="支持正则表达式的-String-对象的方法"><a href="#支持正则表达式的-String-对象的方法" class="headerlink" title="支持正则表达式的 String 对象的方法"></a>支持正则表达式的 String 对象的方法</h2><p> String对象的如下方法，是支持正则表达式的：</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">描述</th>
+<th align="left">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">split()</td>
+<td align="left">将字符串拆分成数组</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">search()</td>
+<td align="left">搜索字符串中是否含有指定内容，返回索引 index</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">match()</td>
+<td align="left">根据正则表达式，从一个字符串中将符合条件的内容提取出来</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">replace()</td>
+<td align="left">将字符串中的指定内容，替换为新的内容并返回</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>下面来分别介绍和举例。</p>
+<h3 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h3><p><code>split()</code>：将一个字符串拆分成一个数组。可以接受一个正则表达式作为参数。</p>
+<p>备注：关于<code>split()</code>更详细的用法，可以看之前的关于《内置对象：String》这篇文章。</p>
+<p><strong>正则相关的举例</strong>：根据任意字母，将字符串拆分成数组。</p>
+<p>代码实现：（通过正则）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"1a2b3c4d5e6f7g"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result = str.split(<span class="regexp">/[A-z]/</span>); <span class="comment">// 参数是一个正则表达式：表示所有字母</span></span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>, <span class="string">"4"</span>, <span class="string">"5"</span>, <span class="string">"6"</span>, <span class="string">"7"</span>, <span class="string">""</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="search"><a href="#search" class="headerlink" title="search()"></a>search()</h3><p><code>search()</code>：搜索字符串中是否含有指定内容。如果搜索到指定内容，则会返回第一次出现的索引；否则返回-1。</p>
+<p><code>search()</code>方法可以接受一个正则表达式作为参数，然后会根据正则表达式去检索字符串。<code>serach()</code>只会查找第一个，即使设置全局匹配也没用。</p>
+<p><strong>举例</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"hello abc hello aec afc"</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 搜索字符串中是否含有abc 或 aec 或 afc</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">result = str.search(<span class="regexp">/a[bef]c/</span>);</span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 打印结果：6</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="match"><a href="#match" class="headerlink" title="match()"></a>match()</h3><p><code>match()</code>：根据正则表达式，从一个字符串中将符合条件的内容提取出来，封装到一个数组中返回（即使只查询到一个结果）。</p>
+<p><strong>注意</strong>：默认情况下，<code>match()</code>方法只会找到<strong>第一个</strong>符合要求的内容，找到以后就停止检索。我们可以设置正则表达式为<strong>全局匹配</strong>模式，这样就会匹配到所有的内容，并以<strong>数组</strong>的形式返回。</p>
+<p>另外，我们可以为一个正则表达式设置多个匹配模式，且匹配模式的顺序无所谓。</p>
+<p><strong>代码举例</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"1a2a3a4a5e6f7A8B9C"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> result1 = str.match(<span class="regexp">/[a-z]/</span>);   <span class="comment">// 找到符合要求的第一个内容，然后返回</span></span><br><span class="line"><span class="keyword">var</span> result2 = str.match(<span class="regexp">/[a-z]/g</span>);  <span class="comment">// 设置为“全局匹配”模式，匹配字符串中 所有的小写字母</span></span><br><span class="line"><span class="keyword">var</span> result3 = str.match(<span class="regexp">/[a-z]/gi</span>); <span class="comment">// 设置多个匹配模式，匹配字符串中 所有的字母（忽略大小写）</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result1); <span class="comment">// 打印结果：["a"]</span></span><br><span class="line"><span class="built_in">console</span>.log(result2); <span class="comment">// 打印结果：["a", "a", "a", "a", "e", "f"]</span></span><br><span class="line"><span class="built_in">console</span>.log(result3); <span class="comment">// 打印结果：["a", "a", "a", "a", "e", "f", "A", "B", "C"]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>总结</strong>：</p>
+<p>match()这个方法还是很实用的，可以在一个很长的字符串中，提取出<strong>有规则</strong>的内容。这不就是爬虫的时候经常会遇到的场景么？</p>
+<h3 id="replace"><a href="#replace" class="headerlink" title="replace()"></a>replace()</h3><p><code>replace()</code>：将字符串中的指定内容，替换为新的内容并返回。不会修改原字符串。</p>
+<p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">新的字符串 = str.replace(被替换的内容，新的内容);</span><br></pre></td></tr></table></figure>
+
+<p>参数解释：</p>
+<ul>
+<li><p>被替换的内容：可以接受一个正则表达式作为参数。</p>
+</li>
+<li><p>新的内容：默认只会替换第一个。如果需要替换全部符合条件的内容，可以设置正则表达式为<strong>全局匹配</strong>模式。</p>
+</li>
+</ul>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//replace()方法：替换</span></span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">"Today is fine day,today is fine day !!!"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(str2);</span><br><span class="line"><span class="built_in">console</span>.log(str2.replace(<span class="string">"today"</span>,<span class="string">"tomorrow"</span>));  <span class="comment">//只能替换第一个today</span></span><br><span class="line"><span class="built_in">console</span>.log(str2.replace(<span class="regexp">/today/gi</span>,<span class="string">"tomorrow"</span>)); <span class="comment">//这里用到了正则，且为“全局匹配”模式，才能替换所有的today</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常见正则表达式举例"><a href="#常见正则表达式举例" class="headerlink" title="常见正则表达式举例"></a>常见正则表达式举例</h2><h3 id="检查一个字符串是否是一个合法手机号"><a href="#检查一个字符串是否是一个合法手机号" class="headerlink" title="检查一个字符串是否是一个合法手机号"></a>检查一个字符串是否是一个合法手机号</h3><p>手机号的规则：</p>
+<ul>
+<li><p>以1开头（<code>^1</code> 表示1开头 , <code>[^1]</code>表示非1或除了1）</p>
+</li>
+<li><p>第二位是3~9之间任意数字</p>
+</li>
+<li><p>三位以后任意9位数字</p>
+</li>
+</ul>
+<p>正则实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> phoneStr = <span class="string">"13067890123"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> phoneReg = <span class="regexp">/^1[3-9][0-9]&#123;9&#125;$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(phoneReg.test(phoneStr));</span><br></pre></td></tr></table></figure>
+
+<p><strong>备注</strong>：如果在正则表达式中同时使用<code>^</code>和<code>$</code>符号，则要求字符串必须完全符合正则表达式。</p>
+<h3 id="去掉字符串开头和结尾的空格"><a href="#去掉字符串开头和结尾的空格" class="headerlink" title="去掉字符串开头和结尾的空格"></a>去掉字符串开头和结尾的空格</h3><p>正则实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str = str.replace(<span class="regexp">/^\s*|\s*$/g</span>,<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+
+<p>解释如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str = str.replace(<span class="regexp">/^\s*/</span>, <span class="string">""</span>); <span class="comment">//去除开头的空格</span></span><br><span class="line"></span><br><span class="line">str = str.replace(<span class="regexp">/\s*$/</span>, <span class="string">""</span>); <span class="comment">//去除结尾的空格</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="判断字符串是否为电子邮件"><a href="#判断字符串是否为电子邮件" class="headerlink" title="判断字符串是否为电子邮件"></a>判断字符串是否为电子邮件</h3><p>正则实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emailReg = <span class="regexp">/^\w&#123;3,&#125;(\.\w+)*@[A-z0-9]+(\.[A-z]&#123;2,5&#125;)&#123;1,2&#125;$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> email = <span class="string">"abchello@163.com"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(emailReg.test(email));</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<strong>更多技能</strong>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="http://img.smyhvae.com/20190101.png" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/43-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="32-正则表达式">https://tongsiying.github.io/2021/11/25/web/04-JavaScript基础/43-正则表达式/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/33-%E7%B1%BB%E5%92%8C%E6%9E%84%E9%80%A0%E7%BB%A7%E6%89%BF%EF%BC%88%E5%BE%85%E6%9B%B4%E6%96%B0%EF%BC%89/" rel="prev" title="33-类和构造继承（待更新）">
+      <i class="fa fa-chevron-left"></i> 33-类和构造继承（待更新）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/44-%E4%BA%8B%E4%BB%B6%E7%AE%80%E4%BB%8B/" rel="next" title="33-事件简介">
+      33-事件简介 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式简介"><span class="nav-text">正则表达式简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建正则表达式的对象"><span class="nav-text">创建正则表达式的对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式一：使用构造函数创建正则表达式的对象"><span class="nav-text">方式一：使用构造函数创建正则表达式的对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式二：使用字面量创建正则表达式"><span class="nav-text">方式二：使用字面量创建正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以上两种方式的对比"><span class="nav-text">以上两种方式的对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避坑指南：全局匹配-g-慎用test-方法"><span class="nav-text">避坑指南：全局匹配 g 慎用test()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则表达式的简单语法"><span class="nav-text">正则表达式的简单语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查一个字符串中是否包含-a或b"><span class="nav-text">检查一个字符串中是否包含 a或b</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表示：或"><span class="nav-text">[]表示：或</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表示：除了"><span class="nav-text">[^ ] 表示：除了</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持正则表达式的-String-对象的方法"><span class="nav-text">支持正则表达式的 String 对象的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#split"><span class="nav-text">split()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#search"><span class="nav-text">search()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#match"><span class="nav-text">match()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#replace"><span class="nav-text">replace()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见正则表达式举例"><span class="nav-text">常见正则表达式举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#检查一个字符串是否是一个合法手机号"><span class="nav-text">检查一个字符串是否是一个合法手机号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去掉字符串开头和结尾的空格"><span class="nav-text">去掉字符串开头和结尾的空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断字符串是否为电子邮件"><span class="nav-text">判断字符串是否为电子邮件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

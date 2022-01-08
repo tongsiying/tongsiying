@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="2018年-前端日记">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/2018%E5%B9%B4-%E5%89%8D%E7%AB%AF%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-25T23:53:28.943Z">
+<meta property="article:modified_time" content="2021-11-25T23:53:28.944Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/2018%E5%B9%B4-%E5%89%8D%E7%AB%AF%E6%97%A5%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>2018年-前端日记 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/2018%E5%B9%B4-%E5%89%8D%E7%AB%AF%E6%97%A5%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2018年-前端日记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-26 07:53:28" itemprop="dateCreated datePublished" datetime="2021-11-26T07:53:28+08:00">2021-11-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h2 id="2018年4月份"><a href="#2018年4月份" class="headerlink" title="2018年4月份"></a>2018年4月份</h2><h3 id="2018-04-25"><a href="#2018-04-25" class="headerlink" title="2018-04-25"></a>2018-04-25</h3><ul>
+<li>userAgent相关：<a href="http://www.cnblogs.com/7z7chn/p/5370352.html" target="_blank" rel="noopener external nofollow noreferrer">判断微信内置浏览器的UserAgent</a></li>
+</ul>
+<h3 id="2018-04-26"><a href="#2018-04-26" class="headerlink" title="2018-04-26"></a>2018-04-26</h3><p><strong>前端相关</strong>：</p>
+<ul>
+<li><p>流程图制作工具：<a href="https://www.processon.com/" target="_blank" rel="noopener external nofollow noreferrer">ProcessOn</a></p>
+</li>
+<li><p>api方法的浏览器兼容性问题，可以在这个网站上看：<a href="https://caniuse.com/" target="_blank" rel="noopener external nofollow noreferrer">https://caniuse.com/</a></p>
+</li>
+<li><p>CSS3的兼容性问题，不一定要使用-webkit-, -moz-, -o-, -ms-等私有前缀。可以使用 PostCSS。<a href="https://www.zhihu.com/question/20597072" target="_blank" rel="noopener external nofollow noreferrer">知乎</a></p>
+</li>
+<li><p>浏览器常见的内核有：V8、WebKit。另外腾讯还有个<a href="http://x5.tencent.com/" target="_blank" rel="noopener external nofollow noreferrer">X5</a>。</p>
+</li>
+<li><p>要查一下display none 和 visibility hidden的区别。</p>
+</li>
+<li><p>ES 的各个版本在 Node 环境下的支持情况，可以查看这个网站：<a href="http://node.green/" target="_blank" rel="noopener external nofollow noreferrer">http://node.green/</a></p>
+</li>
+<li><p>promise的实现，关键词：Promises/A、Promises/B、<a href="https://github.com/petkaantonov/bluebird" target="_blank" rel="noopener external nofollow noreferrer">bluebird</a></p>
+</li>
+</ul>
+<p><strong>综合</strong>：</p>
+<ul>
+<li>whistle安装证书后，可以拦截 https 请求。但是，我现在又不想拦截了，该怎么卸载证书呢？</li>
+</ul>
+<h3 id="2018-04-27"><a href="#2018-04-27" class="headerlink" title="2018-04-27"></a>2018-04-27</h3><ul>
+<li><p><a href="https://github.com/Strider-CD/strider" target="_blank" rel="noopener external nofollow noreferrer">strider</a>：可以用来部署项目。</p>
+</li>
+<li><p>有必要了解一下电商1.0、电商2.0、电商3.0的概念。</p>
+</li>
+</ul>
+<h3 id="2018-05-02"><a href="#2018-05-02" class="headerlink" title="2018-05-02"></a>2018-05-02</h3><ul>
+<li><p><code>location.pathname</code>：获取 url 的后半部分。参考链接：<a href="http://www.cnblogs.com/itjeff/p/4645262.html" target="_blank" rel="noopener external nofollow noreferrer">#</a></p>
+</li>
+<li><p>代码解读：<code>callback &amp;&amp; callback()</code>的含义</p>
+</li>
+</ul>
+<h3 id="2018-05-03"><a href="#2018-05-03" class="headerlink" title="2018-05-03"></a>2018-05-03</h3><ul>
+<li><p>各种框架实现的todo项目：<a href="http://todomvc.com/" target="_blank" rel="noopener external nofollow noreferrer">http://todomvc.com/</a></p>
+</li>
+<li><p>对比 sass、less、stylus 这三个css预处理器，zqc说，后面两个已经不怎么用了。sass 比 less强大，stylus的书写方式比较奇怪。</p>
+</li>
+<li><p>npm命令中，–save 和 –save-dev的区别。参考链接：<a href="http://pwcong.me/2017/01/05/npm%E5%BC%95%E5%85%A5%E6%A8%A1%E5%9D%97%E6%97%B6--save-%E4%B8%8E--save-dev-%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_blank" rel="noopener external nofollow noreferrer">http://pwcong.me/2017/01/05/npm%E5%BC%95%E5%85%A5%E6%A8%A1%E5%9D%97%E6%97%B6--save-%E4%B8%8E--save-dev-%E7%9A%84%E5%8C%BA%E5%88%AB/</a></p>
+</li>
+</ul>
+<h3 id="2018-05-07"><a href="#2018-05-07" class="headerlink" title="2018-05-07"></a>2018-05-07</h3><ul>
+<li>Vue组件的注册</li>
+</ul>
+<p>有一种组件注册的方式是 Vue+jQuery：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(<span class="string">'my-div'</span>, $.extend(&#123;</span><br><span class="line">	props:[],</span><br><span class="line">	methods:&#123;</span><br><span class="line"></span><br><span class="line">	&#125;,</span><br><span class="line">	filters:&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;), vueTpl.subs.myDiv)</span><br></pre></td></tr></table></figure>
+
+
+<p>根据 zqc 的建议，不一定要使用<code>$.extend()</code>，还可以使用<code>object.assign()</code>。</p>
+<h3 id="2018-05-08"><a href="#2018-05-08" class="headerlink" title="2018-05-08"></a>2018-05-08</h3><ul>
+<li>sku、spu的概念</li>
+</ul>
+<h3 id="2018-05-09"><a href="#2018-05-09" class="headerlink" title="2018-05-09"></a>2018-05-09</h3><ul>
+<li>输入框正则的匹配</li>
+</ul>
+<p>让输入框仅支持输入单个id，且为字符串。如果输入多个id，或者非数字的字符，则自动删除：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v-on:keyup=<span class="string">"querysku = querysku.replace(/\D/,'')"</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2018-05-10"><a href="#2018-05-10" class="headerlink" title="2018-05-10"></a>2018-05-10</h3><ul>
+<li><p>如果在控制台看到网络请求陈功，数据也获取成功，但是在ajax里走的是 error（数据获取失败），说明是 ajax代码的判断逻辑有问题。</p>
+</li>
+<li><p>服务器返回的json数据到底是对象还是字符串？</p>
+</li>
+<li><p>josn数据里的字段，有顺序吗？比如下面这段：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;1492948848&quot;: &#123;</span><br><span class="line">        &quot;3&quot;: &quot;1&quot;,</span><br><span class="line">        &quot;spec&quot;: &quot;&quot;,</span><br><span class="line">        &quot;imagePath&quot;: &quot;hehe.jpg&quot;,</span><br><span class="line">        &quot;color&quot;: &quot;橘色   &quot;,</span><br><span class="line">        &quot;name&quot;: &quot;【多色可选】丽装铺园纯色百搭简约打底T恤女 橘色 M&quot;,</span><br><span class="line">        &quot;size&quot;: &quot;M&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;1492948847&quot;: &#123;</span><br><span class="line">        &quot;3&quot;: &quot;1&quot;,</span><br><span class="line">        &quot;spec&quot;: &quot;&quot;,</span><br><span class="line">        &quot;imagePath&quot;: &quot;lala.jpg&quot;,</span><br><span class="line">        &quot;color&quot;: &quot;灰色   &quot;,</span><br><span class="line">        &quot;name&quot;: &quot;【多色可选】丽装铺园纯色百搭简约打底T恤女 灰色 S&quot;,</span><br><span class="line">        &quot;size&quot;: &quot;S  &quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>答案：顺序不重要。</p>
+<ul>
+<li><p>Vue开发中，在其他地方用到Vue实例中的数据时，一定要用this，或者是<code>vm.$data.myName</code>之类的。</p>
+</li>
+<li><p>疑问：下面的src路径的前面，为何要加<code>//</code>：</p>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">v-bind:src</span>=<span class="string">"'//img14.smyhvae.com/evalpic/s240x240_'+value.imagePath"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我发现，控制台看到的输出src中，会自动加上http。如果前面不加<code>//</code>则表示相对路径。</p>
+<h3 id="2018-05-11"><a href="#2018-05-11" class="headerlink" title="2018-05-11"></a>2018-05-11</h3><ul>
+<li>将逗号分隔的字符串，转换为数组： <code>str.split(&quot;,&quot;)</code>。即使数组中只有一个元素，也可以这样用。参考链接：<a href="https://blog.csdn.net/erlian1992/article/details/50561452" target="_blank" rel="noopener external nofollow noreferrer">#</a></li>
+</ul>
+<h3 id="2018-05-14"><a href="#2018-05-14" class="headerlink" title="2018-05-14"></a>2018-05-14</h3><ul>
+<li><p>ajax发的是post请求，但是后台却只收到了部分数据怎么办？答案：前端的post请求记得加content-type字段，否则会被识别成 get 请求。</p>
+</li>
+<li><p>获取jsonp的数据，只能用get请求。如果要用post请求，那就传json数据，另外，可能还要解决跨域的问题。跨域需要在后台配置，三行代码即可。</p>
+</li>
+<li><p>p标签里的文字溢出怎么办？</p>
+</li>
+<li><p>whistle该怎样mock数据？</p>
+</li>
+</ul>
+<h3 id="2018-05-16"><a href="#2018-05-16" class="headerlink" title="2018-05-16"></a>2018-05-16</h3><ul>
+<li><p>在控制台看标签的样式，发现有些样式是出现在<code>element.style</code>中的（比如图片的尺寸），但是在代码里并没有找到。那是因为，这些样式是在 js 代码中<strong>计算</strong>出来的。</p>
+</li>
+<li><p>图片自适应显示</p>
+</li>
+<li><p><a href="http://www.zhangxinxu.com/wordpress/2012/09/new-viewport-relative-units-vw-vh-vm-vmin/" target="_blank" rel="noopener external nofollow noreferrer">视区相关单位vw, vh..简介以及可实际应用场景</a></p>
+</li>
+<li><p>jingwen推荐的iconMoon图标网站。网址：<a href="https://icomoon.io/" target="_blank" rel="noopener external nofollow noreferrer">https://icomoon.io/</a></p>
+</li>
+</ul>
+<h3 id="2018-06-01"><a href="#2018-06-01" class="headerlink" title="2018-06-01"></a>2018-06-01</h3><ul>
+<li><code>PingFangSC</code>字体是iOS独有的字体。<code>PingFangSC-Regular</code>是常规字体，<code>PingFangSC-Semibold</code>是加粗字体。如果我在代码里设置了这个字体，那么，ios上可以看到效果，但是Android上看不到效果，仍然会采用Android系统默认的字体。</li>
+</ul>
+<h3 id="2018-06-04"><a href="#2018-06-04" class="headerlink" title="2018-06-04"></a>2018-06-04</h3><p><strong>1、git相关</strong>：</p>
+<p>把 branch1 中的某条记录(比如myLog)，提交到 branch2中。做法如下：</p>
+<p>先切换到branch2中，然后输入如下命令：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git cherry-pick myLog</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2018-06-05"><a href="#2018-06-05" class="headerlink" title="2018-06-05"></a>2018-06-05</h3><p><strong>1、font-size</strong>：</p>
+<p><code>font-size</code>的最小值为12。</p>
+<p>也就是说，浏览器的最小字体为12，要是再小于这个值，是不生效的。如果想要小于12，需要在浏览器的高级设置里去修改。</p>
+<p><strong>2、git 多分支同时开发</strong>：</p>
+<p>现在有这样一个场景：我要同时开发一个项目里的两个功能。今天上午开发功能1，下午开发功能2。明天上午改功能1的bug，明天下午改功能2的bug。</p>
+<p>相当于是，我现在是<strong>并行</strong>开发两个功能了，要怎么通过git来进行协作呢？</p>
+<p>目前考虑到的姣好的方式是：</p>
+<ul>
+<li><p>从master拉分支<code>branch1</code>，此分支专门用来开发功能1，改功能1的bug。</p>
+</li>
+<li><p>再从master拉分支<code>branch2</code>，此分支专门用来开发功能2，改功能2的bug。</p>
+</li>
+</ul>
+<p>以后需要上线哪个功能，就从那个分支merge代码到master。</p>
+<p><strong>3、其他</strong>：</p>
+<ul>
+<li>两个span之间默认有5px的 margin</li>
+</ul>
+<ul>
+<li><strong>shadow-root</strong>：下一代。</li>
+</ul>
+<h3 id="2018-06-07"><a href="#2018-06-07" class="headerlink" title="2018-06-07"></a>2018-06-07</h3><ul>
+<li><p><a href="https://www.teakki.com/p/57dfb44cd3a7507f975e91e4" target="_blank" rel="noopener external nofollow noreferrer">原生js实现淡入淡出效果</a></p>
+</li>
+<li><p>通过 jQuery 获取Dom的时候，比如<code>$(&#39;#topNavTop&#39;).css(&#39;background&#39;,&#39;red&#39;)</code>记得要指明是 id 还是 class。</p>
+</li>
+<li><p>每次开发一个新的需求，记得要问清楚：“H5和小程序”都要做吗？要做的话，工作量基本乘以2。</p>
+</li>
+</ul>
+<h3 id="2018-06-14"><a href="#2018-06-14" class="headerlink" title="2018-06-14"></a>2018-06-14</h3><ul>
+<li>pv、uv的概念</li>
+</ul>
+<h3 id="2018-06-21"><a href="#2018-06-21" class="headerlink" title="2018-06-21"></a>2018-06-21</h3><ul>
+<li>今天学会了 iPhone上WebApp的真机调试，感觉很高端呀。具体可以看我在本文件夹中写的《前端开发积累》这篇文章。</li>
+</ul>
+<h3 id="2018-06-27"><a href="#2018-06-27" class="headerlink" title="2018-06-27"></a>2018-06-27</h3><p>没想到，<code>&#39;&#39;</code>和<code>&#39; &#39;</code>竟然还有区别。</p>
+<h3 id="2018-06-30"><a href="#2018-06-30" class="headerlink" title="2018-06-30"></a>2018-06-30</h3><p><strong>并列条件</strong>：</p>
+<p>来看下面这段代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">80</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">50</span> &lt; num &lt;= <span class="number">70</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码，你认为打印的结果是什么？其实，它打印的结果是 true。</p>
+<p>如果我们要实现并列条件，千万不要使用 <code>if(50 &lt; num &lt; 70)</code>，而是要使用<code>if(num &gt; 50 &amp;&amp; num &lt;=70)</code>。</p>
+<h3 id="2018-07-16"><a href="#2018-07-16" class="headerlink" title="2018-07-16"></a>2018-07-16</h3><p><strong>FAQ：问答系统</strong></p>
+<p>FAQ是英文<code>Frequently Asked Questions</code>的缩写，中文意思就是“经常问到的问题”，或者更通俗地叫做“常见问题解答”。</p>
+<h3 id="2018-08-03"><a href="#2018-08-03" class="headerlink" title="2018-08-03"></a>2018-08-03</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> temp = <span class="number">0.123</span>;</span><br><span class="line"><span class="keyword">let</span> temp2 = temp.toFixed(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+
+
+<p>上方代码中，<code>temp2</code>的结果是0.12，但是请注意，<code>temp</code>的类型Number型，而<code>temp2</code>的类型却是String型。</p>
+<h3 id="2018-08-15"><a href="#2018-08-15" class="headerlink" title="2018-08-15"></a>2018-08-15</h3><p>flex布局常用的三行代码：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">display</span>: flex;</span><br><span class="line"><span class="attribute">justify-content</span>: center; <span class="comment">// 子元素在横轴的对齐方式 （左右居中）</span></span><br><span class="line"><span class="attribute">align-items</span>: center;  <span class="comment">// 子元素在竖轴的对齐方式（上下居中）</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2018-08-16"><a href="#2018-08-16" class="headerlink" title="2018-08-16"></a>2018-08-16</h3><p>用CSS3 transition属性实现淡入淡出轮播图：<a href="https://segmentfault.com/a/1190000007648070" target="_blank" rel="noopener external nofollow noreferrer">https://segmentfault.com/a/1190000007648070</a></p>
+<h3 id="2018-08-20"><a href="#2018-08-20" class="headerlink" title="2018-08-20"></a>2018-08-20</h3><p><strong>小程序问题</strong>：</p>
+<p>用小程序调试时，如果出现故障（比如item点击无响应），可能是微信开发者工具IDE的版本太低了。注意，IDE上上虽然提示是最新版，但不一定是官网的最新版。所以，要去官网下载最新版。</p>
+<p>如果还是不行，看看是不是自己的代码写错了。有时候，代码写错了，不一定会有报错提示哦。</p>
+<p><strong>css问题</strong>：</p>
+<ul>
+<li>css3实现的switch开关按钮：<a href="https://codepen.io/chutou/pen/qdGZQr" target="_blank" rel="noopener external nofollow noreferrer">https://codepen.io/chutou/pen/qdGZQr</a></li>
+</ul>
+<h3 id="2018-08-22"><a href="#2018-08-22" class="headerlink" title="2018-08-22"></a>2018-08-22</h3><p><strong>两个span之间去空格</strong></p>
+<ul>
+<li>html+css如何删除行内元素之间的空白/空隙：<a href="http://www.manongjc.com/article/2171.html" target="_blank" rel="noopener external nofollow noreferrer">http://www.manongjc.com/article/2171.html</a></li>
+</ul>
+<p>方法二亲测有效：让父亲的font-size为0，然后具体设置子元素的font-size</p>
+<ul>
+<li>去除inline-block元素间间距的N种方法：<a href="https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-去除间距/" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhangxinxu.com/wordpress/2012/04/inline-block-space-remove-去除间距/</a></li>
+</ul>
+<h3 id="2018-08-28-修改用户的cookie"><a href="#2018-08-28-修改用户的cookie" class="headerlink" title="2018-08-28-修改用户的cookie"></a>2018-08-28-修改用户的cookie</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">document.cookie</span>=<span class="string">"visitkey=98"</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2018-09-20"><a href="#2018-09-20" class="headerlink" title="2018-09-20"></a>2018-09-20</h3><p>需求：当导航条滚动到屏幕顶部时（举例顶部的距离 &lt; 0时），就设置导航条为fixed。</p>
+<p>实现：如果要设置为导航条为fixed，正确的做法应该是：给导航条这个父亲一个高度进行占位，然后让导航条的儿子为fixed。而不是让父亲为 fixed。</p>
+<h3 id="2018-09-27"><a href="#2018-09-27" class="headerlink" title="2018-09-27"></a>2018-09-27</h3><p>如何让微信小程序禁止下拉_解决小程序下拉出现空白的情况：<a href="http://www.fly63.com/article/detial/1069" target="_blank" rel="noopener external nofollow noreferrer">http://www.fly63.com/article/detial/1069</a></p>
+<p>我遇到问题的原因是：背景图太大，超出了视图。</p>
+<h3 id="2018-10-12"><a href="#2018-10-12" class="headerlink" title="2018-10-12"></a>2018-10-12</h3><p>小程序代码中，如果我这样写view的度样式：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">height</span>: <span class="number">60</span>rpx;</span><br><span class="line"><span class="attribute">line-height</span>: <span class="number">1.5rem</span>;</span><br></pre></td></tr></table></figure>
+
+
+<p>上面的这种写法，并不会让里面的文字上下居中，我在 iPhone 7 plus 中看到的结果是：文字偏上移。</p>
+<p>正确的做法是：（单位一致用rpx，不要把两个单位混用）</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">height</span>: <span class="number">60</span>rpx;</span><br><span class="line"><span class="attribute">line-height</span>: <span class="number">60</span>rpx;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2018-10-21"><a href="#2018-10-21" class="headerlink" title="2018-10-21"></a>2018-10-21</h3><p>时间戳和年月日的转换：<a href="https://blog.csdn.net/qq_26747571/article/details/53289120?locationNum=10&amp;fps=1" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/qq_26747571/article/details/53289120?locationNum=10&amp;fps=1</a></p>
+<h3 id="2018-11-28"><a href="#2018-11-28" class="headerlink" title="2018-11-28"></a>2018-11-28</h3><p>css实现圆环进度条：<a href="https://blog.csdn.net/wanglei1991gao/article/details/80009252" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/wanglei1991gao/article/details/80009252</a></p>
+<h3 id="2018-12-13"><a href="#2018-12-13" class="headerlink" title="2018-12-13"></a>2018-12-13</h3><p>对象数组通过对象的属性进行排序：<a href="https://blog.csdn.net/xiaobing_hope/article/details/68638706" target="_blank" rel="noopener external nofollow noreferrer">https://blog.csdn.net/xiaobing_hope/article/details/68638706</a></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/2018%E5%B9%B4-%E5%89%8D%E7%AB%AF%E6%97%A5%E8%AE%B0/" title="2018年-前端日记">https://tongsiying.github.io/2021/11/26/web/17-前端综合/2018年-前端日记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/01-2021%E5%B9%B4Web%E5%89%8D%E7%AB%AF%E5%85%A5%E9%97%A8%E8%87%AA%E5%AD%A6%E8%B7%AF%E7%BA%BF/" rel="prev" title="01-2021年Web前端入门自学路线">
+      <i class="fa fa-chevron-left"></i> 01-2021年Web前端入门自学路线
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/2019%E5%B9%B4-%E5%89%8D%E7%AB%AF%E6%97%A5%E8%AE%B0/" rel="next" title="2019年-前端日记">
+      2019年-前端日记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2018年4月份"><span class="nav-text">2018年4月份</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-04-25"><span class="nav-text">2018-04-25</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-04-26"><span class="nav-text">2018-04-26</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-04-27"><span class="nav-text">2018-04-27</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-02"><span class="nav-text">2018-05-02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-03"><span class="nav-text">2018-05-03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-07"><span class="nav-text">2018-05-07</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-08"><span class="nav-text">2018-05-08</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-09"><span class="nav-text">2018-05-09</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-10"><span class="nav-text">2018-05-10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-11"><span class="nav-text">2018-05-11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-14"><span class="nav-text">2018-05-14</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-05-16"><span class="nav-text">2018-05-16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-01"><span class="nav-text">2018-06-01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-04"><span class="nav-text">2018-06-04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-05"><span class="nav-text">2018-06-05</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-07"><span class="nav-text">2018-06-07</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-14"><span class="nav-text">2018-06-14</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-21"><span class="nav-text">2018-06-21</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-27"><span class="nav-text">2018-06-27</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-06-30"><span class="nav-text">2018-06-30</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-07-16"><span class="nav-text">2018-07-16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-08-03"><span class="nav-text">2018-08-03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-08-15"><span class="nav-text">2018-08-15</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-08-16"><span class="nav-text">2018-08-16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-08-20"><span class="nav-text">2018-08-20</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-08-22"><span class="nav-text">2018-08-22</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-08-28-修改用户的cookie"><span class="nav-text">2018-08-28-修改用户的cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-09-20"><span class="nav-text">2018-09-20</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-09-27"><span class="nav-text">2018-09-27</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-10-12"><span class="nav-text">2018-10-12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-10-21"><span class="nav-text">2018-10-21</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-11-28"><span class="nav-text">2018-11-28</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-12-13"><span class="nav-text">2018-12-13</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

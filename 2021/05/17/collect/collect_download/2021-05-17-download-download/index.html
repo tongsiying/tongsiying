@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="download">
+<meta property="og:url" content="https://tongsiying.github.io/2021/05/17/collect/collect_download/2021-05-17-download-download/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2021-07-21T12:25:12.599Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="download">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/05/17/collect/collect_download/2021-05-17-download-download/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>download | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/05/17/collect/collect_download/2021-05-17-download-download/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          download
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2021-05-17T18:37:19+08:00">2021-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-21 20:25:12" itemprop="dateModified" datetime="2021-07-21T20:25:12+08:00">2021-07-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/download/" itemprop="url" rel="index"><span itemprop="name">download</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="python"><a href="#python" class="headerlink" title="python"></a>python</h1><p><a href="https://tongsiying.github.io/download/python/01-基础班-第01天{Linux、以及命令}.7z">01-基础班-第01天{Linux、以及命令}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第02天{Linux命令、vim编辑器}.7z">01-基础班-第02天{Linux命令、vim编辑器}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第03天{python基础}.7z">01-基础班-第03天{python基础}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第04天{if、while、for}.7z">01-基础班-第04天{if、while、for}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第05天{字符串、列表、字典}.7z">01-基础班-第05天{字符串、列表、字典}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第06天{元组、函数-上}.7z">01-基础班-第06天{元组、函数-上}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第07天{函数-下}.7z">01-基础班-第07天{函数-下}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第08天{字符串操作、文件}.7z">01-基础班-第08天{字符串操作、文件}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第09天{面向对象-1}.7z">01-基础班-第09天{面向对象-1}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第10天{面向对象-2}.7z">01-基础班-第10天{面向对象-2}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第11天{面向对象3、异常、模块}.7z">01-基础班-第11天{面向对象3、异常、模块}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第12天{加强练习}.7z">01-基础班-第12天{加强练习}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第13天{飞机大战-上}.7z">01-基础班-第13天{飞机大战-上}</a><br><a href="https://tongsiying.github.io/download/python/01-基础班-第14天{飞机大战-下}.7z">01-基础班-第14天{飞机大战-下}</a></p>
+<h1 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h1><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="https://tongsiying.github.io/BlogFile/BlockStorage/filebench-1.5-alpha3.tar.gz">filebench-1.5-alpha3.tar.gz</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/filebench之go_filebench.zip">filebench之go_filebench.zip</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/fio-2.1.10.tar.gz">fio-2.1.10.tar.gz</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/fio-fio-2.11.tar.gz">fio-fio-2.11.tar.gz</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/FS_shepler.pdf">FS_shepler.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/go_filebench">go_filebench</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/iozone3_434.tar">iozone3_434.tar</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/pjd-fstest-20080816.tgz">pjd-fstest-20080816.tgz</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/vdbench.pdf">vdbench.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/vdbench.zip">vdbench.zip</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/vdbench504.zip">vdbench504.zip</a><br><a href="https://tongsiying.github.io/BlogFile/BlockStorage/虚拟机安装步骤.docx">虚拟机安装步骤.docx</a><br><a href="https://tongsiying.github.io/BlogFile/Ceph/nagios-install-centos7.3.zip">nagios-install-centos7.3.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Ceph/nagios-install-redhat6.4.zip">nagios-install-redhat6.4.zip</a></p>
+<h2 id="C语言"><a href="#C语言" class="headerlink" title="C语言"></a>C语言</h2><p><a href="https://tongsiying.github.io/BlogFile/pdf/C/数据结构与算法分析：C语言描述+中文版.pdf">数据结构与算法分析：C语言描述+中文版.pdf</a></p>
+<h2 id="java语言"><a href="#java语言" class="headerlink" title="java语言"></a>java语言</h2><p><a href="https://tongsiying.github.io/BlogFile/pdf/Java/JavaScript2.chm">JavaScript2.chm</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/Java从小白到大牛精简版.pdf">Java从小白到大牛精简版.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/Java语言程序设计-基础篇(原书第8版).pdf">Java语言程序设计-基础篇(原书第8版).pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/Java高并发编程详解.pdf">Java高并发编程详解.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/jquery1.7_20111204.chm">jquery1.7_20111204.chm</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/Spring实战（第4版）.pdf">Spring实战（第4版）.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/spring开发指南(夏昕).pdf">spring开发指南(夏昕).pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/Spring高级程序设计.pdf">Spring高级程序设计.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/[数据结构与算法分析_Java语言描述(第2版)].韦斯.扫描版(1).pdf">[数据结构与算法分析_Java语言描述(第2版)].韦斯.扫描版(1).pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/深入分析JavaWeb技术内幕修订版.pdf">深入分析JavaWeb技术内幕修订版.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/精通Spring+MVC+4.pdf">精通Spring+MVC+4.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/阿里巴巴java开发手册.pdf">阿里巴巴java开发手册.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/java从入门到精通/java从入门到精通（第4版）-001.pdf">java从入门到精通（第4版）-001.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/java从入门到精通/java从入门到精通（第4版）-002.pdf">java从入门到精通（第4版）-002.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/java从入门到精通/java从入门到精通（第4版）-003.pdf">java从入门到精通（第4版）-003.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/java从入门到精通/java从入门到精通（第4版）-004.pdf">java从入门到精通（第4版）-004.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/疯狂Java讲义(第3版)/疯狂Java讲义(第3版)-001.pdf">疯狂Java讲义(第3版)-001.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/疯狂Java讲义(第3版)/疯狂Java讲义(第3版)-002.pdf">疯狂Java讲义(第3版)-002.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/疯狂Java讲义(第3版)/疯狂Java讲义(第3版)-003.pdf">疯狂Java讲义(第3版)-003.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/疯狂Java讲义(第3版)/疯狂Java讲义(第3版)-004.pdf">疯狂Java讲义(第3版)-004.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/精通Spring+4.x++企业应用开发实战/精通Spring+4.x++企业应用开发实战-001.pdf">精通Spring+4.x++企业应用开发实战-001.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/精通Spring+4.x++企业应用开发实战/精通Spring+4.x++企业应用开发实战-002.pdf">精通Spring+4.x++企业应用开发实战-002.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Java/精通Spring+4.x++企业应用开发实战/精通Spring+4.x++企业应用开发实战-003.pdf">精通Spring+4.x++企业应用开发实战-003.pdf</a></p>
+<h2 id="Linux语言"><a href="#Linux语言" class="headerlink" title="Linux语言"></a>Linux语言</h2><p><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/Linux.Shell脚本攻略.pdf">Linux.Shell脚本攻略.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/Linux从入门到精通.pdf">Linux从入门到精通.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/Linux入门教程.pdf">Linux入门教程.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/LINUX命令行与SHELL脚本编程大全第2版.pdf">LINUX命令行与SHELL脚本编程大全第2版.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/Linux就该这么学（完整目录版）.pdf">Linux就该这么学（完整目录版）.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/Wireshark网络分析就这么简单.pdf">Wireshark网络分析就这么简单.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/跟老男孩学Linux运维：Shell编程实战.pdf">跟老男孩学Linux运维：Shell编程实战.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/鸟哥的Linux私房菜_基础学习篇(第三版).pdf">鸟哥的Linux私房菜_基础学习篇(第三版).pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Linux/鸟哥的Linux私房菜服务器架设篇(第三版).pdf">鸟哥的Linux私房菜服务器架设篇(第三版).pdf</a></p>
+<h2 id="Python语言"><a href="#Python语言" class="headerlink" title="Python语言"></a>Python语言</h2><p><a href="https://tongsiying.github.io/BlogFile/pdf/Python/Python核心编程(第3版).pdf">Python核心编程(第3版).pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Python/python基础教程(自编精品).pdf">python基础教程(自编精品).pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Python/Python基础教程.pdf">Python基础教程.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Python/python接口自动化1119修正版.pdf">python接口自动化1119修正版.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Python/Python编程-从入门到实践.pdf">Python编程-从入门到实践.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/Python/零基础入门学习Python.zip">零基础入门学习Python.zip</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/XML/ajax教程.chm">ajax教程.chm</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><a href="https://tongsiying.github.io/BlogFile/bookmark/2018_8_9.html">2018_8_9.html</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/其他/《人类简史》.pdf">《人类简史》.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/其他/单元测试规范20161019.pdf">单元测试规范20161019.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/其他/小谈缓存与DB的一致性.pptx">小谈缓存与DB的一致性.pptx</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/其他/机器学习_周志华.pdf">机器学习_周志华.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/其他/浪潮之巅.pdf">浪潮之巅.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/其他/黑客攻防从入门到精通.pdf">黑客攻防从入门到精通.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/大数据/《区块链应用研究》.pdf">《区块链应用研究》.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/大数据/《大数据之路：阿里巴巴大数据实践》.pdf">《大数据之路：阿里巴巴大数据实践》.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/自动化/robot_framework自动化测试.pdf">robot_framework自动化测试.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/自动化/selenium高级自动化（图文教程）-抢先版.pdf">selenium高级自动化（图文教程）-抢先版.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/pdf/自动化/自动化测试0902.pdf">自动化测试0902.pdf</a></p>
+<h2 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h2><p><a href="https://tongsiying.github.io/BlogFile/Soft/天若OCRV5.0.0.zip">天若OCRV5.0.0.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Soft/搜狗输入法皮肤.zip">搜狗输入法皮肤.zip</a></p>
+<h2 id="SN"><a href="#SN" class="headerlink" title="SN"></a>SN</h2><p><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/chrome浏览器调试.pdf">chrome浏览器调试.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/JS的核心动力.pdf">JS的核心动力.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/JVM基础及性能监控.pdf">JVM基础及性能监控.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/LINUX基础课程.pdf">LINUX基础课程.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/PDF自动化测试.pdf">PDF自动化测试.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/WEB安全测试基础.pdf">WEB安全测试基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/WEB安全测试工具介绍.pdf">WEB安全测试工具介绍.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/协议接口自动化.pptx">协议接口自动化.pptx</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/性能测试基础.pdf">性能测试基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/性能测试基础培训--基本理论和流程规范.pdf">性能测试基础培训–基本理论和流程规范.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/性能测试基础培训--常用工具及常见问题分析.pdf">性能测试基础培训–常用工具及常见问题分析.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/性能测试基础培训--测试工具介绍.pdf">性能测试基础培训–测试工具介绍.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/接口测试实例.pptx">接口测试实例.pptx</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/数据库基础.pdf">数据库基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/数据库基础V1.0.pptx">数据库基础V1.0.pptx</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/测试案例设计.pdf">测试案例设计.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/测试质量管理概述.pdf">测试质量管理概述.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/移动端安全测试基础.pdf">移动端安全测试基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/移动端安全测试工具介绍.pdf">移动端安全测试工具介绍.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/系统性能调优.pdf">系统性能调优.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/缺陷管理.pdf">缺陷管理.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/自动化测试.pdf">自动化测试.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/自动化测试基础.pdf">自动化测试基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/自动化测试最佳实践.pptx">自动化测试最佳实践.pptx</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/其他/软件质量管理概述.pdf">软件质量管理概述.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/系统/001-linux基础/LINUX基础课程.docx">LINUX基础课程.docx</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/系统/001-linux基础/LINUX基础课程.pdf">LINUX基础课程.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/系统/002-数据库基础/数据库基础.pdf">数据库基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/系统/003-自动化测试基础/自动化测试基础.pdf">自动化测试基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/001-软件测试基础/软件测试基础-入门篇.pptx">软件测试基础-入门篇.pptx</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/001-软件测试基础/软件测试基础概述.pdf">软件测试基础概述.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/002-缺陷管理/缺陷管理.pdf">缺陷管理.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/003-测试案例设计/测试案例设计.pdf">测试案例设计.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/004-需求挖掘与需求分析/业务需求挖掘与分析.pdf">业务需求挖掘与分析.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/005-软件质量管理(差异）/软件质量管理概述.pdf">软件质量管理概述.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/006-软件性能测试基础/性能测试基础.pdf">性能测试基础.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/006-软件性能测试基础/性能测试基础培训--基本理论和流程规范.pdf">性能测试基础培训–基本理论和流程规范.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/006-软件性能测试基础/性能测试基础培训--常用工具及常见问题分析.pdf">性能测试基础培训–常用工具及常见问题分析.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/006-软件性能测试基础/性能测试基础培训--测试工具介绍.pdf">性能测试基础培训–测试工具介绍.pdf</a><br><a href="https://tongsiying.github.io/BlogFile/SPDF/通用/007-项目管理/项目管理基础和实践.pptx">项目管理基础和实践.pptx</a></p>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><p><a href="https://tongsiying.github.io/BlogFile/Tools/001linux格式化json命令-jq.zip">001linux格式化json命令-jq.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/001nrpe-nmon.zip">001nrpe-nmon.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/002vsftpd部署.zip">002vsftpd部署.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/004一致性脚本.zip">004一致性脚本.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/005获取文件目录下的目录大小（不包括文件）.zip">005获取文件目录下的目录大小（不包括文件）.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/007nginx安装.zip">007nginx安装.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/008nrpe和nmon部署.zip">008nrpe和nmon部署.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/busybox-1.31.1-45.apk">busybox-1.31.1-45.apk</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/enscript-1.6.6-6.el7.x86_64.rpm">enscript-1.6.6-6.el7.x86_64.rpm</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/ImageMagick-6.7.8.9-15.el7_2.i686.rpm">ImageMagick-6.7.8.9-15.el7_2.i686.rpm</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/ImageMagick-6.7.8.9-15.el7_2.x86_64.rpm">ImageMagick-6.7.8.9-15.el7_2.x86_64.rpm</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/jq-linux64">jq-linux64</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/linuxdeploy-2.5.1-257.apk">linuxdeploy-2.5.1-257.apk</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/lrzsz-0.12.20.tar.gz">lrzsz-0.12.20.tar.gz</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/nmonanalyserv55.zip">nmonanalyserv55.zip</a><br><a href="https://tongsiying.github.io/BlogFile/Tools/python-matplotlib-1.2.0-15.el7.x86_64.rpm">python-matplotlib-1.2.0-15.el7.x86_64.rpm</a></p>
+
+    </div>
+
+    
+    
+    
+      
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/05/17/collect/collect_download/2021-05-17-download-download/" title="download">https://tongsiying.github.io/2021/05/17/collect/collect_download/2021-05-17-download-download/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/download/" rel="tag"># download</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/17/linux/2021-05-17-linux-all/" rel="prev" title="linux-all">
+      <i class="fa fa-chevron-left"></i> linux-all
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/29/project/project_CDN/2021-06-29-CDN/" rel="next" title="CND">
+      CND <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python"><span class="nav-text">python</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pdf"><span class="nav-text">pdf</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C语言"><span class="nav-text">C语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java语言"><span class="nav-text">java语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux语言"><span class="nav-text">Linux语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python语言"><span class="nav-text">Python语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件"><span class="nav-text">软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SN"><span class="nav-text">SN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tools"><span class="nav-text">Tools</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

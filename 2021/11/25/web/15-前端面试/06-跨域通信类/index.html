@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="06-跨域通信类">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/15-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/06-%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%B1%BB/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20180307_1443.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180307_1445.png">
+<meta property="og:image" content="http://img.smyhvae.com/2016040102.jpg">
+<meta property="article:published_time" content="2021-11-25T15:24:28.121Z">
+<meta property="article:modified_time" content="2021-11-25T15:24:28.122Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20180307_1443.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/15-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/06-%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%B1%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>06-跨域通信类 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/15-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/06-%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          06-跨域通信类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:24:28" itemprop="dateCreated datePublished" datetime="2021-11-25T23:24:28+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>从本章起，对代码的要求没之前那么高了，但是，要求你对知识面的掌握要足够宽。</p>
+<p>前端通信类的问题，主要包括以下内容：</p>
+<ul>
+<li>1、什么是<strong>同源策略</strong>及限制</li>
+</ul>
+<p>同源策略是一个概念，就一句话。有什么限制，就三句话。能说出来即可。</p>
+<ul>
+<li>2、<strong>前后端如何通信</strong></li>
+</ul>
+<p>如果你不准备，估计也就只能说出ajax。这个可以考察出知识面。</p>
+<ul>
+<li>3、如何创建<strong>Ajax</strong></li>
+</ul>
+<p>Ajax在前后端通信中经常用到。做业务时，可以借助第三方的库，比如vue框架里的库、jQuery也有封装好的方法。但如果让你用原生的js去实现，该怎么做？</p>
+<p>这就是考察你的动手能力，以及框架原理的掌握。如果能写出来，可以体现出你的基本功。是加分项。</p>
+<ul>
+<li>4、<strong>跨域通信</strong>的几种方式</li>
+</ul>
+<p>这部分非常重要。无非就是问你：什么是跨域、跨域有什么限制、<strong>跨域有几种方式</strong>。</p>
+<p>下面分别讲解。</p>
+<h2 id="同源策略的概念和具体限制"><a href="#同源策略的概念和具体限制" class="headerlink" title="同源策略的概念和具体限制"></a>同源策略的概念和具体限制</h2><p><strong>同源策略</strong>：限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键的安全机制。（来自MDN官方的解释）</p>
+<p>具体解释：</p>
+<p>（1）<code>源</code>包括三个部分：协议、域名、端口（http协议的默认端口是80）。如果有任何一个部分不同，则<code>源</code>不同，那就是跨域了。</p>
+<p>（2）<code>限制</code>：这个源的文档没有权利去操作另一个源的文档。这个限制体现在：（要记住）</p>
+<ul>
+<li><p>Cookie、LocalStorage和IndexDB无法获取。</p>
+</li>
+<li><p>无法获取和操作DOM。</p>
+</li>
+<li><p>不能发送Ajax请求。我们要注意，Ajax只适合<strong>同源</strong>的通信。</p>
+</li>
+</ul>
+<h2 id="前后端如何通信"><a href="#前后端如何通信" class="headerlink" title="前后端如何通信"></a>前后端如何通信</h2><p>主要有以下几种方式：</p>
+<ul>
+<li><p>Ajax：不支持跨域。</p>
+</li>
+<li><p>WebSocket：不受同源策略的限制，支持跨域。</p>
+</li>
+<li><p>CORS：不受同源策略的限制，支持跨域。一种新的通信协议标准。可以理解成是：<strong>同时支持同源和跨域的Ajax</strong>。</p>
+</li>
+</ul>
+<h2 id="如何创建Ajax"><a href="#如何创建Ajax" class="headerlink" title="如何创建Ajax"></a>如何创建Ajax</h2><blockquote>
+<p>关于Ajax请求，可以看本人的基础文章：<a href="https://github.com/smyhvae/Web/blob/master/08-Ajax/02-Ajax%E5%85%A5%E9%97%A8%E5%92%8C%E5%8F%91%E9%80%81http%E8%AF%B7%E6%B1%82.md" target="_blank" rel="noopener external nofollow noreferrer">Ajax入门和发送http请求</a></p>
+</blockquote>
+<p>在回答 Ajax 的问题时，要回答以下几个方面：</p>
+<ul>
+<li><p>1、XMLHttpRequest 的工作原理</p>
+</li>
+<li><p>2、兼容性处理</p>
+</li>
+</ul>
+<p>XMLHttpRequest只有在高级浏览器中才支持。在回答问题时，这个兼容性问题不要忽略。</p>
+<ul>
+<li><p>3、事件的触发条件</p>
+</li>
+<li><p>4、事件的触发顺序</p>
+</li>
+</ul>
+<p>XMLHttpRequest有很多触发事件，每个事件是怎么触发的。</p>
+<h3 id="发送-Ajax-请求的五个步骤（XMLHttpRequest的工作原理）"><a href="#发送-Ajax-请求的五个步骤（XMLHttpRequest的工作原理）" class="headerlink" title="发送 Ajax 请求的五个步骤（XMLHttpRequest的工作原理）"></a>发送 Ajax 请求的五个步骤（XMLHttpRequest的工作原理）</h3><p>（1）创建XMLHttpRequest 对象。</p>
+<p>（2）使用open方法设置请求的参数。open(method, url, 是否异步)。</p>
+<p>（3）发送请求。</p>
+<p>（4）注册事件。 注册onreadystatechange事件，状态改变时就会调用。</p>
+<p>如果要在数据完整请求回来的时候才调用，我们需要手动写一些判断的逻辑。</p>
+<p>（5）获取返回的数据，更新UI。</p>
+<h3 id="发送-get-请求和-post-请求"><a href="#发送-get-请求和-post-请求" class="headerlink" title="发送 get 请求和 post 请求"></a>发送 get 请求和 post 请求</h3><p>get请求举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Ajax 发送 get 请求<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"发送get_ajax请求"</span> <span class="attr">id</span>=<span class="string">'btnAjax'</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">// 绑定点击事件</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.querySelector(<span class="string">'#btnAjax'</span>).onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 发送ajax 请求 需要 五步</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">// （1）创建异步对象</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> ajaxObj = <span class="keyword">new</span> XMLHttpRequest();</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">// （2）设置请求的参数。包括：请求的方法、请求的url。</span></span></span><br><span class="line"><span class="actionscript">        ajaxObj.open(<span class="string">'get'</span>, <span class="string">'02-ajax.php'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">// （3）发送请求</span></span></span><br><span class="line">        ajaxObj.send();</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">//（4）注册事件。 onreadystatechange事件，状态改变时就会调用。</span></span></span><br><span class="line"><span class="actionscript">        <span class="comment">//如果要在数据完整请求回来的时候才调用，我们需要手动写一些判断的逻辑。</span></span></span><br><span class="line"><span class="actionscript">        ajaxObj.onreadystatechange = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">// 为了保证 数据 完整返回，我们一般会判断 两个值</span></span></span><br><span class="line">            if (ajaxObj.readyState == 4 &amp;&amp; ajaxObj.status == 200) &#123;</span><br><span class="line"><span class="actionscript">                <span class="comment">// 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的</span></span></span><br><span class="line"><span class="actionscript">                <span class="comment">// 5.在注册的事件中 获取 返回的 内容 并修改页面的显示</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">'数据返回成功'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">                <span class="comment">// 数据是保存在 异步对象的 属性中</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(ajaxObj.responseText);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">                <span class="comment">// 修改页面的显示</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">document</span>.querySelector(<span class="string">'h1'</span>).innerHTML = ajaxObj.responseText;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>post 请求举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Ajax 发送 get 请求<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"发送put_ajax请求"</span> <span class="attr">id</span>=<span class="string">'btnAjax'</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 异步对象</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 设置属性</span></span></span><br><span class="line"><span class="actionscript">    xhr.open(<span class="string">'post'</span>, <span class="string">'02.post.php'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 如果想要使用post提交数据,必须添加此行</span></span></span><br><span class="line"><span class="actionscript">    xhr.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 将数据通过send方法传递</span></span></span><br><span class="line"><span class="actionscript">    xhr.send(<span class="string">'name=fox&amp;age=18'</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">// 发送并接受返回值</span></span></span><br><span class="line"><span class="actionscript">    xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">// 这步为判断服务器是否正确响应</span></span></span><br><span class="line">        if (xhr.readyState == 4 &amp;&amp; xhr.status == 200) &#123;</span><br><span class="line">            alert(xhr.responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="onreadystatechange-事件"><a href="#onreadystatechange-事件" class="headerlink" title="onreadystatechange 事件"></a>onreadystatechange 事件</h3><p>注册 onreadystatechange 事件后，每当 readyState 属性改变时，就会调用 onreadystatechange 函数。</p>
+<p>readyState：（存有 XMLHttpRequest 的状态。从 0 到 4 发生变化）</p>
+<ul>
+<li><p>0: 请求未初始化</p>
+</li>
+<li><p>1: 服务器连接已建立</p>
+</li>
+<li><p>2: 请求已接收</p>
+</li>
+<li><p>3: 请求处理中</p>
+</li>
+<li><p>4: 请求已完成，且响应已就绪</p>
+</li>
+</ul>
+<h3 id="事件的触发条件"><a href="#事件的触发条件" class="headerlink" title="事件的触发条件"></a>事件的触发条件</h3><p><img src="http://img.smyhvae.com/20180307_1443.png" alt></p>
+<h3 id="事件的触发顺序"><a href="#事件的触发顺序" class="headerlink" title="事件的触发顺序"></a>事件的触发顺序</h3><p><img src="http://img.smyhvae.com/20180307_1445.png" alt></p>
+<p>上图的参考链接：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000004322487" target="_blank" rel="noopener external nofollow noreferrer">你真的会使用XMLHttpRequest吗？</a></li>
+</ul>
+<h3 id="实际开发中用的-原生Ajax请求"><a href="#实际开发中用的-原生Ajax请求" class="headerlink" title="实际开发中用的 原生Ajax请求"></a>实际开发中用的 原生Ajax请求</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> util = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取 ajax 请求之后的json</span></span><br><span class="line">util.json = <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> opt = &#123;</span><br><span class="line">        url: <span class="string">''</span>,</span><br><span class="line">        type: <span class="string">'get'</span>,</span><br><span class="line">        data: &#123;&#125;,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        &#125;,</span><br><span class="line">        error: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line">    util.extend(opt, options);</span><br><span class="line">    <span class="keyword">if</span> (opt.url) &#123;</span><br><span class="line">        <span class="comment">//IE兼容性处理：浏览器特征检查。检查该浏览器是否存在XMLHttpRequest这个api，没有的话，就用IE的api</span></span><br><span class="line">        <span class="keyword">var</span> xhr = XMLHttpRequest ? <span class="keyword">new</span> XMLHttpRequest() : <span class="keyword">new</span> <span class="built_in">window</span>.ActiveXObject(<span class="string">'Microsoft.XMLHTTP'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> data = opt.data,</span><br><span class="line">            url = opt.url,</span><br><span class="line">            type = opt.type.toUpperCase();</span><br><span class="line">        dataArr = [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> data) &#123;</span><br><span class="line">        dataArr.push(key + <span class="string">'='</span> + data[key]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (type === <span class="string">'GET'</span>) &#123;</span><br><span class="line">        url = url + <span class="string">'?'</span> + dataArr.join(<span class="string">'&amp;'</span>);</span><br><span class="line">        xhr.open(type, url.replace(<span class="regexp">/\?$/g</span>, <span class="string">''</span>), <span class="literal">true</span>);</span><br><span class="line">        xhr.send();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (type === <span class="string">'POST'</span>) &#123;</span><br><span class="line">        xhr.open(type, url, <span class="literal">true</span>);</span><br><span class="line">        <span class="comment">// 如果想要使用post提交数据,必须添加此行</span></span><br><span class="line">        xhr.setRequestHeader(<span class="string">"Content-type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>);</span><br><span class="line">        xhr.send(dataArr.join(<span class="string">'&amp;'</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    xhr.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (xhr.status === <span class="number">200</span> || xhr.status === <span class="number">304</span>) &#123; <span class="comment">//304表示：用缓存即可。206表示获取媒体资源的前面一部分</span></span><br><span class="line">            <span class="keyword">var</span> res;</span><br><span class="line">            <span class="keyword">if</span> (opt.success &amp;&amp; opt.success <span class="keyword">instanceof</span> <span class="built_in">Function</span>) &#123;</span><br><span class="line">                res = xhr.responseText;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">typeof</span> res === <span class="string">'string'</span>) &#123;</span><br><span class="line">                    res = <span class="built_in">JSON</span>.parse(res);  <span class="comment">//将字符串转成json</span></span><br><span class="line">                    opt.success.call(xhr, res);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (opt.error &amp;&amp; opt.error <span class="keyword">instanceof</span> <span class="built_in">Function</span>) &#123;</span><br><span class="line">                opt.error.call(xhr, res);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Ajax 的推荐链接：<a href="https://segmentfault.com/a/1190000006669043" target="_blank" rel="noopener external nofollow noreferrer">https://segmentfault.com/a/1190000006669043</a></p>
+<h2 id="跨域通信的几种方式"><a href="#跨域通信的几种方式" class="headerlink" title="跨域通信的几种方式"></a>跨域通信的几种方式</h2><p>方式如下：</p>
+<ul>
+<li><p>1、JSONP</p>
+</li>
+<li><p>2、WebSocket</p>
+</li>
+<li><p>3、CORS</p>
+</li>
+<li><p>4、Hash</p>
+</li>
+<li><p>5、postMessage</p>
+</li>
+</ul>
+<p>上面这五种方式，在面试时，都要说出来。</p>
+<h3 id="1、JSONP"><a href="#1、JSONP" class="headerlink" title="1、JSONP"></a>1、JSONP</h3><p>面试会问：JSONP的原理是什么？怎么实现的？</p>
+<p>在CORS和postMessage以前，我们一直都是通过JSONP来做跨域通信的。</p>
+<p><strong>JSONP的原理</strong>：通过<code>&lt;script&gt;</code>标签的异步加载来实现的。比如说，实际开发中，我们发现，head标签里，可以通过<code>&lt;script&gt;</code>标签的src，里面放url，加载很多在线的插件。这就是用到了JSONP。</p>
+<p><strong>JSONP的实现：</strong></p>
+<p>比如说，客户端这样写：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://www.smyhvae.com/?data=name&amp;callback=myjsonp"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的src中，<code>data=name</code>是get请求的参数，<code>myjsonp</code>是和后台约定好的函数名。<br>服务器端这样写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">myjsonp(&#123;</span><br><span class="line">    data: &#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+<p>于是，本地要求创建一个myjsonp 的<strong>全局函数</strong>，才能将返回的数据执行出来。</p>
+<p><strong>实际开发中，前端的JSONP是这样实现的：</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> util = &#123;&#125;;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">//定义方法：动态创建 script 标签</span></span></span><br><span class="line">    /**</span><br><span class="line"><span class="javascript">     * [<span class="function"><span class="keyword">function</span> 在页面中注入<span class="title">js</span>脚本]</span></span></span><br><span class="line">     * @param  &#123;[type]&#125; url     [description]</span><br><span class="line">     * @param  &#123;[type]&#125; charset [description]</span><br><span class="line"><span class="actionscript">     * @<span class="keyword">return</span> &#123;[type]&#125;         [description]</span></span><br><span class="line">     */</span><br><span class="line"><span class="actionscript">    util.createScript = <span class="function"><span class="keyword">function</span> <span class="params">(url, charset)</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span></span><br><span class="line"><span class="actionscript">        script.setAttribute(<span class="string">'type'</span>, <span class="string">'text/javascript'</span>);</span></span><br><span class="line"><span class="actionscript">        charset &amp;&amp; script.setAttribute(<span class="string">'charset'</span>, charset);</span></span><br><span class="line"><span class="actionscript">        script.setAttribute(<span class="string">'src'</span>, url);</span></span><br><span class="line"><span class="actionscript">        script.async = <span class="literal">true</span>;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">return</span> script;</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line"><span class="javascript">     * [<span class="function"><span class="keyword">function</span> 处理<span class="title">jsonp</span>]</span></span></span><br><span class="line">     * @param  &#123;[type]&#125; url      [description]</span><br><span class="line">     * @param  &#123;[type]&#125; onsucess [description]</span><br><span class="line">     * @param  &#123;[type]&#125; onerror  [description]</span><br><span class="line">     * @param  &#123;[type]&#125; charset  [description]</span><br><span class="line"><span class="actionscript">     * @<span class="keyword">return</span> &#123;[type]&#125;          [description]</span></span><br><span class="line">     */</span><br><span class="line"><span class="actionscript">    util.jsonp = <span class="function"><span class="keyword">function</span> <span class="params">(url, onsuccess, onerror, charset)</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> callbackName = util.getName(<span class="string">'tt_player'</span>); <span class="comment">//事先约定好的 函数名</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>[callbackName] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;      <span class="comment">//根据回调名称注册一个全局的函数</span></span></span><br><span class="line">            if (onsuccess &amp;&amp; util.isFunction(onsuccess)) &#123;</span><br><span class="line"><span class="javascript">                onsuccess(<span class="built_in">arguments</span>[<span class="number">0</span>]);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> script = util.createScript(url + <span class="string">'&amp;callback='</span> + callbackName, charset);   <span class="comment">//动态创建一个script标签</span></span></span><br><span class="line"><span class="actionscript">        script.onload = script.onreadystatechange = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;   <span class="comment">//监听加载成功的事件，获取数据</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (!script.readyState || <span class="regexp">/loaded|complete/</span>.test(script.readyState)) &#123;</span></span><br><span class="line"><span class="actionscript">                script.onload = script.onreadystatechange = <span class="literal">null</span>;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// 移除该script的 DOM 对象</span></span></span><br><span class="line">                if (script.parentNode) &#123;</span><br><span class="line">                    script.parentNode.removeChild(script);</span><br><span class="line">                &#125;</span><br><span class="line"><span class="actionscript">                <span class="comment">// 删除函数或变量</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">window</span>[callbackName] = <span class="literal">null</span>;  <span class="comment">//最后不要忘了删除</span></span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"><span class="actionscript">        script.onerror = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line">            if (onerror &amp;&amp; util.isFunction(onerror)) &#123;</span><br><span class="line">                onerror();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>].appendChild(script); <span class="comment">//往html中增加这个标签，目的是把请求发送出去</span></span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、WebSocket"><a href="#2、WebSocket" class="headerlink" title="2、WebSocket"></a>2、WebSocket</h3><p>WebSocket的用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'wss://echo.websocket.org'</span>); <span class="comment">//创建WebSocket的对象。参数可以是 ws 或 wss，后者表示加密。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//把请求发出去</span></span><br><span class="line">ws.onopen = <span class="function"><span class="keyword">function</span> (<span class="params">evt</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connection open ...'</span>);</span><br><span class="line">    ws.send(<span class="string">'Hello WebSockets!'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//对方发消息过来时，我接收</span></span><br><span class="line">ws.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">evt</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Received Message: '</span>, evt.data);</span><br><span class="line">    ws.close();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//关闭连接</span></span><br><span class="line">ws.onclose = <span class="function"><span class="keyword">function</span> (<span class="params">evt</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connection closed.'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Websocket的推荐链接：<a href="http://www.ruanyifeng.com/blog/2017/05/websocket.html" target="_blank" rel="noopener external nofollow noreferrer">http://www.ruanyifeng.com/blog/2017/05/websocket.html</a></p>
+<p>面试一般不会让你写这个代码，一般是考察你是否了解 WebSocket概念，知道有这么回事即可。</p>
+<h3 id="3、CORS"><a href="#3、CORS" class="headerlink" title="3、CORS"></a>3、CORS</h3><p>CORS 可以理解成是<strong>既可以同步、也可以异步</strong>的Ajax。</p>
+<p>fetch 是一个比较新的API，用来实现CORS通信。用法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// url（必选），options（可选）</span></span><br><span class="line">fetch(<span class="string">'/some/url/'</span>, &#123;</span><br><span class="line">    method: <span class="string">'get'</span>,</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;  <span class="comment">//类似于 ES6中的promise</span></span><br><span class="line"></span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 出错了，等价于 then 的第二个参数，但这样更好用更直观</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CORS的推荐链接：<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="noopener external nofollow noreferrer">http://www.ruanyifeng.com/blog/2016/04/cors.html</a></li>
+</ul>
+<p>推荐链接里有详细的配置。</p>
+<p>另外，如果面试官问：“CORS为什么支持跨域的通信？”</p>
+<p>答案：跨域时，浏览器会拦截Ajax请求，并在http头中加Origin。</p>
+<h3 id="4、Hash"><a href="#4、Hash" class="headerlink" title="4、Hash"></a>4、Hash</h3><p>url的<code>#</code>后面的内容就叫Hash。<strong>Hash的改变，页面不会刷新</strong>。这就是用 Hash 做跨域通信的基本原理。</p>
+<p>补充：url的<code>?</code>后面的内容叫Search。Search的改变，会导致页面刷新，因此不能做跨域通信。</p>
+<p><strong>使用举例：</strong></p>
+<p><strong>场景</strong>：我的页面 A 通过iframe或frame嵌入了跨域的页面 B。</p>
+<p>现在，我这个A页面想给B页面发消息，怎么操作呢？</p>
+<p>（1）首先，在我的A页面中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//伪代码</span></span><br><span class="line"><span class="keyword">var</span> B = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'iframe'</span>);</span><br><span class="line">B.src = B.src + <span class="string">'#'</span> + <span class="string">'jsonString'</span>;  <span class="comment">//我们可以把JS 对象，通过 JSON.stringify()方法转成 json字符串，发给 B</span></span><br></pre></td></tr></table></figure>
+
+<p>（2）然后，在B页面中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// B中的伪代码</span></span><br><span class="line"><span class="built_in">window</span>.onhashchange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;  <span class="comment">//通过onhashchange方法监听，url中的 hash 是否发生变化</span></span><br><span class="line">    <span class="keyword">var</span> data = <span class="built_in">window</span>.location.hash;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、postMessage-方法"><a href="#5、postMessage-方法" class="headerlink" title="5、postMessage()方法"></a>5、postMessage()方法</h3><blockquote>
+<p>H5中新增的postMessage()方法，可以用来做跨域通信。既然是H5中新增的，那就一定要提到。</p>
+</blockquote>
+<p><strong>场景</strong>：窗口 A (<code>http:A.com</code>)向跨域的窗口 B (<code>http:B.com</code>)发送信息。步骤如下。</p>
+<p>（1）在A窗口中操作如下：向B窗口发送数据：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息</span></span><br><span class="line">	Bwindow.postMessage(<span class="string">'data'</span>, <span class="string">'http://B.com'</span>); <span class="comment">//这里强调的是B窗口里的window对象</span></span><br></pre></td></tr></table></figure>
+
+<p>（2）在B窗口中操作如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在窗口B中监听 message 事件</span></span><br><span class="line">Awindow.addEventListener(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;   <span class="comment">//这里强调的是A窗口里的window对象</span></span><br><span class="line">    <span class="built_in">console</span>.log(event.origin);  <span class="comment">//获取 ：url。这里指：http://A.com</span></span><br><span class="line">    <span class="built_in">console</span>.log(event.source);  <span class="comment">//获取：A window对象</span></span><br><span class="line">    <span class="built_in">console</span>.log(event.data);    <span class="comment">//获取传过来的数据</span></span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<font color="#0000ff"><strong>更多技能</strong></font>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="http://img.smyhvae.com/2016040102.jpg" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/15-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/06-%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%B1%BB/" title="06-跨域通信类">https://tongsiying.github.io/2021/11/25/web/15-前端面试/06-跨域通信类/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/15-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/05-02.%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%EF%BC%9A%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89%E5%92%8C%E7%BB%A7%E6%89%BF%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/" rel="prev" title="05-02.面向对象：类的定义和继承的几种方式">
+      <i class="fa fa-chevron-left"></i> 05-02.面向对象：类的定义和继承的几种方式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/15-%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95/07-%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9ACSRF%E5%92%8CXSS/" rel="next" title="07-安全问题：CSRF和XSS">
+      07-安全问题：CSRF和XSS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同源策略的概念和具体限制"><span class="nav-text">同源策略的概念和具体限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前后端如何通信"><span class="nav-text">前后端如何通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何创建Ajax"><span class="nav-text">如何创建Ajax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送-Ajax-请求的五个步骤（XMLHttpRequest的工作原理）"><span class="nav-text">发送 Ajax 请求的五个步骤（XMLHttpRequest的工作原理）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送-get-请求和-post-请求"><span class="nav-text">发送 get 请求和 post 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onreadystatechange-事件"><span class="nav-text">onreadystatechange 事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件的触发条件"><span class="nav-text">事件的触发条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件的触发顺序"><span class="nav-text">事件的触发顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际开发中用的-原生Ajax请求"><span class="nav-text">实际开发中用的 原生Ajax请求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跨域通信的几种方式"><span class="nav-text">跨域通信的几种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、JSONP"><span class="nav-text">1、JSONP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、WebSocket"><span class="nav-text">2、WebSocket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、CORS"><span class="nav-text">3、CORS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Hash"><span class="nav-text">4、Hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、postMessage-方法"><span class="nav-text">5、postMessage()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="07-DOM操作练习：innerHTML的方式创建元素">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/08-%E5%89%8D%E7%AB%AF%E5%9F%BA%E6%9C%AC%E5%8A%9F%EF%BC%9ACSS%E5%92%8CDOM%E7%BB%83%E4%B9%A0/07-DOM%E6%93%8D%E4%BD%9C%E7%BB%83%E4%B9%A0%EF%BC%9AinnerHTML%E7%9A%84%E6%96%B9%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20180129_1908.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180129_2017.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180129_2151.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180201_2030.gif">
+<meta property="article:published_time" content="2021-11-25T15:21:41.239Z">
+<meta property="article:modified_time" content="2021-11-25T15:21:41.240Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20180129_1908.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/08-%E5%89%8D%E7%AB%AF%E5%9F%BA%E6%9C%AC%E5%8A%9F%EF%BC%9ACSS%E5%92%8CDOM%E7%BB%83%E4%B9%A0/07-DOM%E6%93%8D%E4%BD%9C%E7%BB%83%E4%B9%A0%EF%BC%9AinnerHTML%E7%9A%84%E6%96%B9%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>07-DOM操作练习：innerHTML的方式创建元素 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/08-%E5%89%8D%E7%AB%AF%E5%9F%BA%E6%9C%AC%E5%8A%9F%EF%BC%9ACSS%E5%92%8CDOM%E7%BB%83%E4%B9%A0/07-DOM%E6%93%8D%E4%BD%9C%E7%BB%83%E4%B9%A0%EF%BC%9AinnerHTML%E7%9A%84%E6%96%B9%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          07-DOM操作练习：innerHTML的方式创建元素
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:21:41" itemprop="dateCreated datePublished" datetime="2021-11-25T23:21:41+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+
+
+<h2 id="动态创建DOM元素的三种方式"><a href="#动态创建DOM元素的三种方式" class="headerlink" title="动态创建DOM元素的三种方式"></a>动态创建DOM元素的三种方式</h2><ul>
+<li><p><code>document.write();</code> 不常用，因为容易覆盖原来的页面。</p>
+</li>
+<li><p><code>innerHTML = ();</code> 用的比较多。绑定属性和内容比较方便。(节点套节点)</p>
+</li>
+<li><p><code>document.createElement();</code> 用得也比较多，指定数量的时候一般用它。</p>
+</li>
+</ul>
+<p><strong>1、方式一：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.write();</span><br></pre></td></tr></table></figure>
+
+<p>这种方式的好处是：比较随意，想创建就创建，可以直接在<code>write</code>里写属性都行。但是会把原来的标签给覆盖掉。所以不建议。</p>
+<p>举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    smyhvae</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//第一种创建方式：document.write();</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">    document.write("<span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">'hehe'</span>&gt;</span>我是document.write创建的<span class="tag">&lt;/<span class="name">li</span>&gt;</span>");</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="http://img.smyhvae.com/20180129_1908.png" alt></p>
+<p><strong>方式二：</strong>innerHTML</p>
+<p>举例如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    smyhvae</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> ul = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"ul"</span>)[<span class="number">0</span>];</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">//第二种：直接利用元素的innerHTNL方法。（innerText方法不识别标签）</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">    ul.innerHTML += "<span class="tag">&lt;<span class="name">li</span> <span class="attr">id</span>=<span class="string">'li1'</span>&gt;</span>我是innerHTML创建的<span class="tag">&lt;/<span class="name">li</span>&gt;</span>"  //注意，是用符号“+=”，不是“=”</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，上方代码中，是用是用符号<code>+=</code>，不是<code>=</code>，前者是在原来的基础之上增加，后者是替换。</p>
+<p>效果如下：</p>
+<p><img src="http://img.smyhvae.com/20180129_2017.png" alt></p>
+<p><strong>3、方式三：</strong>利用DOM的api创建</p>
+<p>利用DOM的api创建节点，有很多种：</p>
+<p>比如：</p>
+<ul>
+<li><p>createElement()</p>
+</li>
+<li><p>appendChild()</p>
+</li>
+<li><p>removeChild()</p>
+</li>
+<li><p>insertBefore()</p>
+</li>
+<li><p>replaceChild()</p>
+</li>
+</ul>
+<p>这个我们在上一篇文章的<code>DOM节点的操作</code>这一段中已经讲到了。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="innerHTML举例：在线用户的获取"><a href="#innerHTML举例：在线用户的获取" class="headerlink" title="innerHTML举例：在线用户的获取"></a>innerHTML举例：在线用户的获取</h2><p>现在要做下面这样一个页面：</p>
+<p><img src="http://img.smyhvae.com/20180129_2151.png" alt></p>
+<p>上图的意思是，每次刷新页面，都从服务器获取最新的在线人数的名单（我们先用本地的数组来模拟服务器上的数据）。</p>
+<p>它的结构是：div &gt; ul &gt; li。每一个li就是一个头像。</p>
+<p>如果在本地直接添加几个头像的话，代码是：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//往ul中添加li元素以及li元素中的内容</span><br><span class="line">   ul.innerHTML += '<span class="tag">&lt;<span class="name">li</span>&gt;</span>'+</span><br><span class="line">                   '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"images/noavatar_small.gif"</span> <span class="attr">width</span>=<span class="string">"48"</span> <span class="attr">height</span>=<span class="string">"48"</span> <span class="attr">alt</span>=<span class="string">"千古壹号"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span>'+</span><br><span class="line">                   '<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">title</span>=<span class="string">"千古壹号"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>千古壹号<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>'+</span><br><span class="line">               '<span class="tag">&lt;/<span class="name">li</span>&gt;</span>';</span><br><span class="line">   ul.innerHTML += '<span class="tag">&lt;<span class="name">li</span>&gt;</span>'+</span><br><span class="line">           '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"images/noavatar_small.gif"</span> <span class="attr">width</span>=<span class="string">"48"</span> <span class="attr">height</span>=<span class="string">"48"</span> <span class="attr">alt</span>=<span class="string">"千古壹号"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span>'+</span><br><span class="line">           '<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">title</span>=<span class="string">"千古壹号"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>千古壹号<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>'+</span><br><span class="line">           '<span class="tag">&lt;/<span class="name">li</span>&gt;</span>';</span><br><span class="line">   ul.innerHTML += '<span class="tag">&lt;<span class="name">li</span>&gt;</span>'+</span><br><span class="line">           '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"images/noavatar_small.gif"</span> <span class="attr">width</span>=<span class="string">"48"</span> <span class="attr">height</span>=<span class="string">"48"</span> <span class="attr">alt</span>=<span class="string">"千古壹号"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span>'+</span><br><span class="line">           '<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">title</span>=<span class="string">"千古壹号"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>千古壹号<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>'+</span><br><span class="line">           '<span class="tag">&lt;/<span class="name">li</span>&gt;</span>';</span><br></pre></td></tr></table></figure>
+
+<p>上方代码有两点比较重要：</p>
+<ul>
+<li><p>我们是通过<code>ul.innerHTML += 元素节点</code>的方式来不停地往ul里面加内容，比<code>createElement</code>的方式要方便。</p>
+</li>
+<li><p>元素的内容本身有双引号<code>&quot;</code>，所以我们要用单引号<code>&#39;</code>进行字符串的连接。</p>
+</li>
+</ul>
+<p>但是，当我们从服务器获取在线用户的时候，头像和用户的昵称是动态变化的，所以每个字符串要用变量进行表示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ul.innerHTML += '<span class="tag">&lt;<span class="name">li</span>&gt;</span>'+</span><br><span class="line">                    '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">target</span>=<span class="string">"blank"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"'+users[i].icon+'"</span> <span class="attr">width</span>=<span class="string">"48"</span> <span class="attr">height</span>=<span class="string">"48"</span> <span class="attr">alt</span>=<span class="string">"'+users[i].name+'"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span>'+</span><br><span class="line">                    '<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">title</span>=<span class="string">"'+users[i].name+'"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>'+users[i].name+'<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>'+</span><br><span class="line">                '<span class="tag">&lt;/<span class="name">li</span>&gt;</span>';</span><br></pre></td></tr></table></figure>
+
+<p>这里我们暂时用本地的数组来代表服务器的数据，最终的完整版代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        * &#123;</span><br><span class="line">            word-wrap: break-word;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.wp</span> &#123;</span></span><br><span class="line">            width: 730px;</span><br><span class="line">            margin: 0px auto;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.mtn</span> &#123;</span></span><br><span class="line">            margin-top: 5px !important;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-id">#ct</span> <span class="selector-class">.frame</span> &#123;</span></span><br><span class="line">            margin: 0;</span><br><span class="line">            border: none;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.xfs_2</span> <span class="selector-class">.frame-title</span>, <span class="selector-class">.xfs_2</span> <span class="selector-class">.frametitle</span>, <span class="selector-class">.xfs_2</span> <span class="selector-class">.tab-title</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">background-color</span>: <span class="selector-id">#A90000</span>;</span></span><br><span class="line">            background-position: 0 -99px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.xfs</span> <span class="selector-class">.frame-title</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.frametitle</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.tab-title</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.frame-title</span> <span class="selector-tag">a</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.frametitle</span> <span class="selector-tag">a</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.tab-title</span> <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">color</span>: <span class="selector-id">#FFF</span> !<span class="selector-tag">important</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.xfs</span> <span class="selector-class">.frame-title</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.frametitle</span>, <span class="selector-class">.xfs</span> <span class="selector-class">.tab-title</span> &#123;</span></span><br><span class="line">            border: none;</span><br><span class="line">            background: transparent url(images/mu.png) repeat-x 0 95;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.title</span> &#123;</span></span><br><span class="line">            padding: 0 10px;</span><br><span class="line">            height: 32px;</span><br><span class="line">            font-size: 14px;</span><br><span class="line">            font-weight: 700;</span><br><span class="line">            line-height: 32px;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.block</span> &#123;</span></span><br><span class="line">            margin: 10px 10px 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ul, menu, dir &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            list-style: none;</span><br><span class="line">            -webkit-margin-before: 1em;</span><br><span class="line">            -webkit-margin-after: 1em;</span><br><span class="line">            -webkit-margin-start: 0px;</span><br><span class="line">            -webkit-margin-end: 0px;</span><br><span class="line">            -webkit-padding-start: 25px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.mls</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line">            padding: 0 0 5px;</span><br><span class="line">            width: 66px;</span><br><span class="line">            height: 85px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.ml</span> <span class="selector-tag">li</span> &#123;</span></span><br><span class="line">            float: left;</span><br><span class="line">            text-align: center;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        a &#123;</span><br><span class="line"><span class="css">            <span class="selector-tag">color</span>: <span class="selector-id">#333</span>;</span></span><br><span class="line">            text-decoration: none;</span><br><span class="line">            font: 12px/1.5 Tahoma, 'Microsoft Yahei', 'Simsun';</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.mls</span> <span class="selector-tag">p</span> &#123;</span></span><br><span class="line">            margin-top: 5px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.ml</span> <span class="selector-tag">p</span>, <span class="selector-class">.ml</span> <span class="selector-tag">span</span> &#123;</span></span><br><span class="line">            display: block;</span><br><span class="line">            width: 100%;</span><br><span class="line">            height: 20px;</span><br><span class="line">            white-space: nowrap;</span><br><span class="line">            text-overflow: ellipsis;</span><br><span class="line">            overflow: hidden;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.mls</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line">            width: 48px;</span><br><span class="line">            height: 48px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.ml</span> <span class="selector-tag">img</span> &#123;</span></span><br><span class="line">            display: block;</span><br><span class="line">            margin: 0 auto;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        a img &#123;</span><br><span class="line">            border: none;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wp mtn"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"diy3"</span> <span class="attr">class</span>=<span class="string">"area"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"frameipq7f2"</span> <span class="attr">class</span>=<span class="string">"xfs xfs_2 frame move-span cl frame-1"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">class</span>=<span class="string">"title frame-title"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"titletext"</span>&gt;</span>当前在线用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"frameipq7f2_left"</span></span></span><br><span class="line"><span class="tag">                 <span class="attr">class</span>=<span class="string">"column frame-1-c"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">                        <span class="attr">id</span>=<span class="string">"frameipq7f2_left_temp"</span> <span class="attr">class</span>=<span class="string">"move-span temp"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"portal_block_695"</span></span></span><br><span class="line"><span class="tag">                     <span class="attr">class</span>=<span class="string">"block move-span"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span></span></span><br><span class="line"><span class="tag">                            <span class="attr">id</span>=<span class="string">"portal_block_695_content"</span> <span class="attr">class</span>=<span class="string">"dxb_bc"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"module cl ml mls"</span> <span class="attr">id</span>=<span class="string">"users"</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">                                <span class="comment">&lt;!--&lt;li&gt;--&gt;</span></span><br><span class="line">                                <span class="comment">&lt;!--&lt;a href="#" target="_blank"&gt;&lt;img src="images/noavatar_small.gif" width="48" height="48" alt="千古壹号"&gt;&lt;/a&gt;--&gt;</span></span><br><span class="line">                                <span class="comment">&lt;!--&lt;p&gt;&lt;a href="#" title="千古壹号" target="_blank"&gt;千古壹号&lt;/a&gt;&lt;/p&gt;--&gt;</span></span><br><span class="line">                                <span class="comment">&lt;!--&lt;/li&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//模拟从服务器获取数据</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> users = [</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"smyhvae"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"smyh"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"smyh02"</span>, <span class="string">"icon"</span>: <span class="string">"images/75_avatar_small.jpg"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"vae"</span>, <span class="string">"icon"</span>: <span class="string">"images/89_avatar_small.jpg"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"today"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"enen"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"oyey"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"dongxiaojie"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"qishi"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"qqtang"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"wawawa"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"haha"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"robot"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"heheda"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"smyhvae1"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;,</span></span><br><span class="line"><span class="actionscript">        &#123;<span class="string">"name"</span>: <span class="string">"lihaile"</span>, <span class="string">"icon"</span>: <span class="string">"images/noavatar_small.gif"</span>&#125;</span></span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">//需求：页面显示所有的在线用户。</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//思路：模拟服务器获取数据（数组中装着json）.获取ul，把ul的innerHTML属性获取到，然后不间断的往innerHTML属性中赋值。</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//赋值要求：li标签的内容。</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//步骤：(获取元素)</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">"users"</span>);</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> ul = div.firstElementChild || div.firstChild;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//        var ul = div.children[0];</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">//1.模拟服务器获取数据（定义数组），通过循环添加元素（定义for）</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//数组中有多少元素，我们就创建多少个li标签</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; users.length; i++) &#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//2.模拟实验的操作方式。</span></span></span><br><span class="line"><span class="actionscript">        ul.innerHTML += <span class="string">'&lt;li&gt;'</span> +</span></span><br><span class="line"><span class="handlebars"><span class="xml">            '<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">target</span>=<span class="string">"blank"</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"' + users[i].icon + '"</span> <span class="attr">width</span>=<span class="string">"48"</span> <span class="attr">height</span>=<span class="string">"48"</span> <span class="attr">alt</span>=<span class="string">"' + users[i].name + '"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span>' +</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">            '<span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">title</span>=<span class="string">"' + users[i].name + '"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>' + users[i].name + '<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span>' +</span></span></span><br><span class="line"><span class="actionscript">            <span class="string">'&lt;/li&gt;'</span>;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>工程文件：</p>
+<ul>
+<li><a href="http://download.csdn.net/download/smyhvae/10237611" target="_blank" rel="noopener external nofollow noreferrer">2018-02-01-获取在线用户列表demo.rar</a></li>
+</ul>
+<h2 id="innerHTML举例2：模拟百度搜索的下方提示"><a href="#innerHTML举例2：模拟百度搜索的下方提示" class="headerlink" title="innerHTML举例2：模拟百度搜索的下方提示"></a>innerHTML举例2：模拟百度搜索的下方提示</h2><p>要求实现的效果如下：</p>
+<p><img src="http://img.smyhvae.com/20180201_2030.gif" alt></p>
+<p>在这之前，我们先实现这样一个例子：<strong>判断字符串以某个字符串为开头</strong>。</p>
+<p><strong>判断字符串是否以某个字符串为开头：</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">"smyhvae"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断str是否以sm为开头？（给定字符串，然后他的索引值为0）</span></span><br><span class="line"><span class="keyword">var</span> num = str.indexOf(<span class="string">"sm"</span>);</span><br><span class="line"><span class="comment">//只有返回值为0，那么字符串才是以参数为开头</span></span><br><span class="line"><span class="comment">//如果在任何位置都查询不到参数，则返回值为-1；</span></span><br></pre></td></tr></table></figure>
+
+
+<p>代码解释：我们可以通过<code>indexOf(&quot;参数&quot;)</code>来实现。如果返回的索引值为0，说明字符串就是以这个参数开头的。</p>
+<p>为了实现上方gif图的搜索功能，完整版代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">        * &#123;</span><br><span class="line">            padding: 0;</span><br><span class="line">            margin: 0;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-class">.box</span> &#123;</span></span><br><span class="line">            width: 500px;</span><br><span class="line">            margin: 200px auto;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ul &#123;</span><br><span class="line">            width: 392px;</span><br><span class="line">            padding: 5px;</span><br><span class="line">            list-style: none;</span><br><span class="line">            border: 1px solid red;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">        <span class="selector-tag">li</span><span class="selector-pseudo">:hover</span> &#123;</span></span><br><span class="line">            background-color: red;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        input &#123;</span><br><span class="line">            width: 400px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        button &#123;</span><br><span class="line">            width: 70px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span>&gt;</span>搜索<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;ul&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;li&gt;aaaa&lt;/li&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;li&gt;bbb&lt;/li&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;li&gt;ccc&lt;/li&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;/ul&gt;--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//需求：输入内容(输入事件，键盘弹起事件)，模拟服务器获取内容，创建ul，并在其中显示。</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">//1.获取事件源</span></span></span><br><span class="line"><span class="actionscript">    <span class="comment">//模拟服务器获取内容</span></span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"ab"</span>, <span class="string">"abc"</span>, <span class="string">"abcd"</span>, <span class="string">"aa"</span>, <span class="string">"aaa"</span>];</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> box = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"div"</span>)[<span class="number">0</span>];</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">var</span> inp = box.children[<span class="number">0</span>];</span></span><br><span class="line"><span class="actionscript">    <span class="comment">//        var inp = document.getElementsByTagName("input")[0];</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">    <span class="comment">//2.绑定事件(输入内容(输入事件，键盘弹起事件))</span></span></span><br><span class="line"><span class="actionscript">    inp.onkeyup = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//创建一个字符串，里面添加满了li和对应的内容。</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> newArr = [];</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//遍历老数组arr，然后判断每一项，只要是以input的内容为开头的，就添加到新数组newArr中，然后转成字符串。</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">            <span class="comment">//获取输入内容input标签的value属性值。</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">if</span> (arr[i].indexOf(<span class="keyword">this</span>.value) === <span class="number">0</span>) &#123;  <span class="comment">//【重要】判断老数组arr中的每一项，是否以input的内容为开头</span></span></span><br><span class="line"><span class="actionscript">                newArr.push(<span class="string">"&lt;li&gt;"</span> + arr[i] + <span class="string">"&lt;/li&gt;"</span>);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="actionscript">        <span class="keyword">var</span> str = newArr.join(<span class="string">""</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">//Bug1：每次创建新的ul之前，如果有就的ul，就先删除旧的ul</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">if</span> (box.getElementsByTagName(<span class="string">"ul"</span>)[<span class="number">0</span>]) &#123;</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//只要存在，那么就是object，object类型的数据，只要不是null,对应的boolean值都是true；</span></span></span><br><span class="line">            box.removeChild(box.children[2]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">//Bug2.如果input的内容为空，那么就不能再生成ul了。</span></span></span><br><span class="line"><span class="actionscript">        <span class="comment">//如果input为空，那就切断函数</span></span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">//Bug3.如果arr数组中找不到以input为开头的元素。那就切断函数</span></span></span><br><span class="line"><span class="actionscript">        <span class="comment">//newArr的长度为0，就能证明以input内容为开头的元素，在arr中不存在</span></span></span><br><span class="line"><span class="actionscript">        <span class="keyword">if</span> (<span class="keyword">this</span>.value.length === <span class="number">0</span> || newArr.length === <span class="number">0</span>) &#123;  <span class="comment">//fix bug2、fix bug3</span></span></span><br><span class="line"><span class="actionscript">            <span class="comment">//切断函数，直接return</span></span></span><br><span class="line"><span class="actionscript">            <span class="keyword">return</span>;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">        <span class="comment">//3.书写事件驱动程序</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> ul = <span class="built_in">document</span>.createElement(<span class="string">"ul"</span>);</span></span><br><span class="line"><span class="actionscript">        <span class="comment">//把创建好的内容添加到ul中。</span></span></span><br><span class="line">        ul.innerHTML = str;</span><br><span class="line">        box.appendChild(ul);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="动态操作表格"><a href="#动态操作表格" class="headerlink" title="动态操作表格"></a>动态操作表格</h2><p>方式1：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">createElement</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
+<p>方式2：</p>
+<ul>
+<li><p>rows                          (只读，table和textarea能用)</p>
+</li>
+<li><p>insertRow()              (只有table能调用)</p>
+</li>
+<li><p>deleteRow()           (只有table能调用)</p>
+</li>
+<li><p>cells             (只读，table和textarea能用)</p>
+</li>
+<li><p>insertCell()               (只有tr能调用)</p>
+</li>
+<li><p>deleteCell()              (只有tr能调用)</p>
+</li>
+</ul>
+<p>PS：括号里可以带index。用的不多。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/08-%E5%89%8D%E7%AB%AF%E5%9F%BA%E6%9C%AC%E5%8A%9F%EF%BC%9ACSS%E5%92%8CDOM%E7%BB%83%E4%B9%A0/07-DOM%E6%93%8D%E4%BD%9C%E7%BB%83%E4%B9%A0%EF%BC%9AinnerHTML%E7%9A%84%E6%96%B9%E5%BC%8F%E5%88%9B%E5%BB%BA%E5%85%83%E7%B4%A0/" title="07-DOM操作练习：innerHTML的方式创建元素">https://tongsiying.github.io/2021/11/25/web/08-前端基本功：CSS和DOM练习/07-DOM操作练习：innerHTML的方式创建元素/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/08-%E5%89%8D%E7%AB%AF%E5%9F%BA%E6%9C%AC%E5%8A%9F%EF%BC%9ACSS%E5%92%8CDOM%E7%BB%83%E4%B9%A0/05-DOM%E6%93%8D%E4%BD%9C%E7%BB%83%E4%B9%A0%EF%BC%9A%E8%AE%BF%E9%97%AE%E5%85%B3%E7%B3%BB%E7%9A%84%E5%B0%81%E8%A3%85/" rel="prev" title="05-DOM操作练习：访问关系的封装">
+      <i class="fa fa-chevron-left"></i> 05-DOM操作练习：访问关系的封装
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/09-%E7%A7%BB%E5%8A%A8Web%E5%BC%80%E5%8F%91/01-Bootstrap%E5%85%A5%E9%97%A8/" rel="next" title="01-Bootstrap入门">
+      01-Bootstrap入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态创建DOM元素的三种方式"><span class="nav-text">动态创建DOM元素的三种方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#innerHTML举例：在线用户的获取"><span class="nav-text">innerHTML举例：在线用户的获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#innerHTML举例2：模拟百度搜索的下方提示"><span class="nav-text">innerHTML举例2：模拟百度搜索的下方提示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态操作表格"><span class="nav-text">动态操作表格</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

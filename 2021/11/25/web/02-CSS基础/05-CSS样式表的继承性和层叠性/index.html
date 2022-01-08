@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="05-CSS样式表的继承性和层叠性">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/02-CSS%E5%9F%BA%E7%A1%80/05-CSS%E6%A0%B7%E5%BC%8F%E8%A1%A8%E7%9A%84%E7%BB%A7%E6%89%BF%E6%80%A7%E5%92%8C%E5%B1%82%E5%8F%A0%E6%80%A7/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20170724_2359.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170725_2122.jpg">
+<meta property="og:image" content="http://img.smyhvae.com/20170725_2132.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170725_2138.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170725_2250.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170726_2221.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170726_2225.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170726_2229.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0843.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190122_1530.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_2050.png">
+<meta property="og:image" content="http://img.smyhvae.com/2015-10-03-css-14.png">
+<meta property="og:image" content="http://img.smyhvae.com/2015-10-03-css-16.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0851.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0853.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0855.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0857.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_2021.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_2029.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_2035_2.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_2046.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0900.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0901.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0902.png">
+<meta property="og:image" content="http://img.smyhvae.com/20170727_0903.png">
+<meta property="og:image" content="http://img.smyhvae.com/20190101.png">
+<meta property="article:published_time" content="2021-11-25T15:17:38.666Z">
+<meta property="article:modified_time" content="2021-11-25T15:17:38.668Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20170724_2359.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/02-CSS%E5%9F%BA%E7%A1%80/05-CSS%E6%A0%B7%E5%BC%8F%E8%A1%A8%E7%9A%84%E7%BB%A7%E6%89%BF%E6%80%A7%E5%92%8C%E5%B1%82%E5%8F%A0%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>05-CSS样式表的继承性和层叠性 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/02-CSS%E5%9F%BA%E7%A1%80/05-CSS%E6%A0%B7%E5%BC%8F%E8%A1%A8%E7%9A%84%E7%BB%A7%E6%89%BF%E6%80%A7%E5%92%8C%E5%B1%82%E5%8F%A0%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          05-CSS样式表的继承性和层叠性
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:17:38" itemprop="dateCreated datePublished" datetime="2021-11-25T23:17:38+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+<h2 id="本文重点"><a href="#本文重点" class="headerlink" title="本文重点"></a>本文重点</h2><ul>
+<li>CSS的继承性</li>
+<li>CSS的层叠性<ul>
+<li>计算权重</li>
+<li>权重问题大总结</li>
+<li>CSS样式表的冲突的总结</li>
+</ul>
+</li>
+<li>权重问题深入<ul>
+<li>同一个标签，携带了多个类名</li>
+<li>!important标记</li>
+</ul>
+</li>
+</ul>
+<h2 id="CSS的继承性"><a href="#CSS的继承性" class="headerlink" title="CSS的继承性"></a>CSS的继承性</h2><p>我们来看下面这样的代码，来引入继承性：</p>
+<p><img src="http://img.smyhvae.com/20170724_2359.png" alt></p>
+<p>上方代码中，我们给div标签增加红色属性，却发现，div里的每一个子标签<code>&lt;p&gt;</code>也增加了红色属性。于是我们得到这样的结论：</p>
+<blockquote>
+<p>有一些属性，当给自己设置的时候，自己的后代都继承上了，这个就是<strong>继承性。</strong></p>
+</blockquote>
+<p>继承性是从自己开始，直到最小的元素。</p>
+<p>但是呢，如果再给上方的代码加一条属性：</p>
+<p><img src="http://img.smyhvae.com/20170725_2122.jpg" alt></p>
+<p>上图中，我们给div加了一个border，但是发现只有div具备了border属性，而p标签却没有border属性。于是我们可以得出结论：</p>
+<ul>
+<li><p>关于文字样式的属性，都具有继承性。这些属性包括：color、 text-开头的、line-开头的、font-开头的。</p>
+</li>
+<li><p>关于盒子、定位、布局的属性，都不能继承。</p>
+</li>
+</ul>
+<p>以后当我们谈到css有哪些特性的时候，我们要首先想到继承性。而且，要知道哪些属性具有继承性、哪些属性没有继承性。</p>
+<h2 id="CSS的层叠性"><a href="#CSS的层叠性" class="headerlink" title="CSS的层叠性"></a>CSS的层叠性</h2><p>很多公司如果要笔试，那么一定会考层叠性。</p>
+<h3 id="层叠性：计算权重"><a href="#层叠性：计算权重" class="headerlink" title="层叠性：计算权重"></a>层叠性：计算权重</h3><p><strong>层叠性：就是css处理冲突的能力。</strong> 所有的权重计算，没有任何兼容问题！</p>
+<p>CSS像艺术家一样优雅，像工程师一样严谨。</p>
+<p>我们来看一个例子，就知道什么叫层叠性了。</p>
+<p><img src="http://img.smyhvae.com/20170725_2132.png" alt></p>
+<p>上图中，三种选择器同时给P标签增加颜色的属性，但是，文字最终显示的是蓝色，这个时候，就出现了层叠性的情况。</p>
+<p>当多个选择器，选择上了某个元素的时候，要按照如下顺序统计权重：</p>
+<ul>
+<li>id 选择器</li>
+<li>类选择器、属性选择器、伪类选择器</li>
+<li>标签选择器、伪元素选择器</li>
+</ul>
+<p>因为对于相同方式的样式表，其选择器排序的优先级为：ID选择器 &gt; 类选择器 &gt; 标签选择器</p>
+<p>针对上面这句话，我们接下来举一些复杂一点的例子。</p>
+<h3 id="层叠性举例"><a href="#层叠性举例" class="headerlink" title="层叠性举例"></a>层叠性举例</h3><h4 id="举例1：计算权重"><a href="#举例1：计算权重" class="headerlink" title="举例1：计算权重"></a>举例1：计算权重</h4><p><img src="http://img.smyhvae.com/20170725_2138.png" alt></p>
+<p>如上图所示，统计各个选择器的数量，优先级高的胜出。文字的颜色为红色。</p>
+<p>PS：不进位，实际上能进位（奇淫知识点：255个标签，等于1个类名）但是没有实战意义！</p>
+<h4 id="举例2：权重相同时"><a href="#举例2：权重相同时" class="headerlink" title="举例2：权重相同时"></a>举例2：权重相同时</h4><p><img src="http://img.smyhvae.com/20170725_2250.png" alt></p>
+<p>上图可以看到，第一个样式和第二个样式的权重相同。但第二个样式的书写顺序靠后，因此以第二个样式为准（就近原则）。</p>
+<h4 id="举例3：具有实战性的例子"><a href="#举例3：具有实战性的例子" class="headerlink" title="举例3：具有实战性的例子"></a>举例3：具有实战性的例子</h4><p><img src="http://img.smyhvae.com/20170726_2221.png" alt></p>
+<p>现在我要让一个列表实现上面的这种样式：第一个li为红色，剩下的li全部为蓝色。</p>
+<p>如果写成下面这种代码是无法实现的：</p>
+<p><img src="http://img.smyhvae.com/20170726_2225.png" alt></p>
+<p>无法实现的原因很简单，计算一下三个选择器的权重就清楚了，显然第二个样式被第一个样式表覆盖了。</p>
+<p>正确的做法是：（<strong>非常重要</strong>）</p>
+<p><img src="http://img.smyhvae.com/20170726_2229.png" alt></p>
+<p>上图中，第二个样式比第一个样式的权重要大。因此在实战中可以实现这种效果：<strong>所有人当中，让某一个人为红，让其他所有人为蓝。</strong></p>
+<p>这种方式好用是好用，但用好很难。</p>
+<p>就拿上方代码来举例，为了达到这种效果，即为了防止权重不够，比较稳妥的做法是：<strong>把第二个样式表照着第一个样式表来写，在此基础上，给第二个样式表再加一个权重。</strong></p>
+<p>上面这个例子很具有实战性。</p>
+<h4 id="举例4：继承性造成的影响"><a href="#举例4：继承性造成的影响" class="headerlink" title="举例4：继承性造成的影响"></a>举例4：继承性造成的影响</h4><p>这里需要声明一点：</p>
+<blockquote>
+<p>如果不能直接选中某个元素，通过继承性影响的话，那么权重是0。</p>
+</blockquote>
+<p>为了验证上面这句话，我们来看看下面这样的例子：</p>
+<p><img src="http://img.smyhvae.com/20170727_0843.png" alt></p>
+<p>另外：<strong>如果大家的权重相同，那么就采用就近原则：谁描述的近，听谁的</strong>。举例如下：(box3 描述得最近，所以采用 box3 的属性)</p>
+<p><img src="http://img.smyhvae.com/20190122_1530.png" alt></p>
+<p>上方代码的文字版如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">      <span class="selector-id">#box1</span> &#123;</span></span><br><span class="line">        color: red;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-id">#box2</span> &#123;</span></span><br><span class="line">        color: green;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line"><span class="css">      <span class="selector-id">#box3</span> &#123;</span></span><br><span class="line">        color: blue;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box1"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box2"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"box3"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>猜猜我是什么颜色<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="层叠性：权重计算的问题大总结（非常重要）"><a href="#层叠性：权重计算的问题大总结（非常重要）" class="headerlink" title="层叠性：权重计算的问题大总结（非常重要）"></a>层叠性：权重计算的问题大总结（非常重要）</h3><p>层叠性。层叠性是一种能力，就是处理冲突的能力。当不同选择器，对一个标签的同一个样式，有不同的值，听谁的？这就是冲突。css有着严格的处理冲突的机制。</p>
+<p>通过列举上面几个例子，我们对权重问题做一个总结。</p>
+<p><img src="http://img.smyhvae.com/20170727_2050.png" alt></p>
+<p>上面这个图非常重要，我们针对这个图做一个文字描述：</p>
+<ul>
+<li>选择上了，数权重，(id的数量，类的数量，标签的数量)。如果权重一样，谁写在后面听谁的。</li>
+<li>没有选择上，通过继承影响的，就近原则，谁描述的近听谁的。如果描述的一样近，比如选择器权重，如果权重再一样重，谁写在后面听谁的。</li>
+</ul>
+<h3 id="CSS样式表的冲突的总结"><a href="#CSS样式表的冲突的总结" class="headerlink" title="CSS样式表的冲突的总结"></a>CSS样式表的冲突的总结</h3><ul>
+<li>1、对于相同的选择器（比如同样都是类选择器），其样式表排序：行级样式 &gt; 内嵌样式表 &gt; 外部样式表（就近原则）</li>
+<li>2、对于相同类型的样式表（比如同样都是内部样式表），其选择器排序：ID选择器 &gt; 类选择器 &gt; 标签选择器</li>
+<li>3、外部样式表的ID选择器  &gt; 内嵌样式表的标签选择器</li>
+</ul>
+<blockquote>
+<p>总结：就近原则。ID选择器优先级最大。</p>
+</blockquote>
+<p>举例：如果都是内嵌样式表，优先级的顺序如下：（ID 选择器 &gt; 类选择器 &gt; 标签选择器）</p>
+<p><img src="http://img.smyhvae.com/2015-10-03-css-14.png" alt></p>
+<p>另外还有两个冲突的情况：</p>
+<ul>
+<li>1、对同一个标签，如果用到的都是内嵌样式表，且权重一致，那它的优先级：<strong>定义</strong>的CSS样式表中，谁最近，就用谁。</li>
+<li>2、对于同一个标签，如果用到的都是外部样式表，且权重一致，那它的优先级：html文件中，引用样式表的位置越近，就用谁。</li>
+</ul>
+<p>例如：</p>
+<p><img src="http://img.smyhvae.com/2015-10-03-css-16.png" alt></p>
+<h3 id="题目演示"><a href="#题目演示" class="headerlink" title="题目演示"></a>题目演示</h3><p>CSS的层叠性讲完了，我们来做几个题目吧。</p>
+<h4 id="题目1"><a href="#题目1" class="headerlink" title="题目1"></a>题目1</h4><p><img src="http://img.smyhvae.com/20170727_0851.png" alt></p>
+<h4 id="题目2"><a href="#题目2" class="headerlink" title="题目2"></a>题目2</h4><p><img src="http://img.smyhvae.com/20170727_0853.png" alt></p>
+<h4 id="题目3"><a href="#题目3" class="headerlink" title="题目3"></a>题目3</h4><p><img src="http://img.smyhvae.com/20170727_0855.png" alt></p>
+<h4 id="题目4"><a href="#题目4" class="headerlink" title="题目4"></a>题目4</h4><p><img src="http://img.smyhvae.com/20170727_0857.png" alt></p>
+<h2 id="权重问题深入"><a href="#权重问题深入" class="headerlink" title="权重问题深入"></a>权重问题深入</h2><h3 id="同一个标签，携带了多个类名，有冲突："><a href="#同一个标签，携带了多个类名，有冲突：" class="headerlink" title="同一个标签，携带了多个类名，有冲突："></a>同一个标签，携带了多个类名，有冲突：</h3><p>这里需要补充两种冲突的情况：</p>
+<ul>
+<li>1、对同一个标签，如果用到了了多个相同的内嵌样式表，它的优先级：<strong>定义</strong>的样式表中，谁最近，就用谁。</li>
+<li>2、对于同一个标签，如果引用了多个相同的外部样式表，它的优先级：html文件中，引用样式表的位置越近，就用谁。</li>
+</ul>
+<p>例如：（就近原则）</p>
+<p><img src="http://img.smyhvae.com/20170727_2021.png" alt></p>
+<p>上图中，<strong>文字显示的颜色均为红色</strong>。因为这和在标签中的挂类名的书序无关，只和css的顺序有关。</p>
+<h3 id="important标记：优先级最高"><a href="#important标记：优先级最高" class="headerlink" title="!important标记：优先级最高"></a>!important标记：优先级最高</h3><p>来看个很简单的例子：</p>
+<p><img src="http://img.smyhvae.com/20170727_2029.png" alt></p>
+<p>上图中，显然id选择器的权重最大，所以文字的颜色是红色。</p>
+<p>如果我们想让文字的颜色显示为绿色，只需要给标签选择器的加一个<code>!important</code>标记，此时其权重为无穷大。如下：</p>
+<p><img src="http://img.smyhvae.com/20170727_2035_2.png" alt></p>
+<p>important是英语里面的“重要的”的意思。我们可以通过如下语法：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">k</span>:v <span class="meta">!important</span>;</span><br></pre></td></tr></table></figure>
+
+<p>来给一个属性提高权重。这个属性的权重就是<strong>无穷大</strong>。</p>
+<p>注意，一定要注意语法的正确性。</p>
+<p>正确的语法：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">font-size</span>:<span class="number">60px</span> <span class="meta">!important</span>;</span><br></pre></td></tr></table></figure>
+
+<p>错误的语法：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">font-size</span>:<span class="number">60px</span>; !important;    不能把!important写在外面</span><br><span class="line"><span class="attribute">font-size</span>:<span class="number">60px</span> important;      不能忘记感叹号</span><br></pre></td></tr></table></figure>
+
+<p><code>!important</code>标记需要强调如下3点：</p>
+<p><strong>（1）!important提升的是一个属性，而不是一个选择器</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">	color:red !important;    只写了这一个!important，所以只有字体颜色属性提升了权重</span><br><span class="line">	<span class="selector-tag">font-size</span>: 100<span class="selector-tag">px</span> ;       这条属性没有写!<span class="selector-tag">important</span>，所以没有提升权重</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#para1</span>&#123;</span><br><span class="line">	<span class="attribute">color</span>:blue;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.spec</span>&#123;</span><br><span class="line">	<span class="attribute">color</span>:green;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以，综合来看，字体颜色是red（听important的）；字号是50px（听id的）。</p>
+<p><strong>（2）!important无法提升继承的权重，该是0还是0</strong></p>
+<p>比如HTML结构：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">p</span>&gt;</span>哈哈哈哈哈哈哈哈<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>有CSS样式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">	<span class="attribute">color</span>:red <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">	<span class="attribute">color</span>:blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于div是通过继承性来影响文字颜色的，所以!important无法提升它的权重，权重依然是0。</p>
+<p>干不过p标签，因为p标签是实实在在选中了，所以字是蓝色的（以p为准）。</p>
+<p><strong>(3)!important不影响就近原则</strong></p>
+<p>如果大家都是继承来的，按理说应该按照“就近原则”，那么important能否影响就近原则呢？<br>答案是：不影响。远的，永远是远的。不能给远的写一个important，干掉近的。</p>
+<p>为了验证这个问题，我们可以搞两层具有继承性的标签，然后给外层标签加一个!important，最终看看就近原则有没有被打破。举例如下：</p>
+<p><img src="http://img.smyhvae.com/20170727_2046.png" alt></p>
+<p>PS：做网站的时候，!important 尽量不要用。否则会让css写的很乱。</p>
+<h2 id="知识回顾"><a href="#知识回顾" class="headerlink" title="知识回顾"></a>知识回顾</h2><blockquote>
+<p>我们把以上内容和上一篇文章做一个简单的知识回顾。</p>
+</blockquote>
+<h3 id="CSS属性"><a href="#CSS属性" class="headerlink" title="CSS属性"></a>CSS属性</h3><blockquote>
+<p>css属性，面试的时候会有笔试，笔试没有智能提示的。</p>
+</blockquote>
+<p>加粗，倾斜，下划线：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">font-weight</span>:bold;</span><br><span class="line"><span class="attribute">font-style</span>:italic;</span><br><span class="line"><span class="attribute">text-decoration</span>:underline;</span><br></pre></td></tr></table></figure>
+
+<p>背景颜色、前景色：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">background</span>-<span class="built_in">color</span>:<span class="built_in">red</span>;</span><br><span class="line"><span class="built_in">color</span>:<span class="built_in">red</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="class和id的区别"><a href="#class和id的区别" class="headerlink" title="class和id的区别"></a>class和id的区别</h3><p>class用于css的，id用于js的。</p>
+<p>1）class页面上可以重复。id页面上唯一，不能重复。<br>2）一个标签可以有多个class，用空格隔开。但是id只能有id。</p>
+<h3 id="各种选择器-浏览器兼容性"><a href="#各种选择器-浏览器兼容性" class="headerlink" title="各种选择器(浏览器兼容性)"></a>各种选择器(浏览器兼容性)</h3><p>IE6层面兼容的选择器： 标签选择器、id选择器、类选择器、后代、交集选择器、并集选择器、通配符。如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">p</span><br><span class="line">#box</span><br><span class="line">.spec</span><br><span class="line"><span class="selector-tag">div</span> p</span><br><span class="line"><span class="selector-tag">div</span>.spec</span><br><span class="line"><span class="selector-tag">div</span>,p</span><br><span class="line">*</span><br></pre></td></tr></table></figure>
+
+<p>IE7能够兼容的：儿子选择器、下一个兄弟选择器。如下：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">div</span>&gt;p</span><br><span class="line">h3+p</span><br></pre></td></tr></table></figure>
+<p>IE8能够兼容的：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ul</span> <span class="selector-tag">li</span>:first-child</span><br><span class="line"><span class="selector-tag">ul</span> <span class="selector-tag">li</span>:last-child</span><br></pre></td></tr></table></figure>
+<h3 id="css两个性质"><a href="#css两个性质" class="headerlink" title="css两个性质"></a>css两个性质</h3><ul>
+<li><p>继承性：好的事儿。继承从上到下，哪些能？哪些不能？</p>
+</li>
+<li><p>层叠性：冲突，多个选择器描述了同一个属性，听谁的？</p>
+</li>
+</ul>
+<p>再看几个题目：</p>
+<p><img src="http://img.smyhvae.com/20170727_0900.png" alt></p>
+<p><img src="http://img.smyhvae.com/20170727_0901.png" alt></p>
+<p><img src="http://img.smyhvae.com/20170727_0902.png" alt></p>
+<p><img src="http://img.smyhvae.com/20170727_0903.png" alt></p>
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<strong>更多技能</strong>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="http://img.smyhvae.com/20190101.png" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/02-CSS%E5%9F%BA%E7%A1%80/05-CSS%E6%A0%B7%E5%BC%8F%E8%A1%A8%E7%9A%84%E7%BB%A7%E6%89%BF%E6%80%A7%E5%92%8C%E5%B1%82%E5%8F%A0%E6%80%A7/" title="05-CSS样式表的继承性和层叠性">https://tongsiying.github.io/2021/11/25/web/02-CSS基础/05-CSS样式表的继承性和层叠性/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/02-CSS%E5%9F%BA%E7%A1%80/04-CSS%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%9A%E4%BC%AA%E7%B1%BB/" rel="prev" title="04-CSS选择器：伪类">
+      <i class="fa fa-chevron-left"></i> 04-CSS选择器：伪类
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/02-CSS%E5%9F%BA%E7%A1%80/06-CSS%E7%9B%92%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/" rel="next" title="06-CSS盒模型详解">
+      06-CSS盒模型详解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本文重点"><span class="nav-text">本文重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS的继承性"><span class="nav-text">CSS的继承性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS的层叠性"><span class="nav-text">CSS的层叠性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#层叠性：计算权重"><span class="nav-text">层叠性：计算权重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层叠性举例"><span class="nav-text">层叠性举例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举例1：计算权重"><span class="nav-text">举例1：计算权重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例2：权重相同时"><span class="nav-text">举例2：权重相同时</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例3：具有实战性的例子"><span class="nav-text">举例3：具有实战性的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#举例4：继承性造成的影响"><span class="nav-text">举例4：继承性造成的影响</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层叠性：权重计算的问题大总结（非常重要）"><span class="nav-text">层叠性：权重计算的问题大总结（非常重要）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS样式表的冲突的总结"><span class="nav-text">CSS样式表的冲突的总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题目演示"><span class="nav-text">题目演示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目1"><span class="nav-text">题目1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题目2"><span class="nav-text">题目2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题目3"><span class="nav-text">题目3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题目4"><span class="nav-text">题目4</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#权重问题深入"><span class="nav-text">权重问题深入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同一个标签，携带了多个类名，有冲突："><span class="nav-text">同一个标签，携带了多个类名，有冲突：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#important标记：优先级最高"><span class="nav-text">!important标记：优先级最高</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识回顾"><span class="nav-text">知识回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS属性"><span class="nav-text">CSS属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class和id的区别"><span class="nav-text">class和id的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各种选择器-浏览器兼容性"><span class="nav-text">各种选择器(浏览器兼容性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#css两个性质"><span class="nav-text">css两个性质</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

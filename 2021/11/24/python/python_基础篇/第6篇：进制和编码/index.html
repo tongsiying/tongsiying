@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第6篇：进制和编码">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC6%E7%AF%87%EF%BC%9A%E8%BF%9B%E5%88%B6%E5%92%8C%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201025174321969.png">
+<meta property="og:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201025180124802.png">
+<meta property="og:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201026111741235.png">
+<meta property="og:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201026111752410.png">
+<meta property="article:published_time" content="2021-11-24T11:37:35.446Z">
+<meta property="article:modified_time" content="2021-11-24T11:36:12.893Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201025174321969.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC6%E7%AF%87%EF%BC%9A%E8%BF%9B%E5%88%B6%E5%92%8C%E7%BC%96%E7%A0%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第6篇：进制和编码 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC6%E7%AF%87%EF%BC%9A%E8%BF%9B%E5%88%B6%E5%92%8C%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第6篇：进制和编码
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:36:12" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+**学习目标**：讲解计算机中一些必备的常识知识，让同学们了解一些常见名词背后的含义（重在理解）。
+
+<p><strong>本节概要</strong>：</p>
+<ul>
+<li>进制</li>
+<li>单位</li>
+<li>编码</li>
+<li>小结</li>
+</ul>
+<h2 id="进制"><a href="#进制" class="headerlink" title="进制"></a>进制</h2><p>计算机中底层所有的数据都是以 <code>010101</code>的形式存在（图片、文本、视频等）。</p>
+<h3 id="进制介绍"><a href="#进制介绍" class="headerlink" title="进制介绍"></a>进制介绍</h3><ul>
+<li><p>二进制：0、1、10</p>
+</li>
+<li><p>八进制：逢8进1</p>
+</li>
+<li><p>十进制：逢10进1</p>
+</li>
+<li><p>十六进制：逢16进1</p>
+</li>
+</ul>
+<img src="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201025174321969.png" alt="image-20201025174321969" style="zoom: 50%;">
+
+<h3 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h3><img src="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201025180124802.png" alt="image-20201025180124802" style="zoom:50%;">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">v1 = bin(<span class="number">25</span>) <span class="comment"># 十进制转换为二进制</span></span><br><span class="line">print(v1) <span class="comment"># "0b11001"</span></span><br><span class="line"></span><br><span class="line">v2 = oct(<span class="number">23</span>) <span class="comment"># 十进制转换为八进制</span></span><br><span class="line">print(v2) <span class="comment"># "0o27"</span></span><br><span class="line"></span><br><span class="line">v3 = hex(<span class="number">28</span>) <span class="comment"># 十进制转换为十六进制</span></span><br><span class="line">print(v3) <span class="comment"># "0x1c"</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i1 = int(<span class="string">"0b11001"</span>,base=<span class="number">2</span>) <span class="comment"># 25</span></span><br><span class="line"></span><br><span class="line">i2 = int(<span class="string">"0o27"</span>,base=<span class="number">8</span>) <span class="comment"># 23 </span></span><br><span class="line"></span><br><span class="line">i3 = int(<span class="string">"0x1c"</span>,base=<span class="number">16</span>) <span class="comment"># 28</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">""" 十进制转换成其他进制 """</span></span><br><span class="line">print(<span class="string">'十进制：'</span>,<span class="number">4</span>)</span><br><span class="line">print(<span class="string">'二进制:'</span>, bin(<span class="number">4</span>)) <span class="comment">#  100</span></span><br><span class="line">print(<span class="string">'八进制:'</span>, oct(<span class="number">9</span>))  <span class="comment"># 11</span></span><br><span class="line">print(<span class="string">'十六进制:'</span>, hex(<span class="number">10</span>))  <span class="comment"># a</span></span><br><span class="line"></span><br><span class="line"><span class="string">""" 其他进制转换成十进制 """</span></span><br><span class="line">print(int(<span class="string">'0b10'</span>, base=<span class="number">2</span>))  <span class="comment"># 2</span></span><br><span class="line">print(int(<span class="string">'11'</span>, base=<span class="number">8</span>)) <span class="comment"># 9</span></span><br><span class="line">print(int(<span class="string">'11'</span>, base=<span class="number">16</span>)) <span class="comment"># 17</span></span><br><span class="line"></span><br><span class="line"><span class="string">""" 二进制转换成八进制 """</span></span><br><span class="line">print(oct(int(<span class="string">'100'</span>, base=<span class="number">2</span>)))  <span class="comment"># 0o4</span></span><br><span class="line"><span class="string">""" 二进制转换成十六进制 """</span></span><br><span class="line">print(hex(int(<span class="string">'100'</span>, base=<span class="number">2</span>)))  <span class="comment"># 0x4</span></span><br><span class="line"><span class="string">""" 八进制转换成二进制 """</span></span><br><span class="line">print(bin(int(<span class="string">'10'</span>, base=<span class="number">8</span>)))  <span class="comment"># 0b1000</span></span><br><span class="line"><span class="string">""" 八进制转换成十六进制 """</span></span><br><span class="line">print(hex(int(<span class="string">'10'</span>, base=<span class="number">8</span>)))  <span class="comment"># 0x4</span></span><br><span class="line"><span class="string">""" 十六进制转换成二进制 """</span></span><br><span class="line">print(bin(int(<span class="string">'10'</span>, base=<span class="number">16</span>)))  <span class="comment"># 0b10000</span></span><br><span class="line"><span class="string">""" 十六进制转换成八进制 """</span></span><br><span class="line">print(hex(int(<span class="string">'10'</span>, base=<span class="number">16</span>)))  <span class="comment"># 0x10</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="单位"><a href="#单位" class="headerlink" title="单位"></a>单位</h2><p>由于计算机中本质上所有的东西以为二进制存储和操作的，为了方便对于二进制值大小的表示，所以就搞了一些单位。</p>
+<ul>
+<li><p>b（bit），位</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>，<span class="number">1</span>位</span><br><span class="line"><span class="number">10</span>，<span class="number">2</span>位</span><br><span class="line"><span class="number">111</span>，<span class="number">3</span>位</span><br><span class="line"><span class="number">1001</span>，<span class="number">4</span>位</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>B（byte），字节</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span>位是一个字节。</span><br><span class="line"></span><br><span class="line"><span class="number">10010110</span>，<span class="number">1</span>个字节</span><br><span class="line"><span class="symbol">10010110 </span><span class="number">10010110</span>，<span class="number">2</span>个字节</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>KB（kilobyte），千字节</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1024</span>个字节就是<span class="number">1</span>个千字节。</span><br><span class="line"></span><br><span class="line"><span class="number">10010110</span> <span class="number">11010110</span>  <span class="number">10010111</span> .. ，<span class="number">1</span>KB</span><br><span class="line"><span class="number">1</span>KB = <span class="number">1024</span>B= <span class="number">1024</span> * <span class="number">8</span> b</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>M（Megabyte），兆</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1024</span>KB就是<span class="number">1</span>M</span><br><span class="line"><span class="number">1</span>M= <span class="number">1024</span>KB = <span class="number">1024</span> * <span class="number">1024</span> B = <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">8</span> b</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>G（Gigabyte），千兆</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1024</span>M就是<span class="number">1</span>G</span><br><span class="line"><span class="number">1</span> G=  <span class="number">1024</span> M=  <span class="number">1024</span> *<span class="number">1024</span>KB =  <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span> B =  <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">8</span> b</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>T（Terabyte），万亿字节</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1024</span>个G就是<span class="number">1</span>T</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他更大单位 PB/EB/ZB/YB/BB/NB/DB 不再赘述。</p>
+</li>
+</ul>
+<p><strong>做个小练习</strong>：</p>
+<ul>
+<li><p>假设1个汉字需要2个字节(2B=16位来表示，如：1000101011001100)，那么1G流量可以通过网络传输多少汉字呢？（计算机传输本质上也是二进制）</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>G = <span class="number">1024</span>M = <span class="number">1024</span> * <span class="number">1024</span> KB = <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span> / <span class="number">2</span> B</span><br><span class="line"><span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span> / <span class="number">2</span> = ?</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>假设1个汉字需要2个字节(2B=16位来表示，如：1000101011001100)，那么500G硬盘可以存储多少个汉字？</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">500</span>G = <span class="number">500</span> * <span class="number">1024</span>M = <span class="number">500</span> * <span class="number">1024</span> * <span class="number">1024</span> KB = <span class="number">500</span> * <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span> / <span class="number">2</span> B</span><br><span class="line"><span class="number">500</span> * <span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span> / <span class="number">2</span> = ?</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><p>编码，文字和二进制之间的一个对照表。</p>
+<h3 id="ASCII编码"><a href="#ASCII编码" class="headerlink" title="ASCII编码"></a>ASCII编码</h3><ul>
+<li>ASCII（American Standard Code for Information Interchange，美国信息互换标准代码，ASCⅡ）是基于拉丁字母的一套电脑编码系统。它主要用于显示现代英语和其他西欧语言。它是现今最通用的单字节编码系统，并等同于国际标准ISO/IEC 646。</li>
+<li>ASCII规定使用1个字节来表示字母与二进制的对应关系。</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000000</span></span><br><span class="line"><span class="number">00000001</span>    w</span><br><span class="line"><span class="number">00000010</span>    B</span><br><span class="line"><span class="number">00000011</span>    a</span><br><span class="line">...</span><br><span class="line"><span class="number">11111111</span></span><br><span class="line"></span><br><span class="line"><span class="number">2</span>**<span class="number">8</span> = <span class="number">256</span></span><br></pre></td></tr></table></figure>
+
+<center><b>ASCII对照表</b></center>
+
+<ul>
+<li><a href="http://ascii.911cha.com/" target="_blank" rel="noopener external nofollow noreferrer">http://ascii.911cha.com/</a></li>
+</ul>
+<p><img src="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201026111741235.png" alt="image-20201026111741235"></p>
+<p><img src="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/image-20201026111752410.png" alt="image-20201026111752410"></p>
+<h3 id="gb-2312编码"><a href="#gb-2312编码" class="headerlink" title="gb-2312编码"></a>gb-2312编码</h3><ul>
+<li><p><code>gb-2312</code>编码，由国家信息标准委员会制作（1980年）。</p>
+</li>
+<li><p><code>gbk</code>编码，对gb2312进行扩展，包含了中日韩等文字（1995年）。</p>
+</li>
+<li><p>在与二进制做对应关系时，由如下逻辑：</p>
+<ul>
+<li>单字节表示，用一个字节表示对应关系。2**8 = 256</li>
+<li>双字节表示，用两个字节表示对应关系。2**16 = 65536中可能性，目前只用了2万多。</li>
+</ul>
+</li>
+<li><p>问题：如果我用<code>gbk</code>编码来编写一个中文，转换成二进制的话用几个字节表示？答：2个字节</p>
+</li>
+</ul>
+<h3 id="unicode"><a href="#unicode" class="headerlink" title="unicode"></a>unicode</h3><ul>
+<li><p><code>unicode</code>也被称为万国码，为全球的每个文字都分配了一个码位（二进制表示）。</p>
+</li>
+<li><p>ucs2 </p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用固定的<span class="number">2</span>个字节去表示一个文字。</span><br><span class="line"></span><br><span class="line"><span class="number">00000000</span> <span class="number">00000000</span>     我</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>**<span class="number">16</span> = <span class="number">65535</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ucs4</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用固定的<span class="number">4</span>个字节去表示一个文字。</span><br><span class="line"><span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span>  我</span><br><span class="line">...</span><br><span class="line"><span class="number">2</span>**<span class="number">32</span> = <span class="number">4294967296</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>unicode</code>官网：<a href="http://www.unicode.org/charts/" target="_blank" rel="noopener external nofollow noreferrer">http://www.unicode.org/charts/</a></p>
+<ul>
+<li>中文：<a href="https://unicode-table.com/en/#cjk-unified-ideographs" target="_blank" rel="noopener external nofollow noreferrer">https://unicode-table.com/en/#cjk-unified-ideographs</a></li>
+<li>表情：<a href="https://unicode-table.com/en/#emoticons" target="_blank" rel="noopener external nofollow noreferrer">https://unicode-table.com/en/#emoticons</a><ul>
+<li><a href="https://emojipedia.org/" target="_blank" rel="noopener external nofollow noreferrer">https://emojipedia.org/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">文字     十六进制            二进制 </span><br><span class="line"> ˂		 <span class="number">02</span>C2 		    <span class="number">1011000010</span></span><br><span class="line"> ȧ        <span class="number">0227</span>           <span class="number">1000100111</span></span><br><span class="line"> ȧ        <span class="number">0227</span>         <span class="number">00000010</span> <span class="number">00100111</span>                       ucs2</span><br><span class="line"> ȧ        <span class="number">0227</span>         <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000010</span> <span class="number">00100111</span>     ucs4</span><br><span class="line"> </span><br><span class="line"> 乐	     <span class="number">4E50</span>		   <span class="number">1001110</span> <span class="number">01010000</span></span><br><span class="line"> 乔       <span class="number">4E54</span>           <span class="number">1001110</span> <span class="number">01010100</span></span><br><span class="line"> 乔       <span class="number">4E54</span>         <span class="number">01001110</span> <span class="number">01010100</span>                       ucs2</span><br><span class="line"> 乔       <span class="number">4E54</span>         <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">01001110</span> <span class="number">01010100</span>     ucs4</span><br><span class="line"> 王       <span class="number">738</span>b           <span class="number">1110011</span> <span class="number">10001011</span></span><br><span class="line"> </span><br><span class="line"> 😆      <span class="number">1</span>F606        <span class="number">11111011000000110</span></span><br><span class="line"> 😆      <span class="number">1</span>F606        <span class="number">00000000</span> <span class="number">00000001</span> <span class="number">11110110</span> <span class="number">00000110</span>      ucs4</span><br><span class="line"> 😂      <span class="number">1</span>F602        <span class="number">1</span> <span class="number">11110110</span> <span class="number">00000010</span></span><br></pre></td></tr></table></figure>
+
+<p>无论是ucs2和ucs4都有缺点：浪费空间？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文字     十六进制     二进制</span><br><span class="line">A        <span class="number">0041</span>      <span class="number">01000001</span></span><br><span class="line">A        <span class="number">0041</span>      <span class="number">00000000</span> <span class="number">01000001</span></span><br><span class="line">A        <span class="number">0041</span>      <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">00000000</span> <span class="number">01000001</span></span><br></pre></td></tr></table></figure>
+
+<p><code>unicode</code>的应用：在文件存储和网络传输时，不会直接使用<code>unicode</code>，而在内存中会<code>unicode</code>。</p>
+<h3 id="utf-8编码"><a href="#utf-8编码" class="headerlink" title="utf-8编码"></a>utf-8编码</h3><ul>
+<li><p>包含所有文字和二进制的对应关系，全球应用最为广泛的一种编码（站在巨人的肩膀上功成名就）。</p>
+</li>
+<li><p>本质上：<code>utf-8</code>是对<code>unicode</code>的压缩，用尽量少的二进制去与文字进行对应。</p>
+</li>
+</ul>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">unicode码位范围            utf<span class="number">-8</span>      </span><br><span class="line"> <span class="number">0000</span> ~ <span class="number">007</span>F              用<span class="number">1</span>个字节表示</span><br><span class="line"> <span class="number">0080</span> ~ <span class="number">07</span>FF              用<span class="number">2</span>个字节表示</span><br><span class="line"> <span class="number">0800</span> ~ FFFF              用<span class="number">3</span>个字节表示</span><br><span class="line"><span class="number">10000</span> ~ <span class="number">10</span>FFFF            用<span class="number">4</span>个字节表示</span><br></pre></td></tr></table></figure>
+
+<p>具体压缩的流程：</p>
+<ul>
+<li><p>第一步：选择转换模板</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  码位范围（十六进制）                转换模板</span><br><span class="line">   <span class="number">0000</span> ~ <span class="number">007</span>F              <span class="number">0</span>XXXXXXX</span><br><span class="line">   <span class="number">0080</span> ~ <span class="number">07</span>FF              <span class="number">110</span>XXXXX <span class="number">10</span>XXXXXX</span><br><span class="line">   <span class="number">0800</span> ~ FFFF              <span class="number">1110</span>XXXX <span class="number">10</span>XXXXXX <span class="number">10</span>XXXXXX</span><br><span class="line">  <span class="number">10000</span> ~ <span class="number">10</span>FFFF            <span class="number">11110</span>XXX <span class="number">10</span>XXXXXX <span class="number">10</span>XXXXXX <span class="number">10</span>XXXXXX</span><br><span class="line">  </span><br><span class="line">  例如：</span><br><span class="line">      <span class="string">"B"</span>  对应的unicode码位为 <span class="number">0042</span>，那么他应该选择的一个模板。</span><br><span class="line">           <span class="number">0</span>XXXXXXX    <span class="number">1000010</span></span><br><span class="line">           <span class="number">01000010</span></span><br><span class="line">      <span class="string">"ǣ"</span>  对应的unicode码位为 <span class="number">01E3</span>，则应该选择第二个模板。</span><br><span class="line">      <span class="string">"张"</span> 对应的unicode码位为 <span class="number">5</span>F20，则应该选择第三个模板。</span><br><span class="line">      <span class="string">"亚"</span> 对应的unicode码位为 <span class="number">4E9</span>A，则应该选择第三个模板。</span><br><span class="line">      <span class="string">"飞"</span> 对应的unicode码位为 <span class="number">98</span>DE，则应该选择第三个模板。</span><br><span class="line">      😆  对应的unicode码位为 <span class="number">1</span>F606，则应该选择第四个模板。            </span><br><span class="line"></span><br><span class="line">注意：一般中文都使用第三个模板（<span class="number">3</span>个字节），这也就是平时大家说中文在utf<span class="number">-8</span>中会占<span class="number">3</span>个字节的原因了。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二步：在模板中填入数据</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- <span class="string">"张"</span>  -&gt;  <span class="number">5</span>F20  -&gt;  <span class="number">101</span> <span class="number">111100</span> <span class="number">100000</span></span><br><span class="line">- 根据模板去套入数据</span><br><span class="line">	<span class="number">1110</span>XXXX <span class="number">10</span>XXXXXX <span class="number">10</span>XXXXXX</span><br><span class="line">	<span class="number">1110</span>XXXX <span class="number">10</span>XXXXXX <span class="number">10100000</span></span><br><span class="line">	<span class="number">1110</span>XXXX <span class="number">10111100</span> <span class="number">10100110</span></span><br><span class="line">	<span class="number">11100101</span> <span class="number">10101101</span> <span class="number">10100110</span></span><br><span class="line">在UTF<span class="number">-8</span>编码中 ”张“  <span class="number">11100101</span> <span class="number">10101101</span> <span class="number">10100110</span></span><br><span class="line"></span><br><span class="line">- 😆  -&gt;  <span class="number">1</span>F606  -&gt;  <span class="number">11111</span> <span class="number">011000</span> <span class="number">000110</span></span><br><span class="line">- 根据模板去套入数据</span><br><span class="line">	<span class="number">11110000</span> <span class="number">10011111</span> <span class="number">10011000</span> <span class="number">10000110</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="Python相关编码"><a href="#Python相关编码" class="headerlink" title="Python相关编码"></a>Python相关编码</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">字符串（<span class="keyword">str） </span>    <span class="string">"夫轻诺必寡信"</span>             unicode处理               一般在内存</span><br><span class="line">字节（<span class="keyword">byte） </span>     <span class="keyword">b"\xe5\xa4\xab\..." </span>utf-<span class="number">8</span>编码 or gbk编码       一般用于文件或网络处理</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">""" utf-8和gbk """</span></span><br><span class="line">v1 = <span class="string">"张"</span></span><br><span class="line"></span><br><span class="line">v2 = <span class="string">"张"</span>.encode(<span class="string">"utf-8"</span>)</span><br><span class="line">v2 = <span class="string">"张"</span>.encode(<span class="string">"gbk"</span>)</span><br><span class="line">name = <span class="string">'陈月'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字符串编码为二进制</span></span><br><span class="line">name_utf8 = name.encode(encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">print(name_utf8) <span class="comment"># \xe9\x99\x88</span></span><br><span class="line">name_gbk = name.encode(encoding=<span class="string">'gbk'</span>)</span><br><span class="line">print(name_gbk)</span><br><span class="line"><span class="comment"># 二进制解码为字符串</span></span><br><span class="line">print(name_utf8.decode(encoding=<span class="string">'utf-8'</span>))</span><br><span class="line">print(name_gbk.decode(encoding=<span class="string">'gbk'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>将一个字符串写入到一个文件中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">text = <span class="string">"功高不自居，名高不自誉，位高不自傲"</span></span><br><span class="line">data = text.encode(<span class="string">"utf-8"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打开一个文件</span></span><br><span class="line">file_object = open(<span class="string">"log.txt"</span>,mode=<span class="string">"wb"</span>)</span><br><span class="line"><span class="comment"># 在文件中写内容</span></span><br><span class="line">file_object.write(data)</span><br><span class="line"><span class="comment"># 关闭文件</span></span><br><span class="line">file_object.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本章的知识点属于理解为主，了解这些基础之后有利于后面知识点的学习，接下来对本节所有的知识点进行归纳总结：</p>
+<ol>
+<li><p>计算机上所有的东西最终都会转换成为二进制再去运行。</p>
+</li>
+<li><p>ascii编码、<code>unicode</code>字符集、<code>utf-8</code>编码本质上都是字符与二进制的关系。</p>
+<ul>
+<li><code>ascii</code>，字符和二进制的对照表。</li>
+<li><code>unicode</code>，字符和二进制（码位）的对照表。</li>
+<li><code>utf-8</code>，对<code>unicode</code>字符集的码位进行压缩处理，间接也维护了字符和二进制的对照表。</li>
+</ul>
+</li>
+<li><p>ucs2和ucs4指的是使用多少个字节来表示<code>unicode</code>字符集的码位。</p>
+</li>
+<li><p>目前最广泛的编码为：<code>utf-8</code>，他可以表示所有的字符且存储或网络传输也不会浪费资源（对码位进行压缩了）。</p>
+</li>
+<li><p>二进制、八进制、十进制、十六进制其实就是进位的时机不同。</p>
+</li>
+<li><p>基于Python实现二进制、八进制、十进制、十六进制之间的转换。</p>
+</li>
+<li><p>一个字节8位</p>
+</li>
+<li><p>计算机中常见单位b/B/KB/M/G的关系。</p>
+</li>
+<li><p>汉字，用<code>gbk</code>编码需要用2个字节；用<code>utf-8</code>编码需要用3个字节。</p>
+</li>
+<li><p>基于Python实现将字符串转换为字节（<code>utf-8</code>编码）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串类型</span></span><br><span class="line">name = <span class="string">"张亚飞"</span></span><br><span class="line"></span><br><span class="line">print(name) <span class="comment"># 张亚飞</span></span><br><span class="line"><span class="comment"># 字符串转换为字节类型</span></span><br><span class="line">data = name.encode(<span class="string">"utf-8"</span>)</span><br><span class="line">print(data) <span class="comment"># b'\xe5\xbc\xa0\xe4\xba\x9a\xe9\xa3\x9e'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把字节转换为字符串</span></span><br><span class="line">old = data.decode(<span class="string">"utf-8"</span>)</span><br><span class="line">print(old)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>基于Python实现将字符串转换为字节（<code>gbk</code>编码）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字符串类型</span></span><br><span class="line">name = <span class="string">"张亚飞"</span></span><br><span class="line">print(name) <span class="comment"># 张亚飞</span></span><br><span class="line"><span class="comment"># 字符串转换为字节类型</span></span><br><span class="line">data = name.encode(<span class="string">"gbk"</span>)</span><br><span class="line"><span class="comment"># print(data) # b'\xe5\xbc\xa0\xe4\xba\x9a\xe9\xa3\x9e'  utf8，中文3个字节 </span></span><br><span class="line">print(data) <span class="comment"># b'\xd5\xc5\xd1\xc7\xb7\xc9'                gbk，中文2个字节</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把字节转换为字符串</span></span><br><span class="line">old = data.decode(<span class="string">"gbk"</span>)</span><br><span class="line">print(old)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第10篇：列表和元组的应用\" rel="bookmark">第10篇：列表和元组的应用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第11篇：高级数据类型之集合\" rel="bookmark">第11篇：高级数据类型之集合</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC6%E7%AF%87%EF%BC%9A%E8%BF%9B%E5%88%B6%E5%92%8C%E7%BC%96%E7%A0%81/" title="第6篇：进制和编码">https://tongsiying.github.io/2021/11/24/python/python_基础篇/第6篇：进制和编码/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC5%E7%AF%87%EF%BC%9A%E5%B7%A9%E5%9B%BA%E7%BB%83%E4%B9%A0/" rel="prev" title="第5篇：巩固练习">
+      <i class="fa fa-chevron-left"></i> 第5篇：巩固练习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC7%E7%AF%87%EF%BC%9APython%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="第7篇：Python基础数据类型">
+      第7篇：Python基础数据类型 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进制"><span class="nav-text">进制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进制介绍"><span class="nav-text">进制介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进制转换"><span class="nav-text">进制转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单位"><span class="nav-text">单位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码"><span class="nav-text">编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ASCII编码"><span class="nav-text">ASCII编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gb-2312编码"><span class="nav-text">gb-2312编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unicode"><span class="nav-text">unicode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#utf-8编码"><span class="nav-text">utf-8编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python相关编码"><span class="nav-text">Python相关编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第27篇：装饰器">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC27%E7%AF%87%EF%BC%9A%E8%A3%85%E9%A5%B0%E5%99%A8/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-24T11:37:35.537Z">
+<meta property="article:modified_time" content="2021-11-24T11:35:29.759Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC27%E7%AF%87%EF%BC%9A%E8%A3%85%E9%A5%B0%E5%99%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第27篇：装饰器 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC27%E7%AF%87%EF%BC%9A%E8%A3%85%E9%A5%B0%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第27篇：装饰器
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:35:29" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+**学习目标**：掌握装饰器相关知识点
+
+<p>今天来学函数的第二个高阶应用，<strong>装饰器</strong>，装饰器属于Python的核心特色，学了这两个高阶功能，我们就可以做更多事情了。</p>
+<p><strong>装饰器是Python中</strong>用一个函数装饰另外一个函数或类并可以在不改变函数或方法的调用方式的情况下，为其提供额外功能<strong>的语法现象。</strong>装饰器本身是一个函数<strong>，只不过该函数可以具有特殊的含义，它的参数是被装饰的函数或类，它的返回值是一个带有装饰功能的函数。装饰器用来</strong>装饰函数或类<strong>，</strong>使用装饰器可以在函数执行前和执行后添加相应操作**。换句话说，装饰器通过返回包装对象实现间接调用,以此在函数执行前或执行后插入额外逻辑。很显然，装饰器是一个高阶函数，它的参数和返回值都是函数。下面我们先通过一个简单的例子来说明装饰器的写法和作用。</p>
+<h3 id="一、案例引入"><a href="#一、案例引入" class="headerlink" title="一、案例引入"></a>一、案例引入</h3><p><strong>示例1</strong>：我们假设你的程序实现了<code>say_hello()</code>和<code>say_goodbye()</code>两个函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"hello!"</span>)</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_goodbye</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"hello!"</span>)  <span class="comment"># bug here</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    say_hello()</span><br><span class="line">    say_goodbye()</span><br></pre></td></tr></table></figure>
+
+<p>但是在实际调用中，我们发现程序出错了，上面的代码打印了两个hello。经过调试你发现是<code>say_goodbye()</code>出错了。老板要求调用每个方法前都要记录进入函数的名称，比如这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[DEBUG]: Enter say_hello()</span><br><span class="line">Hello!</span><br><span class="line">[DEBUG]: Enter say_goodbye()</span><br><span class="line">Goodbye!</span><br></pre></td></tr></table></figure>
+
+<p>好，小A是个毕业生，他是这样实现的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"[DEBUG]: enter say_hello()"</span>)</span><br><span class="line">    print(<span class="string">"hello!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_goodbye</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"[DEBUG]: enter say_goodbye()"</span>)</span><br><span class="line">    print(<span class="string">"hello!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    say_hello()</span><br><span class="line">    say_goodbye()</span><br></pre></td></tr></table></figure>
+
+<p>很low吧？ 嗯是的。小B工作有一段时间了，他告诉小A可以这样写。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">import</span> inspect</span><br><span class="line">    caller_name = inspect.stack()[<span class="number">1</span>][<span class="number">3</span>]</span><br><span class="line">    print(<span class="string">"[DEBUG]: enter &#123;&#125;()"</span>.format(caller_name))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_hello</span><span class="params">()</span>:</span></span><br><span class="line">    debug()</span><br><span class="line">    print(<span class="string">"hello!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_goodbye</span><span class="params">()</span>:</span></span><br><span class="line">    debug()</span><br><span class="line">    print(<span class="string">"goodbye!"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    say_hello()</span><br><span class="line">    say_goodbye()</span><br></pre></td></tr></table></figure>
+
+<p>是不是好一点？那当然，但是每个业务函数里都要调用一下<code>debug()</code>函数，是不是很难受？万一老板说say相关的函数不用debug，do相关的才需要呢？</p>
+<p>那么装饰器这时候应该登场了。</p>
+<blockquote>
+<p>装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。装饰器是解决这类问题的绝佳设计，有了装饰器，我们就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。</p>
+</blockquote>
+<p>概括的讲，装饰器的作用就是<strong>为已经存在的函数或对象添加额外的功能</strong>。</p>
+<p>在早些时候 (Python Version &lt; 2.4，2004年以前)，为一个函数添加额外功能的写法是这样的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"[DEBUG]: enter &#123;&#125;()"</span>.format(func.__name__))</span><br><span class="line">        <span class="keyword">return</span> func()</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"hello!"</span>)</span><br><span class="line"></span><br><span class="line">say_hello = debug(say_hello)  <span class="comment"># 添加功能并保持原函数名不变</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的debug函数其实已经是一个装饰器了，它对原函数做了包装并返回了另外一个函数，额外添加了一些功能。因为这样写实在不太优雅，在后面版本的Python中支持了@语法糖，下面代码等同于早期的写法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"[DEBUG]: enter &#123;&#125;()"</span>.format(func.__name__))</span><br><span class="line">        <span class="keyword">return</span> func()</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@debug</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say_hello</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"hello!"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这是最简单的装饰器，但是有一个问题，如果被装饰的函数需要传入参数，那么这个装饰器就坏了。因为返回的函数并不能接受参数，你可以指定装饰器函数<code>wrapper</code>接受和原函数一样的参数，比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span>  <span class="comment"># 指定宇宙无敌参数</span></span><br><span class="line">        print(<span class="string">"[DEBUG]: enter &#123;&#125;()"</span>.format(func.__name__))</span><br><span class="line">        print(<span class="string">'Prepare and say...'</span>,)</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> wrapper  <span class="comment"># 返回</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@debug</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(something)</span>:</span></span><br><span class="line">    print(<span class="string">"hello &#123;&#125;!"</span>.format(something))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    say(<span class="string">'你好啊'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样你就解决了一个问题，但又多了N个问题。因为函数有千千万，你只管你自己的函数，别人的函数参数是什么样子，鬼知道？还好Python提供了可变参数<code>*args</code>和关键字参数<code>**kwargs</code>，有了这两个参数，装饰器就可以用于任意目标函数了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span>  <span class="comment"># 指定宇宙无敌参数</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"[DEBUG]: enter &#123;&#125;()"</span>.format(func.__name__)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">'Prepare and say...'</span>,</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> wrapper  <span class="comment"># 返回</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@debug</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">say</span><span class="params">(something)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"hello &#123;&#125;!"</span>.format(something)</span><br></pre></td></tr></table></figure>
+
+<p>至此，你已完全掌握初级的装饰器写法。</p>
+<p><strong>示例2</strong>：:假设已经有名为<code>downlaod</code>和<code>upload</code>的两个函数，分别用于文件的上传和下载，下面的代码用休眠一段随机时间的方式模拟了下载和上传需要花费的时间，并没有联网做上传下载。</p>
+<blockquote>
+<p><strong>说明</strong>：用Python语言实现联网的上传下载也很简单，继续你的学习，这个环节很快就会来到。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始下载<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">2</span>, <span class="number">6</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>下载完成.'</span>)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始上传<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">4</span>, <span class="number">8</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>上传完成.'</span>)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">download(<span class="string">'MySQL从删库到跑路.avi'</span>)</span><br><span class="line">upload(<span class="string">'Python从入门到住院.pdf'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在我们希望知道调用<code>download</code>和<code>upload</code>函数做文件上传下载到底用了多少时间，这个应该如何实现呢？相信很多小伙伴已经想到了，我们可以在函数开始执行的时候记录一个时间，在函数调用结束后记录一个时间，两个时间相减就可以计算出下载或上传的时间，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">start = time.time()</span><br><span class="line">download(<span class="string">'MySQL从删库到跑路.avi'</span>)</span><br><span class="line">end = time.time()</span><br><span class="line">print(<span class="string">f'花费时间: <span class="subst">&#123;end - start:<span class="number">.3</span>f&#125;</span>秒'</span>)</span><br><span class="line">start = time.time()</span><br><span class="line">upload(<span class="string">'Python从入门到住院.pdf'</span>)</span><br><span class="line">end = time.time()</span><br><span class="line">print(<span class="string">f'花费时间: <span class="subst">&#123;end - start:<span class="number">.3</span>f&#125;</span>秒'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的代码，我们可以得到下载和上传花费的时间，但不知道大家是否注意到，上面记录时间、计算和显示执行时间的代码都是重复代码。有编程经验的人都知道，<strong>重复的代码是万恶之源</strong>，那么有没有办法在不写重复代码的前提下，用一种简单优雅的方式记录下函数的执行时间呢？在Python中，装饰器就是解决这类问题的最佳选择。我们可以把记录函数执行时间的功能封装到一个装饰器中，在有需要的地方直接使用这个装饰器就可以了。</p>
+<h3 id="二、普通装饰器"><a href="#二、普通装饰器" class="headerlink" title="二、普通装饰器"></a>二、普通装饰器</h3><p>将上文示例中的代码进行一下修改，如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义装饰器函数，它的参数是被装饰的函数或类</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 定义一个带装饰功能（记录被装饰函数的执行时间）的函数</span></span><br><span class="line">    <span class="comment"># 因为不知道被装饰的函数有怎样的参数所以使用*args和**kwargs接收所有参数</span></span><br><span class="line">    <span class="comment"># 在Python中函数可以嵌套的定义（函数中可以再定义函数）</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 在执行被装饰的函数之前记录开始时间</span></span><br><span class="line">        start = time.time()</span><br><span class="line">        <span class="comment"># 执行被装饰的函数并获取返回值</span></span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        <span class="comment"># 在执行被装饰的函数之后记录结束时间</span></span><br><span class="line">        end = time.time()</span><br><span class="line">        <span class="comment"># 计算和显示被装饰函数的执行时间</span></span><br><span class="line">        print(<span class="string">f'<span class="subst">&#123;func.__name__&#125;</span>执行时间: <span class="subst">&#123;end - start:<span class="number">.3</span>f&#125;</span>秒'</span>)</span><br><span class="line">        <span class="comment"># 返回被装饰函数的返回值（装饰器通常不会改变被装饰函数的执行结果）</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 返回带装饰功能的wrapper函数</span></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+
+<p>使用上面的装饰器函数有两种方式，第一种方式就是直接调用装饰器函数，传入被装饰的函数并获得返回值，我们可以用这个返回值直接覆盖原来的函数，那么在调用时就已经获得了装饰器提供的额外的功能（记录执行时间），大家可以试试下面的代码就明白了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">download = record_time(download)</span><br><span class="line">upload = record_time(upload)</span><br><span class="line">download(<span class="string">'MySQL从删库到跑路.avi'</span>)</span><br><span class="line">upload(<span class="string">'Python从入门到住院.pdf'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码中已经没有重复代码了，虽然写装饰器会花费一些心思，但是这是一个一劳永逸的骚操作，如果还有其他的函数也需要记录执行时间，按照上面的代码如法炮制即可。</p>
+<p>在Python中，使用装饰器很有更为便捷的<strong>语法糖</strong>（编程语言中添加的某种语法，这种语法对语言的功能没有影响，但是使用更加方法，代码的可读性也更强），可以用<code>@装饰器函数</code>将装饰器函数直接放在被装饰的函数上，效果跟上面的代码相同，下面是完整的代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        start = time.time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        end = time.time()</span><br><span class="line">        print(<span class="string">f'<span class="subst">&#123;func.__name__&#125;</span>执行时间: <span class="subst">&#123;end - start:<span class="number">.3</span>f&#125;</span>秒'</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始下载<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">2</span>, <span class="number">6</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>下载完成.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始上传<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">4</span>, <span class="number">8</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>上传完成.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">download(<span class="string">'MySQL从删库到跑路.avi'</span>)</span><br><span class="line">upload(<span class="string">'Python从入门到住院.pdf'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码，我们通过装饰器语法糖为<code>download</code>和<code>upload</code>函数添加了装饰器，这样调用<code>download</code>和<code>upload</code>函数时，会记录下函数的执行时间。事实上，被装饰后的<code>download</code>和<code>upload</code>函数是我们在装饰器<code>record_time</code>中返回的<code>wrapper</code>函数，调用它们其实就是在调用<code>wrapper</code>函数，所以拥有了记录函数执行时间的功能。</p>
+<h3 id="三、多个装饰器"><a href="#三、多个装饰器" class="headerlink" title="三、多个装饰器"></a>三、多个装饰器</h3><p>多个装饰器同时修饰一个函数的的情况你能想到他们的执行顺序是什么样子的吗？看看下面的代码你就知道了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义函数： 完成包裹数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeBold</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"-----1-----"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;b&gt;"</span> + fn() + <span class="string">"&lt;/b&gt;"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapped</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数： 完成包裹数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeItalic</span><span class="params">(fn)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"-------2-----"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;i&gt;"</span> + fn() + <span class="string">"&lt;/i&gt;"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapped</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@makeBold  	 # makeBold(makeItalic(test)</span></span><br><span class="line"><span class="meta">@makeItalic  # # makeItalic(test</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test3</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"-------3------"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"hello world"</span></span><br><span class="line"></span><br><span class="line">test()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">-----1-----</span></span><br><span class="line"><span class="string">-------2-----</span></span><br><span class="line"><span class="string">-------3------</span></span><br><span class="line"><span class="string">&lt;b&gt;&lt;i&gt;hello world&lt;/i&gt;&lt;/b&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>从上面的代码可以看出，多个装饰器同时修饰一个函数时，内函数执行顺序是从上往下（从最外层到最内层）以此执行。下面再来看一个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义函数： 完成包裹数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeBold</span><span class="params">(fn)</span>:</span></span><br><span class="line">    print(<span class="string">'进入 makeBold 装饰器 -1'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"makeBold开始装饰 1"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;b&gt;"</span> + fn() + <span class="string">"&lt;/b&gt;"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapped</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数： 完成包裹数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeItalic</span><span class="params">(fn)</span>:</span></span><br><span class="line">    print(<span class="string">'进入 makeItalic 装饰器 -2'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapped</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"makeItalic开始装饰 2"</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"&lt;i&gt;"</span> + fn() + <span class="string">"&lt;/i&gt;"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapped</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只要python解释器执行到了这个代码,那么就会自动的进行装饰,而不是等到调用的时候才装饰的</span></span><br><span class="line"><span class="meta">@makeBold</span></span><br><span class="line"><span class="meta">@makeItalic</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"执行test函数内容逻辑 - 3"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"hello world"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print(test())</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">进入 makeItalic 装饰器 -2</span></span><br><span class="line"><span class="string">进入 makeBold 装饰器 -1</span></span><br><span class="line"><span class="string">makeBold开始装饰 1</span></span><br><span class="line"><span class="string">makeItalic开始装饰 2</span></span><br><span class="line"><span class="string">执行test函数内容逻辑 - 3</span></span><br><span class="line"><span class="string">&lt;b&gt;&lt;i&gt;hello world&lt;/i&gt;&lt;/b&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>我们发现多个装饰器修饰一个函数时，多个装饰器外函数执行顺序和内函数执行顺序居然是相反的，外函数是从下往上（由内向外）顺序执行，这个是为什么呢？其实仔细想想，当Python解释器执行到<code>@makeBold</code>这一行代码时，会把其转化为<code>makeBold(makeItalic(test))</code>，两个装饰器函数会在这里执行，先会执行内层装饰器，后执行外层装饰器，而<code>test()</code>这个过程相当于开始执行装饰器返回值内函数，执行顺序从外层装饰器到内层装饰器。即<strong>多个装饰器的外函数在Python解释器执行到对应代码时会执行，内函数会有被装饰函数执行（加括号）时执行，执行顺序是外函数由内向外执行，内涵数由外向内执行。</strong></p>
+<h3 id="四、被装饰函数的参数"><a href="#四、被装饰函数的参数" class="headerlink" title="四、被装饰函数的参数"></a>四、被装饰函数的参数</h3><p>那么装饰器修饰被装饰函数时，被装饰函数的参数如何处理呢？我们分三种情况来分析。</p>
+<ul>
+<li><p>情况1：被装饰函数无参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">()</span>:</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">        func()</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time       # 得到闭包函数record_time, func = record_time(func)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'func do something!'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">func do something!</span></span><br><span class="line"><span class="string">spend is 1.0044233798980713</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>情况2：有指定个数参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(a, b)</span>:</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">        func(a, b)</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time       # 得到闭包函数record_time, add = record_time(add)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    print(a + b)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">7</span></span><br><span class="line"><span class="string">spend is 1.0194220542907715</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不定长参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time       # 得到闭包函数record_time, add = record_time(add)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(*args)</span>:</span></span><br><span class="line">    num_sum = sum(num <span class="keyword">for</span> num <span class="keyword">in</span> args)</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;args&#125;</span> sum is <span class="subst">&#123;num_sum&#125;</span>'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">add(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">(1, 2, 3) sum is 6</span></span><br><span class="line"><span class="string">spend is 1.0004258155822754</span></span><br><span class="line"><span class="string">(2, 3, 4, 5) sum is 14</span></span><br><span class="line"><span class="string">spend is 1.0004265308380127</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>通常情况下，推荐大家用第三种写法。</p>
+</li>
+</ul>
+<h3 id="五、被装饰函数带有返回值"><a href="#五、被装饰函数带有返回值" class="headerlink" title="五、被装饰函数带有返回值"></a>五、被装饰函数带有返回值</h3><p>当被装饰函数带有返回值的情况如何处理呢？下面的例子告诉你答案。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(outertionName)</span>:</span></span><br><span class="line">    print(<span class="string">"-----outer---1----"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span></span><br><span class="line">        print(<span class="string">"----inner---1--"</span>)</span><br><span class="line">        ret = outertionName()</span><br><span class="line">        print(<span class="string">"---inner---2---"</span>)</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line">    print(<span class="string">"----outer---2---"</span>)</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@outer</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"---func----"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"haha"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ret = func()</span><br><span class="line">print(<span class="string">f"func return value is <span class="subst">&#123;ret&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">-----outer---1----</span></span><br><span class="line"><span class="string">----outer---2---</span></span><br><span class="line"><span class="string">----inner---1--</span></span><br><span class="line"><span class="string">---func----</span></span><br><span class="line"><span class="string">---inner---2---</span></span><br><span class="line"><span class="string">func return value is haha</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="六、带有参数的装饰器"><a href="#六、带有参数的装饰器" class="headerlink" title="六、带有参数的装饰器"></a>六、带有参数的装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">time_logger</span><span class="params">(flag=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(a, b)</span>:</span></span><br><span class="line">            start_time = time.time()</span><br><span class="line">            func(a, b)</span><br><span class="line">            end_time = time.time()</span><br><span class="line">            print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> flag:</span><br><span class="line">            print(<span class="string">'将此操作保留至日志'</span>)</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> record_time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@time_logger(2)  # 得到闭包函数record_time,add = record_time(add)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    print(a + b)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">将此操作保留至日志</span></span><br><span class="line"><span class="string">7</span></span><br><span class="line"><span class="string">spend is 1.0813958644866943</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="七、类装饰器"><a href="#七、类装饰器" class="headerlink" title="七、类装饰器"></a>七、类装饰器</h3><ul>
+<li><p>普通类装饰器</p>
+<p>示例：记录一个函数的执行时间，用类装饰器实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RecordTime</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, func)</span>:</span></span><br><span class="line">        self._func = func</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">        self._func()</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@RecordTime  # bar = RecordTime(bar)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'func..'</span>)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">func..</span></span><br><span class="line"><span class="string">spend is 2.0018553733825684</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个类装饰器</p>
+<p>示例：在eat函数执行之前执行洗手，执行之后执行洗碗操作，用两个类装饰器实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WashHands</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, func)</span>:</span></span><br><span class="line">        self._func = func</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></span><br><span class="line">        print(<span class="string">'wash hands ...'</span>)</span><br><span class="line">        <span class="keyword">return</span> self._func()</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WashDishes</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, func)</span>:</span></span><br><span class="line">        self._func = func</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self)</span>:</span></span><br><span class="line">        ret = self._func()</span><br><span class="line">        print(<span class="string">'wash the dishes ...'</span>)</span><br><span class="line">        <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"><span class="meta">@WashHands</span></span><br><span class="line"><span class="meta">@WashDishes</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">eat</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'start eating ...'</span>)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">eat()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">wash hands ...</span></span><br><span class="line"><span class="string">start eating ...</span></span><br><span class="line"><span class="string">wash the dishes ...</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>带参数的类装饰器</p>
+<p><strong>类装饰器函数本身也可以参数化</strong>，简单的说就是通过我们的装饰器也是可以通过调用者传入的参数来定制的，这个知识点我们在后面用上它的时候再为大家讲解。除了可以用函数来定义装饰器之外，通过定义类的方式也可以定义装饰器。如果一个类中有名为<code>__call__</code>的魔术方法，那么这个类的对象就可以像函数一样调用，这就意味着这个对象可以像装饰器一样工作，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RecordTime</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num=<span class="number">4</span>)</span>:</span></span><br><span class="line">        self.num = num</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, func)</span>:</span></span><br><span class="line"><span class="meta">        @wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            start = time.time()</span><br><span class="line">            result = func(*args, **kwargs)</span><br><span class="line">            end = time.time()</span><br><span class="line">            print(<span class="string">f'<span class="subst">&#123;func.__name__&#125;</span>执行时间: <span class="subst">&#123;round(end - start, self.num)&#125;</span>秒'</span>)</span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用装饰器语法糖添加装饰器</span></span><br><span class="line"><span class="meta">@RecordTime(num=3)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始下载<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">2</span>, <span class="number">6</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>下载完成.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始上传<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">4</span>, <span class="number">8</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>上传完成.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 直接创建对象并调用对象传入被装饰的函数</span></span><br><span class="line">upload = RecordTime()(upload)</span><br><span class="line">download(<span class="string">'MySQL从删库到跑路.avi'</span>)</span><br><span class="line">upload(<span class="string">'Python从入门到住院.pdf'</span>)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">开始下载MySQL从删库到跑路.avi.</span></span><br><span class="line"><span class="string">MySQL从删库到跑路.avi下载完成.</span></span><br><span class="line"><span class="string">download执行时间: 2.001秒</span></span><br><span class="line"><span class="string">开始上传Python从入门到住院.pdf.</span></span><br><span class="line"><span class="string">Python从入门到住院.pdf上传完成.</span></span><br><span class="line"><span class="string">upload执行时间: 5.0002秒</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的代码演示了两种添加装饰器的方式，由于<code>RecordTime</code>是一个类，所以需要先创建对象，才能把对象当成装饰器来使用，所以提醒大家注意<code>RecordTime</code>后面的圆括号，那是调用构造器创建对象的语法。如果为<code>RecordTime</code>类添加一个<code>__init__</code>方法，就可以实现对装饰器的参数化。使用装饰器还可以装饰一个类，为其提供额外的功能，这个知识点也等我们用到的时候再做讲解。</p>
+</li>
+</ul>
+<h3 id="八、装饰器作用在类上"><a href="#八、装饰器作用在类上" class="headerlink" title="八、装饰器作用在类上"></a>八、装饰器作用在类上</h3><p>除了可以用在方法上,其实python的装饰器也可以作用于类上,在不改变类的情况下,给类增加一些额外的功能.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下面是一个重写了特殊方法 __getattribute__ 的类装饰器，可以打印日志:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log_getattribute</span><span class="params">(cls)</span>:</span></span><br><span class="line">    origin_getattribute = cls.__getattribute__</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">new_getattribute</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        print(<span class="string">'greeting:'</span>, name)</span><br><span class="line">        <span class="keyword">return</span> origin_getattribute(self, name)</span><br><span class="line"></span><br><span class="line">    cls.__getattribute__ = new_getattribute</span><br><span class="line">    <span class="keyword">return</span> cls</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用</span></span><br><span class="line"><span class="meta">@log_getattribute</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        self.x = x</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spam</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    a = A(<span class="string">'x'</span>)</span><br><span class="line">    print(a.x)</span><br><span class="line">    print(a.spam())</span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    greeting: x</span></span><br><span class="line"><span class="string">    x</span></span><br><span class="line"><span class="string">    greeting: spam</span></span><br><span class="line"><span class="string">    None</span></span><br><span class="line"><span class="string">    """</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="九、保留原对象指定属性信息"><a href="#九、保留原对象指定属性信息" class="headerlink" title="九、保留原对象指定属性信息"></a>九、保留原对象指定属性信息</h3><p>以上书写装饰器的方式有什么问题吗？看下面一个例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'func ...'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'decorator before name is '</span>, func.__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'func ...'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'decorator after name is '</span>, func.__name__)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">decorator before name is  func</span></span><br><span class="line"><span class="string">decorator after name is  wrapper</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>由此可以看出,装饰器会对原函数的元信息进行更改,可以使用wraps,进行原函数信息的添加</p>
+<p>注解:wraps本身也是一个装饰器,他能把函数的元信息拷贝到装饰器函数中使得装饰器函数与原函数有一样的元信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">    @wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        start_time = time.time()</span><br><span class="line">        func(*args, **kwargs)</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        print(<span class="string">'spend is &#123;&#125;'</span>.format(end_time - start_time))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'func ...'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'decorator before name is '</span>, func.__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'func ...'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'decorator after name is '</span>, func.__name__)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">decorator before name is  func</span></span><br><span class="line"><span class="string">decorator after name is  func</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="十、取消装饰器的作用"><a href="#十、取消装饰器的作用" class="headerlink" title="十、取消装饰器的作用"></a>十、取消装饰器的作用</h3><p>如果希望取消装饰器的作用，那么在定义装饰器函数的时候，需要做一些额外的工作。Python标准库<code>functools</code>模块的<code>wraps</code>函数也是一个装饰器，我们将它放在<code>wrapper</code>函数上，这个装饰器可以帮我们保留被装饰之前的函数，这样在需要取消装饰器时，可以通过被装饰函数的<code>__wrapped__</code>属性获得被装饰之前的函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">record_time</span><span class="params">(func)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">        start = time.time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        end = time.time()</span><br><span class="line">        print(<span class="string">f'<span class="subst">&#123;func.__name__&#125;</span>执行时间: <span class="subst">&#123;end - start:<span class="number">.3</span>f&#125;</span>秒'</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始下载<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">2</span>, <span class="number">6</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>下载完成.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@record_time</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upload</span><span class="params">(filename)</span>:</span></span><br><span class="line">    print(<span class="string">f'开始上传<span class="subst">&#123;filename&#125;</span>.'</span>)</span><br><span class="line">    time.sleep(random.randint(<span class="number">4</span>, <span class="number">8</span>))</span><br><span class="line">    print(<span class="string">f'<span class="subst">&#123;filename&#125;</span>上传完成.'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">download(<span class="string">'MySQL从删库到跑路.avi'</span>)</span><br><span class="line">upload(<span class="string">'Python从入门到住院.pdf'</span>)</span><br><span class="line"><span class="comment"># 取消装饰器</span></span><br><span class="line">download.__wrapped__(<span class="string">'MySQL必知必会.pdf'</span>)</span><br><span class="line">upload = upload.__wrapped__</span><br><span class="line">upload(<span class="string">'Python从新手到大师.pdf'</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="十一、常用的内置装饰器"><a href="#十一、常用的内置装饰器" class="headerlink" title="十一、常用的内置装饰器"></a>十一、常用的内置装饰器</h3><ol>
+<li><p><strong>property</strong></p>
+<p>@property 可以把一个实例方法变成其同名属性，以支持实例访问，它返回的是一个property属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, radius)</span>:</span>  <span class="comment"># 圆的半径radius</span></span><br><span class="line">        self.radius = radius</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">area</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> math.pi * self.radius ** <span class="number">2</span>  <span class="comment"># 计算面积</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perimeter</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span> * math.pi * self.radius  <span class="comment"># 计算周长</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 我们可以通过实例访问到类中属性</span></span><br><span class="line">circle = Circle(<span class="number">10</span>)</span><br><span class="line">print(circle.radius)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过@property装饰后的方法也可以像访问数据属性一样去访问area,会触发一个函数的执行,动态计算出一个值；</span></span><br><span class="line">print(circle.area)</span><br><span class="line">print(circle.perimeter)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">10</span></span><br><span class="line"><span class="string">314.1592653589793</span></span><br><span class="line"><span class="string">62.83185307179586</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<p>一个property对象还具有<code>setter</code>、<code>deleter</code>可用作装饰器；<code>setter</code>是设置属性值。<code>deleter</code>用于删除属性值。而官方文档中给出了getter用于获取属性信息，但是实际使用中可以直接通过property获取属性信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._x = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._x</span><br><span class="line"></span><br><span class="line"><span class="meta">    @x.setter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        self._x = value</span><br><span class="line"></span><br><span class="line"><span class="meta">    @x.deleter</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">x</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">del</span> self._x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 实例化类</span></span><br><span class="line">c = C()</span><br><span class="line"><span class="comment"># 为属性进行赋值</span></span><br><span class="line">c.x = <span class="number">100</span></span><br><span class="line"><span class="comment"># 输出属性值</span></span><br><span class="line">print(c.x) <span class="comment"># 100</span></span><br><span class="line"><span class="comment"># 删除属性</span></span><br><span class="line"><span class="keyword">del</span> c.x</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>总结：使用property：在设置属性时，可以对值对进检查，设置发生时，可以 修改设置的值，获取属性时，可以动态地计算值。</p>
+<ol start="2">
+<li><p><strong>classmethod</strong></p>
+<p>修饰的方法不需要实例化，不需要 self 参数，但第一个参数需要是表示自身类的 cls 参数，可以来调用类的属性，类的方法，实例化对象等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">()</span>:</span></span><br><span class="line">    number = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span><span class="params">(cls)</span>:</span>     <span class="comment">#cls 接收的是当前类，类在使用时会将自身传入到类方法的第一个参数</span></span><br><span class="line">        print(<span class="string">'这是类本身：'</span>,cls)<span class="comment"># 如果子类调用，则传入的是子类</span></span><br><span class="line">        print(<span class="string">'这是类属性:'</span>,cls.number)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></span><br><span class="line">    number = <span class="number">20</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用类方法 不需要实例化可以执行调用类方法</span></span><br><span class="line">A.get_a()</span><br><span class="line">B.get_a()</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">这是类本身： &lt;class '__main__.A'&gt;</span></span><br><span class="line"><span class="string">这是类属性: 10</span></span><br><span class="line"><span class="string">这是类本身： &lt;class '__main__.B'&gt;</span></span><br><span class="line"><span class="string">这是类属性: 20</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>staticmethod</strong></p>
+<p><code>@staticmethod</code>：改变一个方法为静态方法，静态方法不需要传递隐性的第一参数，静态方法的本质类型就是一个函数 一个静态方法可以直接通过类进行调用，也可以通过实例进行调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, year, month, day)</span>:</span></span><br><span class="line">        self.year = year</span><br><span class="line">        self.month = month</span><br><span class="line">        self.day = day</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span>  <span class="comment"># 用Date.now()的形式去产生实例,该实例用的是当前时间</span></span><br><span class="line">        t = time.localtime()  <span class="comment"># 获取结构化的时间格式</span></span><br><span class="line">        <span class="keyword">return</span> Date(t.tm_year, t.tm_mon, t.tm_mday)  <span class="comment"># 新建实例并且返回</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tomorrow</span><span class="params">()</span>:</span>  <span class="comment"># 用Date.tomorrow()的形式去产生实例,该实例用的是明天的时间</span></span><br><span class="line">        t = time.localtime(time.time() + <span class="number">86400</span>)</span><br><span class="line">        <span class="keyword">return</span> Date(t.tm_year, t.tm_mon, t.tm_mday)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = Date(<span class="string">'1987'</span>, <span class="number">11</span>, <span class="number">27</span>)  <span class="comment"># 自己定义时间</span></span><br><span class="line">print(a.year, a.month, a.day)</span><br><span class="line">b = Date.now()  <span class="comment"># 采用当前时间</span></span><br><span class="line">print(b.year, b.month, b.day)</span><br><span class="line">c = Date.tomorrow()  <span class="comment"># 采用明天的时间</span></span><br><span class="line">print(c.year, c.month, c.day)</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">1987 11 27</span></span><br><span class="line"><span class="string">2020 12 17</span></span><br><span class="line"><span class="string">2020 12 18</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h3><p>闭包和装饰器是Python中的特色语法，装饰器是闭包可以通过装饰器来增强现有的类或函数，这是一种非常有用的编程技巧。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第10篇：列表和元组的应用\" rel="bookmark">第10篇：列表和元组的应用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第11篇：高级数据类型之集合\" rel="bookmark">第11篇：高级数据类型之集合</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC27%E7%AF%87%EF%BC%9A%E8%A3%85%E9%A5%B0%E5%99%A8/" title="第27篇：装饰器">https://tongsiying.github.io/2021/11/24/python/python_基础篇/第27篇：装饰器/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC26%E7%AF%87%EF%BC%9A%E9%97%AD%E5%8C%85/" rel="prev" title="第26篇：闭包">
+      <i class="fa fa-chevron-left"></i> 第26篇：闭包
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC28%E7%AF%87%EF%BC%9A%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8/" rel="next" title="第28篇：迭代器和生成器">
+      第28篇：迭代器和生成器 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、案例引入"><span class="nav-text">一、案例引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、普通装饰器"><span class="nav-text">二、普通装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、多个装饰器"><span class="nav-text">三、多个装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、被装饰函数的参数"><span class="nav-text">四、被装饰函数的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、被装饰函数带有返回值"><span class="nav-text">五、被装饰函数带有返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、带有参数的装饰器"><span class="nav-text">六、带有参数的装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、类装饰器"><span class="nav-text">七、类装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、装饰器作用在类上"><span class="nav-text">八、装饰器作用在类上</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#九、保留原对象指定属性信息"><span class="nav-text">九、保留原对象指定属性信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#十、取消装饰器的作用"><span class="nav-text">十、取消装饰器的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#十一、常用的内置装饰器"><span class="nav-text">十一、常用的内置装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的总结"><span class="nav-text">简单的总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

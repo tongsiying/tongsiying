@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="00-前端性能优化认知">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A4%E7%9F%A5/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20210115-1507.png">
+<meta property="og:image" content="http://img.smyhvae.com/20210115-2150.jpg">
+<meta property="article:published_time" content="2021-11-25T15:23:52.416Z">
+<meta property="article:modified_time" content="2021-11-25T15:23:52.417Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20210115-1507.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A4%E7%9F%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>00-前端性能优化认知 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A4%E7%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          00-前端性能优化认知
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:23:52" itemprop="dateCreated datePublished" datetime="2021-11-25T23:23:52+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+<h2 id="前端性能优化认知"><a href="#前端性能优化认知" class="headerlink" title="前端性能优化认知"></a>前端性能优化认知</h2><h3 id="什么是前端性能优化"><a href="#什么是前端性能优化" class="headerlink" title="什么是前端性能优化"></a>什么是前端性能优化</h3><p>通常来讲，前端性能优化是指：从用户开始访问网站到整个页面完整地展现出来的过程中，通过各种优化策略和优化方法，让页面加载得更快，让用户的操作相应更及时，给用户更好的使用体验。</p>
+<p>优化是在做什么：</p>
+<p><img src="http://img.smyhvae.com/20210115-1507.png" alt></p>
+<p>如上图所示，优化工作是围绕前端的基本工作原理展开的，包括：<strong>客户端和服务器端建立连接、加载资源、解析资源并渲染</strong>。</p>
+<p>上方图片的来源：</p>
+<ul>
+<li><a href="https://medium.com/dev-channel/the-cost-of-javascript-84009f51e99e" target="_blank" rel="noopener external nofollow noreferrer">The Cost Of JavaScript</a></li>
+<li><a href="https://github.com/dwqs/blog/issues/59" target="_blank" rel="noopener external nofollow noreferrer">[译]JavaScript 的时间消耗</a></li>
+</ul>
+<h3 id="性能优化的重要性（程序员角度）"><a href="#性能优化的重要性（程序员角度）" class="headerlink" title="性能优化的重要性（程序员角度）"></a>性能优化的重要性（程序员角度）</h3><p>当领导问：“<strong>为什么网页访问这么慢</strong>？”我们不能只是回答“<strong>网络不好</strong>”这么简单，网络不可能一直都不好。</p>
+<p>每个程序员如果想要成长，就不能回避“性能优化”这个话题。很多人写了多年的代码，一直在构建样式、写业务逻辑。但是平凡的程序员之路，何时才是尽头？前端职业发展的瓶颈在哪儿？怎么才能从团队中脱颖而出？如何区分出平凡程序员/大牛程序员/架构师的分水岭？</p>
+<p>职场晋升时，我们也要想一想：大部分人都在写业务代码，和别人相比，我的核心竞争力在哪里？除了<strong>技术深度、前端工程化、综合素质</strong>之外，还有其他的吗？<strong>性能优化</strong>，绝对是不能忽视的一方面。而且它是贯穿于开发和维护的的全过程。</p>
+<p>前端工程化是侧重于<strong>提效</strong>，具体包括编译打包发布流程、物料中心、组件化等；而前端性能优化是侧重于<strong>体验</strong>。</p>
+<p>公司评价一个程序员的价值，不是加班越多越好，也不是代码量越多越好，而是看他<strong>是否能解决其他人解决不了的一些技术难题或者瓶颈</strong>。</p>
+<p><strong>大家都知道性能优化很重要，但是落实到具体，怎么去优化</strong>？这就需要我们深入去了解前端技术背后的原理，学习一些主流的前端性能优化技术方案，掌握性能优化技术，提升Web性能，才能总结出相应的优化方案，而且需要多年的经验积累；进而到达前端技术圈的上游，提高自己的核心竞争力。</p>
+<h3 id="前端性能优化面试"><a href="#前端性能优化面试" class="headerlink" title="前端性能优化面试"></a>前端性能优化面试</h3><p>性能优化是前端面试的必考问题，面试者在回答这个问题时，大致情况如下：</p>
+<ul>
+<li><p>70% 的人上来就说减少合并资源、减少请求、数据缓存这些优化手段。</p>
+</li>
+<li><p>15% 的人会提到需要在 DevTools 下先看看首屏时间，可以先围绕首屏来做优化。</p>
+</li>
+<li><p>10%的人会提到需要接入一个性能平台来看看现状，诊断一下。</p>
+</li>
+<li><p>而只有 5% 的人会从前端性能体系来系统考虑性能优化。</p>
+</li>
+</ul>
+<p>面试官期待的是你在什么场景下，遇到了什么性能问题，围绕什么样的性能指标，采取了哪些性能优化手段，最后取得了什么样的结果，而不仅仅是直接说采取了哪些优化手段。</p>
+<p>比如说，“<strong>为什么首页打开慢</strong>？”    面试官期待的是，前端能和后端一样，通过查日志和数据就能定位问题，而不是停留在猜测层面。但在实际当中，能做到这点的前端同学并不多。</p>
+<p>那么，前端有没有这样的工具呢？有，那就是性能监控平台。平台上面有各个业务的性能指标及其对应场景下的性能标准，一旦遇到性能问题，就能直接判断当前性能数据有没有问题，然后提示问题是出在前端、后端，还是网络层。</p>
+<h3 id="性能优化的意义"><a href="#性能优化的意义" class="headerlink" title="性能优化的意义"></a>性能优化的意义</h3><p>1、随着互联网的发展，<strong>网页的内容越来越丰富，功能越来越强大，页面也越做越漂亮</strong>；带来的问题是，访问速度和体验会收到影响。只有对网站进行持续不断的优化，才能保证网页的访问速度可以跟得上用户体验的需求。</p>
+<p>2、<strong>高性能</strong>可以带来更高的<strong>用户参与度</strong>、<strong>用户留存</strong>，进而带来更高的<strong>转化率</strong>和<strong>SEO排名</strong>，更好的<strong>用户体验</strong>，最终带来更高的<strong>业务收益</strong>。</p>
+<p>随着时间的推移，如果一个网站由于各种原因导致心梗越来越差，以至于用户每打开一个页面都要等待很长时间，甚至出现加载失败的情况，那么，不仅新用户不会沉淀下来，老用户也会纷纷离去，最终导致产品的加速衰败。</p>
+<p>而且网站的加载快慢，最产品收入有着直接的影响。<strong>有数据表明：网页加载时间在5秒内的网站比加载时间为19秒的网站，广告收入会增加近一倍</strong>。也就是说，网站或者App的性能直接关系到产品的用户增长和收入增长。</p>
+<p>正因为如此，我们才需要通过性能优化的技巧，并结合其他的技术手段来不断提高网站和App的用户体验，从而助力公司的业务增长；同时，我们也可以借此提升自己的技术实力，这对个人的职业成长也会以后很大的帮助。</p>
+<p>3、只要产品上线了，随着<strong>业务规模量和用户访问量的扩大</strong>，性能优化就是不可回避的话题。在遇到性能问题时，有些人的解决办法是：用一些粗糙的手段把问题绕过去，但却给后面的人埋下了坑。这些人常说的依据口头禅是：</p>
+<p><img src="http://img.smyhvae.com/20210115-2150.jpg" alt></p>
+<h3 id="相关案例"><a href="#相关案例" class="headerlink" title="相关案例"></a>相关案例</h3><ul>
+<li><p><a href="https://www.gigaspaces.com/blog/amazon-found-every-100ms-of-latency-cost-them-1-in-sales/" target="_blank" rel="noopener external nofollow noreferrer">Amazon发现每100ms延迟导致1%的销量损失</a>。</p>
+</li>
+<li><p>歌地图首页文件从100KB减少到70KB，流量在第一周涨了10%，在接下来的三周涨了25%。</p>
+</li>
+<li><p>腾讯根据长期数据监控发现，页面一秒钟延迟会造成页面访问量下降9.4%，跳出率增加8.3%，转化率下降3.5%。</p>
+</li>
+</ul>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><p>有些同学做事有拖延症，经常喜欢刷朋友圈、刷微博、看新闻，导致工作效率很低。为了解决这个问题，其实有个办法就是：把你的浏览器或者指定的软件，添加一个5秒的延迟，这时候，当你访问所有的网站，都会很慢。坚持一个月，你会发现，你再也不想看这些网站了，工作效率明显提升了许多。</p>
+<p>这件事情从侧面也反映出：网站的性能如果不够好，对用户来说是一种折磨。时间一长，用户就不想用这个网站了。性能和网站的利益直接相关。涉及到：流量、搜索、转化率、用户体验。</p>
+<h2 id="如何学习性能优化"><a href="#如何学习性能优化" class="headerlink" title="如何学习性能优化"></a>如何学习性能优化</h2><h3 id="学习难点"><a href="#学习难点" class="headerlink" title="学习难点"></a>学习难点</h3><p>我们在网上找到的文章，有很多都只是对CSS、JS技术本身的优化，一旦涉及到App、后端、网络等不是很熟悉的领域，学习起来就比较困难了。结合具体业务开发的应用场景时，却不知从何下手。因此，<strong>我们需要要由点及面，学习全链路前端性能优化的知识体系和解决方案</strong>。</p>
+<p>在实际工作当中，前端性能优化往往比较繁杂，学习难点主要体现在以下几个方面：todo</p>
+<h3 id="优化标准"><a href="#优化标准" class="headerlink" title="优化标准"></a>优化标准</h3><p>我们在做优化时，需要有一个量化标准，比如：</p>
+<ul>
+<li><p>loading 要做到什么效果、动画要达到什么效果才是好的？</p>
+</li>
+<li><p>所有的事件处理，要在什么时间内完成，才能给用户良好的体验？</p>
+</li>
+</ul>
+<h3 id="技术储备前提"><a href="#技术储备前提" class="headerlink" title="技术储备前提"></a>技术储备前提</h3><ul>
+<li><p>掌握前端基础知识。</p>
+</li>
+<li><p>具备Web开发实战经验。</p>
+</li>
+</ul>
+<h3 id="寻找性能瓶颈"><a href="#寻找性能瓶颈" class="headerlink" title="寻找性能瓶颈"></a>寻找性能瓶颈</h3><ul>
+<li><p>了解性能指标，多快才算快。</p>
+</li>
+<li><p>利用测量工具和API</p>
+</li>
+<li><p>优化问题，重新测量。持续迭代。</p>
+</li>
+</ul>
+<h3 id="移动端挑战多"><a href="#移动端挑战多" class="headerlink" title="移动端挑战多"></a>移动端挑战多</h3><ul>
+<li><p>移动端的硬件不如PC端，且网络不稳定。</p>
+</li>
+<li><p>屏幕尺寸和交互方式都是挑战。</p>
+</li>
+<li><p>移动端用户更佳缺乏耐心。而且，很多用户是利用碎片化时间访问网页。数据参考： <strong>&gt;3秒</strong>的加载时间，导致 53%的跳出率（bounce rate）。</p>
+</li>
+<li><p>持续增长的移动端用户和电商业务。现在很多事情都是在移动端做的。</p>
+</li>
+</ul>
+<h3 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h3><ul>
+<li><p>由浅入深：解读优化技术内幕。</p>
+</li>
+<li><p>流行+经典：了解技术背后的设计思想。</p>
+</li>
+<li><p>了解性能优化的关键环节，升级知识储备。</p>
+</li>
+</ul>
+<ul>
+<li><p>理论+实践：掌握前端业界的流行且成熟的多种性能优化技术，脱颖而出。</p>
+</li>
+<li><p>了解大厂正在用的生产环境级别的高性能解决方案。</p>
+</li>
+</ul>
+<h2 id="前端性能优化全过程"><a href="#前端性能优化全过程" class="headerlink" title="前端性能优化全过程"></a>前端性能优化全过程</h2><h3 id="1、静态资源优化"><a href="#1、静态资源优化" class="headerlink" title="1、静态资源优化"></a>1、静态资源优化</h3><p>静态资源优化包括html、css、js、图片等资源的性能优化。包括：</p>
+<ul>
+<li><p>图片的应用场景和使用</p>
+</li>
+<li><p>html、css、js的具体优化策略</p>
+</li>
+</ul>
+<ul>
+<li><p>资源文件的优化：比如文件压缩合并策略、打包方案、版本号更新方案</p>
+</li>
+<li><p>前端工程化工具等。</p>
+</li>
+</ul>
+<h3 id="2、页面渲染架构设计及相关的技术方案选型"><a href="#2、页面渲染架构设计及相关的技术方案选型" class="headerlink" title="2、页面渲染架构设计及相关的技术方案选型"></a>2、页面渲染架构设计及相关的技术方案选型</h3><p>按照技术方案的分类，包括：</p>
+<ul>
+<li><p>前后端分离技术</p>
+</li>
+<li><p>SPA单页应用</p>
+</li>
+<li><p>BigPipe</p>
+</li>
+<li><p>同构直出</p>
+</li>
+<li><p>PWA</p>
+</li>
+<li><p>页面加载策略</p>
+</li>
+<li><p>接口服务调优、接口缓存策略</p>
+</li>
+<li><p>大型网站背后的实际性能优化案例</p>
+</li>
+<li><p>前端组件化、模块化，加速业务开发</p>
+</li>
+</ul>
+<h3 id="3、原生App优化、混合开发优化"><a href="#3、原生App优化、混合开发优化" class="headerlink" title="3、原生App优化、混合开发优化"></a>3、原生App优化、混合开发优化</h3><ul>
+<li><p>浏览器的整体优化方案。比如导航条、登录态、滚动条优化等。</p>
+</li>
+<li><p>前端缓存策略和优化</p>
+</li>
+<li><p>H5静态资源请求代理的技术原理</p>
+</li>
+<li><p>H5离线技术，达到页面秒开的目标</p>
+</li>
+<li><p>混合式开发解决方案</p>
+</li>
+<li><p>RN、小程序、flutter等</p>
+</li>
+</ul>
+<h3 id="4、服务端与网络优化"><a href="#4、服务端与网络优化" class="headerlink" title="4、服务端与网络优化"></a>4、服务端与网络优化</h3><ul>
+<li><p>CDN 和 DNS 优化</p>
+</li>
+<li><p>如何减少 http 请求数、减少cookie大小</p>
+</li>
+<li><p>nginx缓存配置和优化</p>
+</li>
+<li><p>开启和配置 gzip 压缩</p>
+</li>
+<li><p>如何开启全站 https</p>
+</li>
+<li><p>升级 Http2.0 的好处和方法</p>
+</li>
+</ul>
+<h3 id="5、研发流程优化"><a href="#5、研发流程优化" class="headerlink" title="5、研发流程优化"></a>5、研发流程优化</h3><ul>
+<li><p>技术调用的方法</p>
+</li>
+<li><p>前后端接口约定、加快前后端接口联调</p>
+</li>
+<li><p>前端自动化测试</p>
+</li>
+<li><p>自动化部署和上线</p>
+</li>
+<li><p>从研发的整体流程层面梳理出提升研发效率的方式和方法。</p>
+</li>
+</ul>
+<h3 id="6、全链路质量监控体系建设"><a href="#6、全链路质量监控体系建设" class="headerlink" title="6、全链路质量监控体系建设"></a>6、全链路质量监控体系建设</h3><p>主要是对性能优化的结果进行衡量、打分、考核：</p>
+<ul>
+<li><p>上线前，页面质量及时检测</p>
+</li>
+<li><p>上线后，页面性能和错误监控</p>
+</li>
+<li><p>线上运行时，页面的可用性监控</p>
+</li>
+<li><p>愿生App的性能和错误监控</p>
+</li>
+</ul>
+<h2 id="前端性能优化包括哪些方面"><a href="#前端性能优化包括哪些方面" class="headerlink" title="前端性能优化包括哪些方面"></a>前端性能优化包括哪些方面</h2><h3 id="1、性能优化指标与测量工具"><a href="#1、性能优化指标与测量工具" class="headerlink" title="1、性能优化指标与测量工具"></a>1、性能优化指标与测量工具</h3><ul>
+<li><p>行业标准</p>
+</li>
+<li><p>优化模型</p>
+</li>
+<li><p>性能测量工具：了解性能情况，并对比</p>
+</li>
+<li><p>性能相关APIs</p>
+</li>
+</ul>
+<h3 id="2、渲染优化"><a href="#2、渲染优化" class="headerlink" title="2、渲染优化"></a>2、渲染优化</h3><ul>
+<li><p>现代浏览器的渲染原理</p>
+</li>
+<li><p>可优化的渲染环节和方法</p>
+</li>
+</ul>
+<h3 id="3、代码优化"><a href="#3、代码优化" class="headerlink" title="3、代码优化"></a>3、代码优化</h3><ul>
+<li><p>JS优化：了解JS的开销、解析、优化方案，以及如何配合V8引擎做更有效的优化。</p>
+</li>
+<li><p>html优化</p>
+</li>
+<li><p>css优化</p>
+<h3 id="4、资源优化"><a href="#4、资源优化" class="headerlink" title="4、资源优化"></a>4、资源优化</h3></li>
+<li><p>压缩合并</p>
+</li>
+<li><p>图片格式</p>
+</li>
+<li><p>图片加载</p>
+</li>
+<li><p>字体优化</p>
+</li>
+</ul>
+<h3 id="5、构建优化"><a href="#5、构建优化" class="headerlink" title="5、构建优化"></a>5、构建优化</h3><ul>
+<li><p>webpack 优化配置</p>
+</li>
+<li><p>代码拆分</p>
+</li>
+<li><p>代码压缩</p>
+</li>
+<li><p>持久化缓存</p>
+</li>
+<li><p>监测与分析</p>
+</li>
+<li><p>按需加载</p>
+</li>
+</ul>
+<h3 id="6、传输和加载优化"><a href="#6、传输和加载优化" class="headerlink" title="6、传输和加载优化"></a>6、传输和加载优化</h3><ul>
+<li><p>gZip</p>
+</li>
+<li><p>KeepAlive</p>
+</li>
+<li><p>HTTP缓存</p>
+</li>
+<li><p>Service Worker</p>
+</li>
+<li><p>HTTP/2</p>
+</li>
+<li><p>SSR 服务端渲染</p>
+</li>
+<li><p>Nginx</p>
+<h3 id="7、更多主流优化方案"><a href="#7、更多主流优化方案" class="headerlink" title="7、更多主流优化方案"></a>7、更多主流优化方案</h3></li>
+</ul>
+<ul>
+<li><p>SVG 优化图标</p>
+</li>
+<li><p>FlexBox 布局</p>
+</li>
+<li><p>预加载</p>
+</li>
+<li><p>预渲染</p>
+</li>
+<li><p>窗口化提高列表性能</p>
+</li>
+<li><p>骨架屏</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%A4%E7%9F%A5/" title="00-前端性能优化认知">https://tongsiying.github.io/2021/11/25/web/14-前端性能优化/00-前端性能优化认知/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/13-React%E5%9F%BA%E7%A1%80/11-ReactNavive%E5%88%9D%E8%AF%86/" rel="prev" title="11-React Navive初识">
+      <i class="fa fa-chevron-left"></i> 11-React Navive初识
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/01-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%B7%A5%E5%85%B7%E5%92%8C%E6%8C%87%E6%A0%87/" rel="next" title="01-前端性能分析工具和指标">
+      01-前端性能分析工具和指标 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端性能优化认知"><span class="nav-text">前端性能优化认知</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是前端性能优化"><span class="nav-text">什么是前端性能优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化的重要性（程序员角度）"><span class="nav-text">性能优化的重要性（程序员角度）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端性能优化面试"><span class="nav-text">前端性能优化面试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化的意义"><span class="nav-text">性能优化的意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关案例"><span class="nav-text">相关案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何学习性能优化"><span class="nav-text">如何学习性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习难点"><span class="nav-text">学习难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化标准"><span class="nav-text">优化标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术储备前提"><span class="nav-text">技术储备前提</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找性能瓶颈"><span class="nav-text">寻找性能瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动端挑战多"><span class="nav-text">移动端挑战多</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收获"><span class="nav-text">收获</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端性能优化全过程"><span class="nav-text">前端性能优化全过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、静态资源优化"><span class="nav-text">1、静态资源优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、页面渲染架构设计及相关的技术方案选型"><span class="nav-text">2、页面渲染架构设计及相关的技术方案选型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、原生App优化、混合开发优化"><span class="nav-text">3、原生App优化、混合开发优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、服务端与网络优化"><span class="nav-text">4、服务端与网络优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、研发流程优化"><span class="nav-text">5、研发流程优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、全链路质量监控体系建设"><span class="nav-text">6、全链路质量监控体系建设</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端性能优化包括哪些方面"><span class="nav-text">前端性能优化包括哪些方面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、性能优化指标与测量工具"><span class="nav-text">1、性能优化指标与测量工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、渲染优化"><span class="nav-text">2、渲染优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、代码优化"><span class="nav-text">3、代码优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、资源优化"><span class="nav-text">4、资源优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、构建优化"><span class="nav-text">5、构建优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、传输和加载优化"><span class="nav-text">6、传输和加载优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、更多主流优化方案"><span class="nav-text">7、更多主流优化方案</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

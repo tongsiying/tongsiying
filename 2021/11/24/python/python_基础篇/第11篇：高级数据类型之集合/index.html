@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第11篇：高级数据类型之集合">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/set.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/%E9%9B%86%E5%90%88.jpg">
+<meta property="og:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/image-20201126114556403.png">
+<meta property="article:published_time" content="2021-11-24T11:37:35.467Z">
+<meta property="article:modified_time" content="2021-11-30T13:04:15.169Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/set.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第11篇：高级数据类型之集合 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第11篇：高级数据类型之集合
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-24 19:37:35" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-11-30 21:04:15" itemprop="dateModified" datetime="2021-11-30T21:04:15+08:00">2021-11-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+基础数据类型：
+
+<ul>
+<li><span style="color:gray">int，整数类型（整形）</span></li>
+<li><span style="color:gray">float，浮点类型（浮点型）</span></li>
+<li><span style="color:gray">complex,复数类型</span></li>
+<li><span style="color:gray">bool，布尔类型</span></li>
+<li><span style="color:gray">str，字符串类型</span></li>
+</ul>
+<p>高级数据类型</p>
+<ul>
+<li><span style="color:gray">list，列表类型</span></li>
+<li><span style="color:gray">tuple，元组类型</span></li>
+<li><strong>set，集合类型</strong></li>
+<li><span style="color:gray">dict，字典类型</span></li>
+</ul>
+<p><strong>学习目标：掌握集合相关知识。</strong></p>
+<p>在学习了列表和元组之后，我们再来学习一种容器型的数据类型，它的名字叫集合（set）。说到集合这个词大家一定不会陌生，在数学课本上就有这个概念。通常我们对集合的定义是“<strong>把一定范围的、确定的、可以区别的事物当作一个整体来看待</strong>”，集合中的各个事物通常称为集合的元素。集合应该满足以下特性：</p>
+<ol>
+<li><strong>无序性</strong>：一个集合中，每个元素的地位都是相同的，元素之间是无序的。</li>
+<li><strong>互异性</strong>：一个集合中，任何两个元素都认为是不相同的，即每个元素只能出现一次。</li>
+<li><strong>确定性</strong>：给定一个集合，任给一个元素，该元素或者属于或者不属于该集合，二者必居其一，不允许有模棱两可的情况出现。</li>
+</ol>
+<p>Python程序中的集合跟数学上的集合是完全一致的，需要强调的是上面所说的无序性和互异性。无序性说明集合中的元素并不像列中的元素那样一个挨着一个，可以通过索引的方式实现随机访问（随机访问指的是给定一个有效的范围，随机抽取出一个数字，然后通过这个数字获取到对应的元素），所以Python中的<strong>集合肯定不能够支持索引运算</strong>。另外，集合的互异性决定了<strong>集合中不能有重复元素</strong>，这一点也是集合区别于列表的关键，说得更直白一些就是，Python中的集合类型具有去重特性。当然，Python中的集合一定是支持<code>in</code>和<code>not in</code>成员运算的，这样就可以确定一个元素是否属于集合，也就是上面所说的集合的确定性。<strong>集合的成员运算在性能上要优于列表的成员运算</strong>，这是集合的底层存储特性决定的，此处我们暂时不做讨论，先记下这个结论即可。</p>
+<h2 id="集合的定义"><a href="#集合的定义" class="headerlink" title="集合的定义"></a>集合的定义</h2><p>通过对比列表和元组，我们来看一下集合的定义：</p>
+<ul>
+<li><p>列表（list），是一个<strong>有序</strong>且<strong>可变</strong>的容器，在里面可以存放<strong>多个不同类型</strong>、<strong>数据元素可重复</strong>的元素。</p>
+</li>
+<li><p>元组（tuple），是一个<strong>有序</strong>且<strong>不可变</strong>的容器，在里面可以存放<strong>多个不同类型</strong>、<strong>数据元素可重复</strong>的元素。</p>
+</li>
+<li><p>集合（set），是一个 <strong>无序</strong> 且<strong>可变</strong>的容器，在里面可以存放<strong>多个不同类型</strong>、<strong>数据元素不可重复</strong>的元素。</p>
+</li>
+<li><p>集合的特点：</p>
+<ul>
+<li>以<code>{}</code>包裹，<code>,</code>为分隔符</li>
+<li>内部元素无序：无法通过索引取值</li>
+<li>内部元素可变：可以添加和删除元素</li>
+<li>内部元素类型可不同</li>
+<li>内部元素不可重复：经常应用在有去重需求的场景</li>
+</ul>
+</li>
+<li><p>一般什么时候用集合呢？</p>
+</li>
+</ul>
+<blockquote>
+<p>就是想要维护一大堆不重复的数据时，就可以用它。比如：做爬虫去网上找图片的链接，为了避免链接重复，可以选择用集合去存储链接地址。</p>
+</blockquote>
+<h2 id="集合的创建"><a href="#集合的创建" class="headerlink" title="集合的创建"></a>集合的创建</h2><p>在Python中，创建集合可以使用<code>{}</code>字面量语法，<code>{}</code>中需要至少有一个元素，因为没有元素的<code>{}</code>并不是空集合而是一个空字典，我们下一节就会大家介绍字典的知识。当然，也可以使用内置函数<code>set</code>来创建一个集合，准确的说<code>set</code>并不是一个函数，而是创建集合对象的构造器，这个知识点我们很快也会讲到，现在不理解跳过它就可以了。要创建空集合可以使用<code>set()</code>；也可以将其他序列转换成集合，例如：<code>set(&#39;hello&#39;)</code>会得到一个包含了4个字符的集合（重复的<code>l</code>会被去掉）。除了这两种方式，我们还可以使用生成式语法来创建集合，就像我们之前用生成式创建列表那样。要知道集合中有多少个元素，还是使用内置函数<code>len</code>；使用<code>for</code>循环可以实现对集合元素的遍历。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建集合的字面量语法(重复元素不会出现在集合中)</span></span><br><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>&#125;</span><br><span class="line">print(set1)         <span class="comment"># &#123;1, 2, 3&#125;</span></span><br><span class="line">print(len(set1))    <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建集合的构造器语法(后面会讲到什么是构造器)</span></span><br><span class="line">set2 = set(<span class="string">'hello'</span>)</span><br><span class="line">print(set2)         <span class="comment"># &#123;'h', 'l', 'o', 'e'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将列表转换成集合(可以去掉列表中的重复元素)</span></span><br><span class="line">set3 = set([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">print(set3)         <span class="comment"># &#123;1, 2, 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建集合的生成式语法(将列表生成式的[]换成&#123;&#125;)</span></span><br><span class="line">set4 = &#123;num <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">20</span>) <span class="keyword">if</span> num % <span class="number">3</span> == <span class="number">0</span> <span class="keyword">or</span> num % <span class="number">5</span> == <span class="number">0</span>&#125;</span><br><span class="line">print(set4)         <span class="comment"># &#123;3, 5, 6, 9, 10, 12, 15, 18&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 集合元素的循环遍历</span></span><br><span class="line"><span class="keyword">for</span> elem <span class="keyword">in</span> set4:</span><br><span class="line">    print(elem)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：定义空集合时，只能使用<code>v = set()</code>，不能使用 <code>v={}</code>（这样是定义一个空字典）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">v1 = []</span><br><span class="line">v11 = list()</span><br><span class="line"></span><br><span class="line">v2 = ()</span><br><span class="line">v22 = tuple()</span><br><span class="line"></span><br><span class="line">v3 = set()</span><br><span class="line"></span><br><span class="line">v4 = &#123;&#125; <span class="comment"># 空字典</span></span><br><span class="line">v44 = dict()</span><br></pre></td></tr></table></figure>
+
+<p>需要提醒大家，集合中的元素必须是<code>hashable</code>类型。所谓<code>hashable</code>类型指的是能够计算出哈希码的数据类型，你可以暂时将哈希码理解为和变量对应的唯一的ID值。通常不可变类型都是<code>hashable</code>类型，如整数、浮点、字符串、元组等，而可变类型都不是<code>hashable</code>类型，因为可变类型无法确定唯一的ID值，所以也就不能放到集合中。集合本身也是可变类型，所以集合不能够作为集合中的元素，这一点请大家一定要注意。</p>
+<h2 id="集合的方法"><a href="#集合的方法" class="headerlink" title="集合的方法"></a>集合的方法</h2><p>集合常用的方法如下：</p>
+<ul>
+<li>添加<ul>
+<li>add(value)，在集合中添加一个元素</li>
+</ul>
+</li>
+<li>删除<ul>
+<li>pop()，删除并返回任意集合元素，若集合为空，则引发KeyError</li>
+<li>discard(value)，在集合中删除指定元素，若不存在不报错</li>
+<li>remove(value)，在集合中删除指定元素，若不存在报错</li>
+<li>del set，删除集合</li>
+</ul>
+</li>
+<li>清空<ul>
+<li>clear()，清空集合</li>
+</ul>
+</li>
+<li>求交集<ul>
+<li>intersection(set2)，返回两个集合的交集，自身集合不发生改变</li>
+<li>intersection_update(set2)，在自身集合的基础上求两个集合的交集，改变自身集合</li>
+</ul>
+</li>
+<li>求并集<ul>
+<li>update(set2)，使用自身和其他集合的并集来更新集合，改变自身集合</li>
+<li>union(set2)，并集，返回两个集合的并集，不改变自身</li>
+</ul>
+</li>
+<li>求差集<ul>
+<li>difference(set2)，返回两个集合的差集，自身集合不发生改变</li>
+<li>difference_update(set2)，在自身集合的基础上求两个集合的差集，改变自身集合</li>
+<li>symmetric_difference(set2)，对称差集</li>
+</ul>
+</li>
+<li>求超集和子集<ul>
+<li>issuperset(set2)，求超集</li>
+<li>issubset(set2)，求子集</li>
+</ul>
+</li>
+</ul>
+<p><strong>使用示例</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1，列表去重。</span></span><br><span class="line">l1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>,]</span><br><span class="line">set1 = set(l1)</span><br><span class="line">l2 = list(set1)</span><br><span class="line">print(l2)  <span class="comment"># [1, 2, 3, 4, 5, 6]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2，集合的增删查。</span></span><br><span class="line">set1 = set()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加</span></span><br><span class="line">set1.add(<span class="string">"周杰伦"</span>)</span><br><span class="line">set1.add(<span class="string">"林俊杰"</span>)</span><br><span class="line">print(set1)  <span class="comment"># &#123;'周杰伦', '林俊杰'&#125;</span></span><br><span class="line">set2 = &#123;<span class="string">"刘嘉玲"</span>, <span class="string">'关之琳'</span>, <span class="string">"王祖贤"</span>, <span class="string">"张曼⽟"</span>, <span class="string">"李若彤"</span>&#125;</span><br><span class="line">set1.update(set2)</span><br><span class="line">print(set1)  <span class="comment"># &#123;'王祖贤', '刘嘉玲', '张曼⽟', '周杰伦', '林俊杰', '关之琳', '李若彤'&#125;</span></span><br><span class="line">print(set1.union(set2))  <span class="comment"># # &#123;'王祖贤', '刘嘉玲', '张曼⽟', '周杰伦', '林俊杰', '关之琳', '李若彤'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除</span></span><br><span class="line">print(set1.pop()) <span class="comment"># 关之琳  随机删除 返回指定元素</span></span><br><span class="line">print(set1)       <span class="comment"># &#123;'周杰伦', '张曼⽟', '李若彤', '王祖贤', '林俊杰', '刘嘉玲'&#125;</span></span><br><span class="line">set1.remove(<span class="string">'刘嘉玲'</span>)  <span class="comment"># 删除指定元素 若不存在 会引发KeyError异常 &#123;'周杰伦', '张曼⽟', '李若彤', '王祖贤', '林俊杰'&#125;</span></span><br><span class="line">print(set1)</span><br><span class="line">set1.discard(<span class="string">'李若彤'</span>)  <span class="comment"># 删除指定元素 若不存在不报错</span></span><br><span class="line">print(set1)          <span class="comment"># &#123;'周杰伦', '张曼⽟', '王祖贤', '林俊杰'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清空</span></span><br><span class="line"><span class="comment"># set1.clear()</span></span><br><span class="line"><span class="comment"># print(set1)   # set()</span></span><br><span class="line"><span class="comment"># del set1</span></span><br><span class="line"><span class="comment"># print(set1)   # NameError: name 'set1' is not defined</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询: for循环</span></span><br><span class="line"><span class="keyword">for</span> val <span class="keyword">in</span> set1:</span><br><span class="line">    print(val)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3，集合的关系测试。</span></span><br><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交集：&amp; intersection</span></span><br><span class="line">print(set1 &amp; set2)       <span class="comment"># &#123;4, 5&#125;</span></span><br><span class="line">print(set1.intersection(set2))  <span class="comment"># &#123;4, 5&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并集：| union</span></span><br><span class="line">print(set1 | set2)        <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7, 8&#125;</span></span><br><span class="line">print(set1.union(set2))   <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7, 8&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 差集：- difference</span></span><br><span class="line">print(set1 - set2)            <span class="comment"># &#123;1, 2, 3&#125;</span></span><br><span class="line">print(set1.difference(set2))  <span class="comment"># &#123;1, 2, 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对称差集: ^ symmetric_difference</span></span><br><span class="line">print(set1 ^ set2)                      <span class="comment"># &#123;1, 2, 3, 6, 7, 8&#125;</span></span><br><span class="line">print(set1.symmetric_difference(set2))  <span class="comment"># &#123;1, 2, 3, 6, 7, 8&#125;</span></span><br><span class="line"></span><br><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 超集：&gt;</span></span><br><span class="line">print(set1 &gt; set2)         <span class="comment"># True</span></span><br><span class="line">print(set1.issuperset(set2)) <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 子集：&lt; issubset</span></span><br><span class="line">print(set2 &lt; set1)         <span class="comment"># True</span></span><br><span class="line">print(set2.issubset(set1))  <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要判断两个集合有没有相同的元素可以使用<code>isdisjoint</code>方法，没有相同元素返回<code>True</code>，否则返回<code>False</code>，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="string">'Java'</span>, <span class="string">'Python'</span>, <span class="string">'Go'</span>, <span class="string">'Kotlin'</span>&#125;</span><br><span class="line">set2 = &#123;<span class="string">'Kotlin'</span>, <span class="string">'Swift'</span>, <span class="string">'Java'</span>, <span class="string">'Objective-C'</span>, <span class="string">'Dart'</span>&#125;</span><br><span class="line">set3 = &#123;<span class="string">'HTML'</span>, <span class="string">'CSS'</span>, <span class="string">'JavaScript'</span>&#125;</span><br><span class="line">print(set1.isdisjoint(set2))    <span class="comment"># False</span></span><br><span class="line">print(set1.isdisjoint(set3))    <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集合的运算"><a href="#集合的运算" class="headerlink" title="集合的运算"></a>集合的运算</h2><p>Python为集合类型提供了非常丰富的运算符，主要包括：成员运算、交集运算、并集运算、差集运算、比较运算（相等性、子集、超集）等。常见运算总结如下：</p>
+<ul>
+<li>成员运算<ul>
+<li><code>int</code>/<code>not in</code>：检查元素是否在集合中</li>
+</ul>
+</li>
+<li>交并差运算<ul>
+<li><code>&amp;</code>：求两个集合的交集，即公共的元素</li>
+<li><code>|</code>：求两个集合的并集，即两个集合中去重之后所有的元素</li>
+<li><code>-</code>：求两个集合中的差集，及第一个集合中有第二个集合中没有的元素</li>
+<li><code>^</code>：求两个集合中的对称差，即两个集合的并集减去两个集合的差集</li>
+</ul>
+</li>
+<li>比较运算<ul>
+<li><code>==</code> ：判断两个集合中元素是否相等</li>
+<li><code>!=</code> ：判断两个集合中元素是否不等</li>
+<li><code>&lt;</code>：判断第一个集合是否是第二个集合的真子集</li>
+<li><code>&lt;=</code>：断第一个集合是否是第二个集合的子集</li>
+<li><code>&gt;</code>：判断第一个集合是否是第二个集合的超集</li>
+</ul>
+</li>
+</ul>
+<h3 id="成员运算"><a href="#成员运算" class="headerlink" title="成员运算"></a>成员运算</h3><p>可以通过成员运算<code>in</code>和<code>not in</code>检查元素是否在集合中，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>&#125;</span><br><span class="line">print(<span class="number">10</span> <span class="keyword">in</span> set1)        <span class="comment"># False </span></span><br><span class="line">print(<span class="number">15</span> <span class="keyword">in</span> set1)        <span class="comment"># True</span></span><br><span class="line">set2 = &#123;<span class="string">'Python'</span>, <span class="string">'Java'</span>, <span class="string">'Go'</span>, <span class="string">'Swift'</span>&#125;</span><br><span class="line">print(<span class="string">'Ruby'</span> <span class="keyword">in</span> set2)    <span class="comment"># False</span></span><br><span class="line">print(<span class="string">'Java'</span> <span class="keyword">in</span> set2)    <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="交并差运算"><a href="#交并差运算" class="headerlink" title="交并差运算"></a>交并差运算</h3><p>Python中的集合跟数学上的集合一样，可以进行交集、并集、差集等运算，而且可以通过运算符和方法调用两种方式来进行操作，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交集</span></span><br><span class="line"><span class="comment"># 方法一: 使用 &amp; 运算符</span></span><br><span class="line">print(set1 &amp; set2)                <span class="comment"># &#123;2, 4, 6&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用intersection方法</span></span><br><span class="line">print(set1.intersection(set2))    <span class="comment"># &#123;2, 4, 6&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并集</span></span><br><span class="line"><span class="comment"># 方法一: 使用 | 运算符</span></span><br><span class="line">print(set1 | set2)         <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7, 8, 10&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用union方法</span></span><br><span class="line">print(set1.union(set2))    <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7, 8, 10&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 差集</span></span><br><span class="line"><span class="comment"># 方法一: 使用 - 运算符</span></span><br><span class="line">print(set1 - set2)              <span class="comment"># &#123;1, 3, 5, 7&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用difference方法</span></span><br><span class="line">print(set1.difference(set2))    <span class="comment"># &#123;1, 3, 5, 7&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对称差</span></span><br><span class="line"><span class="comment"># 方法一: 使用 ^ 运算符</span></span><br><span class="line">print(set1 ^ set2)                        <span class="comment"># &#123;1, 3, 5, 7, 8, 10&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用symmetric_difference方法</span></span><br><span class="line">print(set1.symmetric_difference(set2))    <span class="comment"># &#123;1, 3, 5, 7, 8, 10&#125;</span></span><br><span class="line"><span class="comment"># 方法三: 对称差相当于两个集合的并集减去交集</span></span><br><span class="line">print((set1 | set2) - (set1 &amp; set2))      <span class="comment"># &#123;1, 3, 5, 7, 8, 10&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过上面的代码可以看出，对两个集合求交集，<code>&amp;</code>运算符和<code>intersection</code>方法的作用是完全相同的，使用运算符的方式更直观而且代码也比较简短。相信大家对交集、并集、差集、对称差这几个概念是比较清楚的，如果没什么印象了可以看看下面的图。</p>
+<p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/set.png" alt></p>
+<p>集合的交集、并集、差集运算还可以跟赋值运算一起构成复合运算，如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;</span><br><span class="line"><span class="comment"># 将set1和set2求并集再赋值给set1</span></span><br><span class="line"><span class="comment"># 也可以通过set1.update(set2)来实现</span></span><br><span class="line">set1 |= set2</span><br><span class="line">print(set1)    <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7&#125;</span></span><br><span class="line">set3 = &#123;<span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>&#125;</span><br><span class="line"><span class="comment"># 将set1和set3求交集再赋值给set1</span></span><br><span class="line"><span class="comment"># 也可以通过set1.intersection_update(set3)来实现</span></span><br><span class="line">set1 &amp;= set3</span><br><span class="line">print(set1)    <span class="comment"># &#123;3, 6&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="比较运算"><a href="#比较运算" class="headerlink" title="比较运算"></a>比较运算</h3><p>两个集合可以用<code>==</code>和<code>!=</code>进行相等性判断，如果两个集合中的元素完全相同，那么<code>==</code>比较的结果就是<code>True</code>，否则就是<code>False</code>。如果集合A的任意一个元素都是集合B的元素，那么集合A称为集合B的子集，即对于∀a∈A，均有a∈B，则A⊆B。A是B的子集，反过来也可以称B是A的超集。如果A是B的子集且A不等于B，那么A就是B的真子集。Python为集合类型提供了判断子集和超集的运算符，其实就是我们非常熟悉的<code>&lt;</code>和<code>&gt;</code>运算符，代码如下所示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">set3 = set2</span><br><span class="line"><span class="comment"># &lt;运算符表示真子集，&lt;=运算符表示子集</span></span><br><span class="line">print(set1 &lt; set2, set1 &lt;= set2)    <span class="comment"># True True</span></span><br><span class="line">print(set2 &lt; set3, set2 &lt;= set3)    <span class="comment"># False True</span></span><br><span class="line"><span class="comment"># 通过issubset方法也能进行子集判断</span></span><br><span class="line">print(set1.issubset(set2))      <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 反过来可以用issuperset或&gt;运算符进行超集判断</span></span><br><span class="line">print(set2.issuperset(set1))    <span class="comment"># True</span></span><br><span class="line">print(set2 &gt; set1)              <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="不可变集合"><a href="#不可变集合" class="headerlink" title="不可变集合"></a>不可变集合</h2><p>Python中还有一种不可变类型的集合，名字叫<code>frozenset</code>。<code>set</code>跟<code>frozenset</code>的区别就如同<code>list</code>跟<code>tuple</code>的区别，<code>frozenset</code>由于是不可变类型，能够计算出哈希码，因此它可以作为<code>set</code>中的元素。除了不能添加和删除元素，<code>frozenset</code>在其他方面跟<code>set</code>基本是一样的，下面的代码简单的展示了<code>frozenset</code>的用法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set1 = frozenset(&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>&#125;)</span><br><span class="line">set2 = frozenset(range(<span class="number">1</span>, <span class="number">6</span>))</span><br><span class="line">print(set1 &amp; set2)    <span class="comment"># frozenset(&#123;1, 3, 5&#125;)</span></span><br><span class="line">print(set1 | set2)    <span class="comment"># frozenset(&#123;1, 2, 3, 4, 5, 7&#125;)</span></span><br><span class="line">print(set1 - set2)    <span class="comment"># frozenset(&#123;7&#125;)</span></span><br><span class="line">print(set1 &lt; set2)    <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集合类型转换"><a href="#集合类型转换" class="headerlink" title="集合类型转换"></a>集合类型转换</h2><p>其他类型如果想要转换为集合类型，可以通过set进行转换，并且如果数据有重复自动剔除。</p>
+<p>提示：int/list/tuple/dict都可以转换为集合。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="string">"张亚飞"</span></span><br><span class="line">v2 = set(v1)</span><br><span class="line">print(v2) <span class="comment"># &#123;"张","亚","飞"&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">22</span>]</span><br><span class="line">v2 = set(v1)</span><br><span class="line">print(v2) <span class="comment"># &#123;11,22,33,3,99&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = (<span class="number">11</span>,<span class="number">22</span>,<span class="number">3</span>,<span class="number">11</span>)</span><br><span class="line">v2 = set(v1)</span><br><span class="line">print(v2) <span class="comment"># &#123;11,22,3&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>提示：这其实也是去重的一个手段。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">3</span>,<span class="number">99</span>&#125;</span><br><span class="line">v1 = list(data) <span class="comment"># [11,22,33,3,99]</span></span><br><span class="line">v2 = tuple(data) <span class="comment"># (11,22,33,3,99)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集合生成式"><a href="#集合生成式" class="headerlink" title="集合生成式"></a>集合生成式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = &#123;v <span class="keyword">for</span> v <span class="keyword">in</span> iterable&#125; 其中iterable是一个可迭代的对象，比如list。</span><br></pre></td></tr></table></figure>
+
+<p>示例1：求余数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for in 循环实现</span></span><br><span class="line">l1 = [<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">20</span>]</span><br><span class="line">s = set()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> li:</span><br><span class="line">    s.add(l1 % <span class="number">3</span>)</span><br><span class="line">print(s) <span class="comment"># &#123;0, 1, 2&#125;</span></span><br><span class="line"><span class="comment"># 集合生成式</span></span><br><span class="line">s = &#123; i % <span class="number">3</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>)&#125;</span><br><span class="line">print(s) <span class="comment">#  &#123;0, 1， 2&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>示例2：嵌套if</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for in 循环实现</span></span><br><span class="line">l1 = [<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">20</span>]</span><br><span class="line">s = set()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> li:</span><br><span class="line">    <span class="keyword">if</span> i &lt; <span class="number">15</span>:</span><br><span class="line">    	s.add(l1 % <span class="number">3</span>)</span><br><span class="line">print(s) <span class="comment"># &#123;0, 1， 2&#125;</span></span><br><span class="line"><span class="comment"># 集合生成式</span></span><br><span class="line">s = &#123; i % <span class="number">3</span> <span class="keyword">for</span> i <span class="keyword">in</span> l1 <span class="keyword">if</span> i &lt; <span class="number">15</span>&#125;</span><br><span class="line">print(s) <span class="comment">#  &#123;0, 1， 2&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>示例3：嵌套循环</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for in 循环</span></span><br><span class="line">S = set()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">        S.add(( i * j))</span><br><span class="line">print(S)  <span class="comment"># &#123;1, 2, 3, 4, 6, 9&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 集合生成式</span></span><br><span class="line">S = &#123; i*j <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>) <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>)&#125;</span><br><span class="line">print(s)  <span class="comment"># &#123;1, 2, 3, 4, 6, 9&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="集合的存储原理"><a href="#集合的存储原理" class="headerlink" title="集合的存储原理"></a>集合的存储原理</h2><p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/%E9%9B%86%E5%90%88.jpg" alt></p>
+<h3 id="元素必须可哈希"><a href="#元素必须可哈希" class="headerlink" title="元素必须可哈希"></a>元素必须可哈希</h3><p>因存储原理，集合的元素必须是可哈希的值，即：内部通过通过哈希函数把值转换成一个数字。</p>
+<p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/image-20201126114556403.png" alt></p>
+<p>目前可哈希的数据类型：int、bool、str、tuple，而list、set是不可哈希的。</p>
+<p>总结：集合的元素只能是 int、bool、str、tuple 。</p>
+<ul>
+<li><p>转换成功</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">11</span>,<span class="number">3</span>,<span class="number">99</span>,<span class="number">22</span>]</span><br><span class="line">v2 = set(v1)</span><br><span class="line">print(v2) <span class="comment"># &#123;11,22,33,3,99&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>转换失败</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,[<span class="string">"Michael"</span>,<span class="string">"eric"</span>],<span class="number">33</span>]</span><br><span class="line">v2 = set(v1) <span class="comment"># 报错 </span></span><br><span class="line">print(v2)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="查找速度特别快"><a href="#查找速度特别快" class="headerlink" title="查找速度特别快"></a>查找速度特别快</h3><p>因存储原理特殊，集合的查找效率非常高（数据量大了才明显）。</p>
+<ul>
+<li><p>低</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表存储</span></span><br><span class="line">user_list = [<span class="string">"张亚飞"</span>,<span class="string">"Michael"</span>,<span class="string">"刘翔"</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">"Michael"</span> <span class="keyword">in</span> user_list:</span><br><span class="line">    print(<span class="string">"在"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不在"</span>)</span><br><span class="line"><span class="comment"># 元组存储</span></span><br><span class="line">user_tuple = (<span class="string">"张亚飞"</span>,<span class="string">"Michael"</span>,<span class="string">"刘翔"</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="string">"Michael"</span> <span class="keyword">in</span> user_tuple:</span><br><span class="line">    print(<span class="string">"在"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不在"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>效率高</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">user_set = &#123;<span class="string">"张亚飞"</span>,<span class="string">"Michael"</span>,<span class="string">"刘翔"</span>&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="string">"Michael"</span> <span class="keyword">in</span> user_set:</span><br><span class="line">    print(<span class="string">"在"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不在"</span>)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<h3 id="对比和嵌套"><a href="#对比和嵌套" class="headerlink" title="对比和嵌套"></a>对比和嵌套</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>是否可变</th>
+<th>是否有序</th>
+<th>元素要求</th>
+<th>是否可哈希</th>
+<th>转换</th>
+<th>定义空</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>list</td>
+<td>是</td>
+<td>是</td>
+<td>无</td>
+<td>否</td>
+<td>list(其他)</td>
+<td><code>v=[]或v=list()</code></td>
+</tr>
+<tr>
+<td>tuple</td>
+<td>否</td>
+<td>是</td>
+<td>无</td>
+<td>是</td>
+<td>tuple(其他)</td>
+<td><code>v=()或v=tuple()</code></td>
+</tr>
+<tr>
+<td>set</td>
+<td>是</td>
+<td>否</td>
+<td>可哈希</td>
+<td>否</td>
+<td>set(其他)</td>
+<td><code>v=set()</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data_list = [</span><br><span class="line">    <span class="string">"Michael"</span>,</span><br><span class="line">    <span class="number">11</span>,</span><br><span class="line">    (<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, &#123;<span class="string">"Michael"</span>, <span class="string">"eric"</span>&#125;, <span class="number">22</span>),</span><br><span class="line">    [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">22</span>],</span><br><span class="line">    &#123;<span class="number">11</span>, <span class="number">22</span>, (<span class="literal">True</span>, [<span class="string">"中国"</span>, <span class="string">"北京"</span>], <span class="string">"沙河"</span>), <span class="number">33</span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>注意：由于True和False本质上存储的是 1 和 0 ，而集合又不允许重复，所以在整数 0、1和False、True出现在集合中会有如下现象：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">v1 = &#123;<span class="literal">True</span>, <span class="number">1</span>&#125;</span><br><span class="line">print(v1)  <span class="comment"># &#123;True&#125;</span></span><br><span class="line"></span><br><span class="line">v2 = &#123;<span class="number">1</span>, <span class="literal">True</span>&#125;</span><br><span class="line">print(v2)  <span class="comment"># &#123;1&#125;</span></span><br><span class="line"></span><br><span class="line">v3 = &#123;<span class="number">0</span>, <span class="literal">False</span>&#125;</span><br><span class="line">print(v3)  <span class="comment"># &#123;0&#125;</span></span><br><span class="line"></span><br><span class="line">v4 = &#123;<span class="literal">False</span>, <span class="number">0</span>&#125;</span><br><span class="line">print(v4)  <span class="comment"># &#123;False&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h2><p>Python中的集合底层使用了<strong>哈希存储</strong>的方式，使得其具有查找速度快的优势，且其数据元素不可重复，经常应用在需要大量查找和去重的场景下。现阶段大家只需要知道以下几个知识点：</p>
+<ol>
+<li>集合，是 无序、不重复、元素必须可哈希、可变的一个容器（子孙元素都必须是可哈希）。</li>
+<li>集合的查找速度比较快（底层是基于哈希进行存储）</li>
+<li>集合可以具有 交并差 的功能。</li>
+<li>不支持索引运算</li>
+</ol>
+<p>集合与列表不同的地方在于集合中的元素<strong>没有序</strong>、<strong>不能用索引运算</strong>、<strong>不能重复</strong>。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第10篇：列表和元组的应用\" rel="bookmark">第10篇：列表和元组的应用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第12篇：高级数据类型之字典\" rel="bookmark">第12篇：高级数据类型之字典</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/" title="第11篇：高级数据类型之集合">https://tongsiying.github.io/2021/11/24/python/python_基础篇/第11篇：高级数据类型之集合/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC10%E7%AF%87%EF%BC%9A%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84%E7%9A%84%E5%BA%94%E7%94%A8/" rel="prev" title="第10篇：列表和元组的应用">
+      <i class="fa fa-chevron-left"></i> 第10篇：列表和元组的应用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC12%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E5%AD%97%E5%85%B8/" rel="next" title="第12篇：高级数据类型之字典">
+      第12篇：高级数据类型之字典 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的定义"><span class="nav-text">集合的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的创建"><span class="nav-text">集合的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的方法"><span class="nav-text">集合的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的运算"><span class="nav-text">集合的运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#成员运算"><span class="nav-text">成员运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交并差运算"><span class="nav-text">交并差运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较运算"><span class="nav-text">比较运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可变集合"><span class="nav-text">不可变集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合类型转换"><span class="nav-text">集合类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合生成式"><span class="nav-text">集合生成式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的存储原理"><span class="nav-text">集合的存储原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#元素必须可哈希"><span class="nav-text">元素必须可哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找速度特别快"><span class="nav-text">查找速度特别快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对比和嵌套"><span class="nav-text">对比和嵌套</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的总结"><span class="nav-text">简单的总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

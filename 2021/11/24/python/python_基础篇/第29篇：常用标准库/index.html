@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第29篇：常用标准库">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC29%E7%AF%87%EF%BC%9A%E5%B8%B8%E7%94%A8%E6%A0%87%E5%87%86%E5%BA%93/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-24T11:37:35.544Z">
+<meta property="article:modified_time" content="2021-11-24T11:35:35.971Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC29%E7%AF%87%EF%BC%9A%E5%B8%B8%E7%94%A8%E6%A0%87%E5%87%86%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第29篇：常用标准库 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC29%E7%AF%87%EF%BC%9A%E5%B8%B8%E7%94%A8%E6%A0%87%E5%87%86%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第29篇：常用标准库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:35:35" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>15 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+## 一、struct：打包
+
+<p> struct模块中最主要的三个函数式pack()、unpack()、calcsize()。</p>
+<ul>
+<li>pack(fmt, v1, v2, …) —— 根据所给的fmt描述的格式将值v1，v2，…转换为一个字符串。</li>
+<li>unpack(fmt, bytes)  —— 根据所给的fmt描述的格式将bytes反向解析出来，返回一个元组。</li>
+<li>calcsize(fmt)       —— 根据所给的fmt描述的格式返回该结构的大小。</li>
+</ul>
+<p>示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"> </span><br><span class="line">pack_num = struct.pack(<span class="string">'i'</span>, <span class="number">126</span>)</span><br><span class="line">print(<span class="string">'pack_string'</span>,pack_num,len(pack_num))</span><br><span class="line">unpack_num = struct.unpack(<span class="string">'i'</span>, pack_num)</span><br><span class="line">print(<span class="string">'unpack_string'</span>,unpack_num)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># pack_string b'~\x00\x00\x00' 4</span></span><br><span class="line"><span class="comment"># unpack_string (126,)</span></span><br><span class="line"> </span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'i'</span>))  <span class="comment"># len:  4</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'ii'</span>))   <span class="comment"># len:  8</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'f'</span>))    <span class="comment"># len:  4</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'ff'</span>))     <span class="comment"># len:  8</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'s'</span>))      <span class="comment"># len:  1</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'ss'</span>))      <span class="comment"># len:  2</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'d'</span>))     <span class="comment"># len:  8</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'dd'</span>))     <span class="comment"># len:  16</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'B'</span>))     <span class="comment"># len:  1</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'!BH'</span>))     <span class="comment"># len:  3</span></span><br><span class="line">print(<span class="string">"len: "</span>, struct.calcsize(<span class="string">'!BQ'</span>))     <span class="comment"># len:  9</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、tqdm-进度条"><a href="#二、tqdm-进度条" class="headerlink" title="二、tqdm: 进度条"></a>二、tqdm: 进度条</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">1</span>]: <span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line">In [<span class="number">2</span>]: <span class="keyword">import</span> time</span><br><span class="line">In [<span class="number">3</span>]: a = <span class="number">0</span>    </span><br><span class="line">In [<span class="number">4</span>]: <span class="keyword">for</span> i <span class="keyword">in</span> tqdm(range(<span class="number">10</span>)):</span><br><span class="line">   ...:     a += i</span><br><span class="line">   ...:     time.sleep(<span class="number">1</span>)</span><br><span class="line">   ...:</span><br><span class="line"> <span class="number">10</span>%|████████                                                                         | <span class="number">1</span>/<span class="number">10</span> [<span class="number">00</span>:<span class="number">01</span>&lt;<span class="number">00</span>:<span class="number">09</span>,  <span class="number">1.</span></span><br><span class="line"> <span class="number">20</span>%|████████████████▏                                                                | <span class="number">2</span>/<span class="number">10</span> [<span class="number">00</span>:<span class="number">02</span>&lt;<span class="number">0</span></span><br><span class="line"> <span class="number">30</span>%|████████████████████████▎                                                        | <span class="number">3</span>/<span class="number">10</span></span><br><span class="line"> <span class="number">40</span>%|████████████████████████████████▍</span><br><span class="line"> <span class="number">50</span>%|████████████████████████████████████████▌</span><br><span class="line"> <span class="number">60</span>%|████████████████████████████████████████████████▌</span><br><span class="line"> <span class="number">70</span>%|████████████████████████████████████████████████████████</span><br><span class="line"> <span class="number">80</span>%|████████████████████████████████████████████████████████</span><br><span class="line"> <span class="number">90</span>%|████████████████████████████████████████████████████████</span><br><span class="line"><span class="number">100</span>%|████████████████████████████████████████████████████████</span><br><span class="line"><span class="number">100</span>%|████████████████████████████████████████████████████████</span><br><span class="line">████████████████████████| <span class="number">10</span>/<span class="number">10</span> [<span class="number">00</span>:<span class="number">10</span>&lt;<span class="number">00</span>:<span class="number">00</span>,  <span class="number">1.00</span>s/it]</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、itertools"><a href="#三、itertools" class="headerlink" title="三、itertools"></a>三、itertools</h2><ul>
+<li>itertools：为高效循环而创建迭代器的函数</li>
+</ul>
+<p>本模块实现一系列 iterator ，这些迭代器受到APL，Haskell和SML的启发。为了适用于Python，它们都被重新写过。本模块标准化了一个快速、高效利用内存的核心工具集，这些工具本身或组合都很有用。它们一起形成了“迭代器代数”，这使得在纯Python中有可能创建简洁又高效的专用工具。以下为使用示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Datetime: 2020/06/25</span></span><br><span class="line"><span class="string">Author: Zhang Yafei</span></span><br><span class="line"><span class="string">Description: itertools 包</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_count</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    无穷的迭代器  count(start,[step])</span></span><br><span class="line"><span class="string">    count 接受两个参数</span></span><br><span class="line"><span class="string">        start:循环开始的数字</span></span><br><span class="line"><span class="string">        step:循环中的间隔</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> count</span><br><span class="line">    c = count(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">    v = next(c)</span><br><span class="line">    <span class="keyword">while</span> v &lt; <span class="number">10</span>:</span><br><span class="line">        v = next(c)</span><br><span class="line">        print(v, end=<span class="string">','</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_cycle</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    无穷迭代器 cycle()</span></span><br><span class="line"><span class="string">    cycle就是一while True，无限循环里面的数字。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> cycle</span><br><span class="line"> </span><br><span class="line">    c = cycle(<span class="string">'ABCD'</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        print(next(c), end=<span class="string">','</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_repeat</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    repeat(elem,[n])</span></span><br><span class="line"><span class="string">    重复迭代elem，n次</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> repeat</span><br><span class="line"> </span><br><span class="line">    r = repeat(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        print(next(r), end=<span class="string">','</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_accumulate</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    迭代器 accumulate()</span></span><br><span class="line"><span class="string">    accumulate(p,[func])</span></span><br><span class="line"><span class="string">    使用func的函数对迭代对象p进行累积。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> accumulate</span><br><span class="line"> </span><br><span class="line">    test_list = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> accumulate(test_list):  <span class="comment"># 默认是operator.add</span></span><br><span class="line">        print(i, end=<span class="string">','</span>)</span><br><span class="line">    print()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> accumulate(test_list, <span class="keyword">lambda</span> x, y: x * y):  <span class="comment"># operator.mul</span></span><br><span class="line">        print(i, end=<span class="string">','</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_chain</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    迭代器 chain()</span></span><br><span class="line"><span class="string">    chain()中可以放多个迭代对象，然后一一迭代出来。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line"> </span><br><span class="line">    ch = chain([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], &#123;<span class="number">4</span>: <span class="number">4</span>, <span class="number">5</span>: <span class="number">5</span>&#125;, &#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;, (<span class="number">9</span>,), [<span class="number">10</span>, [<span class="number">11</span>, <span class="number">12</span>]])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> ch:</span><br><span class="line">        print(i)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_chain_from_iterable</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    迭代器 chain.from_iterable()</span></span><br><span class="line"><span class="string">    跟chain不同的地方在于:</span></span><br><span class="line"><span class="string">        chain: 可以接受多个迭代对象</span></span><br><span class="line"><span class="string">        chain.from_iterable():可以接受一个可以产生迭代对象的迭代器</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> chain</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">gen_iterables</span><span class="params">()</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">            <span class="keyword">yield</span> range(i)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> chain.from_iterable(gen_iterables()):</span><br><span class="line">        print(i)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_compress</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    迭代器 compress</span></span><br><span class="line"><span class="string">    compress(data, selectors)</span></span><br><span class="line"><span class="string">    这是就是看下这个就知道了s是selectors中的元素。</span></span><br><span class="line"><span class="string">    (d[0] if s[0]), (d[1] if s[1]), ...</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> compress</span><br><span class="line"> </span><br><span class="line">    print(list(compress([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>])))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_dropwhile</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    迭代器 dropwhile()</span></span><br><span class="line"><span class="string">    dropwhile(pred, seq)</span></span><br><span class="line"><span class="string">    循环开始的条件是，直到遇到第一次不满足pred条件的情况，才开始遍历。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> dropwhile</span><br><span class="line"> </span><br><span class="line">    l = [<span class="number">1</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">2</span>, <span class="number">10</span>]</span><br><span class="line">    print(list(dropwhile(<span class="keyword">lambda</span> x: x &lt; <span class="number">3</span>, l)))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_groupby</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    groupby</span></span><br><span class="line"><span class="string">    这个感觉有点像sql中的group_by。可以对字符串，列表等进行分组。</span></span><br><span class="line"><span class="string">    返回键和，组里的内容</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> groupby</span><br><span class="line">    <span class="comment"># 对字符串进行分组</span></span><br><span class="line">    <span class="keyword">for</span> k, g <span class="keyword">in</span> groupby(<span class="string">'11111234567'</span>):</span><br><span class="line">        print(k, list(g))</span><br><span class="line">    d = &#123;<span class="number">1</span>: <span class="number">1</span>, <span class="number">2</span>: <span class="number">2</span>, <span class="number">3</span>: <span class="number">2</span>&#125;</span><br><span class="line">    <span class="comment"># 按照字典value来进行分组</span></span><br><span class="line">    <span class="keyword">for</span> k, g <span class="keyword">in</span> groupby(d, <span class="keyword">lambda</span> x: d.get(x)):</span><br><span class="line">        print(k, list(g))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_slice</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    islice</span></span><br><span class="line"><span class="string">    这个就是对迭代对象进行切割，不支持负数，有点像range(1, 10, 2)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> islice</span><br><span class="line">    print(list(islice(<span class="string">'ABCDEFG'</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="literal">None</span>)))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_zip_longest</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    zip_longest</span></span><br><span class="line"><span class="string">    这个和zip很像，不同地方在于:</span></span><br><span class="line"><span class="string">    zip结束取决于里面最短的迭代对象</span></span><br><span class="line"><span class="string">    zip_longest结束取决于里面最长的迭代对象</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> zip_longest</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> zip_longest([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>]):</span><br><span class="line">        print(x, y)</span><br><span class="line">    <span class="keyword">for</span> x, y <span class="keyword">in</span> zip([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>]):</span><br><span class="line">        print(x, y)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_product</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    product</span></span><br><span class="line"><span class="string">    相当于 嵌套的for</span></span><br><span class="line"><span class="string">    排列组合迭代器 product 嵌套的for</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> product</span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> product([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>]):</span><br><span class="line">        print(i, j)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_permutations</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    全排列，比如输出123的全部情况。(1,2,3),(1,3,2)…</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> permutations</span><br><span class="line">    print(list(permutations(<span class="string">'123'</span>)))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_combinations</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    combinations(p,r)</span></span><br><span class="line"><span class="string">    从p中找出所有长度为r的排列情况… 有顺序</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> combinations</span><br><span class="line">    print(list(combinations([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">2</span>)))</span><br><span class="line">    print(list(combinations(<span class="string">'ABCD'</span>, <span class="number">2</span>)))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">itertools_combinations_with_replacement</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""combinations_with_replacement()</span></span><br><span class="line"><span class="string">    从p中找出所有长度为r的排列情况，有顺序，但包括自身就是会重复的意思。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> combinations_with_replacement</span><br><span class="line">    print(list(combinations_with_replacement(<span class="string">'ABCD'</span>, <span class="number">2</span>)))</span><br><span class="line">    <span class="comment"># AA AB AC AD BB BC BD CC CD DD</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    itertools_count()</span><br><span class="line">    itertools_cycle()</span><br><span class="line">    itertools_repeat()</span><br><span class="line">    itertools_accumulate()</span><br><span class="line">    itertools_chain()</span><br><span class="line">    itertools_chain_from_iterable()</span><br><span class="line">    itertools_compress()</span><br><span class="line">    itertools_dropwhile()</span><br><span class="line">    itertools_groupby()</span><br><span class="line">    itertools_slice()</span><br><span class="line">    itertools_zip_longest()</span><br><span class="line">    itertools_product()</span><br><span class="line">    itertools_combinations()</span><br><span class="line">    itertools_combinations_with_replacement()</span><br><span class="line">    itertools_permutations()</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、collections"><a href="#四、collections" class="headerlink" title="四、collections"></a>四、collections</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">namedtuple是一个函数，它用来创建一个自定义的tuple对象，并且规定了tuple元素的个数，并可以用属性而不是索引来引用tuple的某个元素。</span></span><br><span class="line"><span class="string">这样一来，我们用namedtuple可以很方便地定义一种数据类型，它具备tuple的不变性，又可以根据属性来引用，使用十分方便。</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line">Point = namedtuple(<span class="string">'Point'</span>, [<span class="string">'x'</span>, <span class="string">'y'</span>])</span><br><span class="line">p = Point(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">print(p.x)</span><br><span class="line">print(p.y)</span><br><span class="line"></span><br><span class="line"><span class="number">1</span> = [Point(i, j) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>) <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">5</span>)]</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> l1:</span><br><span class="line">    print(p.x, p.y)</span><br><span class="line"></span><br><span class="line">Circle = namedtuple(<span class="string">'Circle'</span>, [<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'r'</span>])</span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">deque</span></span><br><span class="line"><span class="string">使用list存储数据时，按索引访问元素很快，但是插入和删除元素就很慢了，因为list是线性存储，数据量大的时候，插入和删除效率很低。</span></span><br><span class="line"><span class="string">deque是为了高效实现插入和删除操作的双向列表，适合用于队列和栈：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"> </span><br><span class="line">q = deque([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>])</span><br><span class="line">q.append(<span class="string">'x'</span>)</span><br><span class="line">q.appendleft(<span class="string">'y'</span>)</span><br><span class="line">print(q)</span><br><span class="line"> </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">defaultdict</span></span><br><span class="line"><span class="string">使用dict时，如果引用的Key不存在，就会抛出KeyError。如果希望key不存在时，返回一个默认值，就可以用defaultdict：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"> </span><br><span class="line">dd = defaultdict(<span class="keyword">lambda</span>: <span class="string">'N/A'</span>)</span><br><span class="line">dd[<span class="string">'key1'</span>] = <span class="string">'abc'</span></span><br><span class="line">dd[<span class="string">'key1'</span>]  <span class="comment"># key1存在</span></span><br><span class="line">dd[<span class="string">'key2'</span>]  <span class="comment"># key2不存在，返回默认值</span></span><br><span class="line"> </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">OrderedDict</span></span><br><span class="line"><span class="string">使用dict时，Key是无序的。在对dict做迭代时，我们无法确定Key的顺序。</span></span><br><span class="line"><span class="string">如果要保持Key的顺序，可以用OrderedDict：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> OrderedDict</span><br><span class="line"> </span><br><span class="line">d = dict([(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">2</span>), (<span class="string">'c'</span>, <span class="number">3</span>)])</span><br><span class="line">d  <span class="comment"># dict的Key是无序的</span></span><br><span class="line">od = OrderedDict([(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">2</span>), (<span class="string">'c'</span>, <span class="number">3</span>)])</span><br><span class="line">print(od)  <span class="comment"># OrderedDict的Key是有序的</span></span><br><span class="line"><span class="comment"># 注意，OrderedDict的Key会按照插入的顺序排列，不是Key本身排序：</span></span><br><span class="line"> </span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Counter</span></span><br><span class="line"><span class="string">Counter是一个简单的计数器，例如，统计字符出现的个数：</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"> </span><br><span class="line">c = Counter(<span class="string">'programming'</span>)</span><br><span class="line">print(c)</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、os"><a href="#五、os" class="headerlink" title="五、os"></a>五、os</h2><ul>
+<li>os.getcwd() 获取当前工作目录，即当前python脚本工作的目录路径</li>
+<li>os.chdir(“dirname”)  改变当前脚本工作目录；相当于shell下cd</li>
+<li>os.curdir  返回当前目录: (‘.’)</li>
+<li>os.pardir  获取当前目录的父目录字符串名：(‘..’)</li>
+<li>os.makedirs(‘dirname1/dirname2’)    可生成多层递归目录</li>
+<li>os.removedirs(‘dirname1’)    若目录为空，则删除，并递归到上一级目录，如若也为空，则删除，依此类推</li>
+<li>os.mkdir(‘dirname’)    生成单级目录；相当于shell中mkdir dirname</li>
+<li>os.rmdir(‘dirname’)    删除单级空目录，若目录不为空则无法删除，报错；相当于shell中rmdir dirname</li>
+<li>os.listdir(‘dirname’)    列出指定目录下的所有文件和子目录，包括隐藏文件，并以列表方式打印</li>
+<li>os.remove()  删除一个文件</li>
+<li>os.rename(“oldname”,”newname”)  重命名文件/目录</li>
+<li>os.stat(‘path/filename’)  获取文件/目录信息</li>
+<li>os.sep    输出操作系统特定的路径分隔符，win下为”\“,Linux下为”/“</li>
+<li>os.linesep    输出当前平台使用的行终止符，win下为”\t\n”,Linux下为”\n”</li>
+<li>os.pathsep    输出用于分割文件路径的字符串</li>
+<li>os.name    输出字符串指示当前使用平台。win-&gt;’nt’; Linux-&gt;’posix’</li>
+<li>os.system(“bash command”)  运行shell命令，直接显示</li>
+<li>os.environ  获取系统环境变量</li>
+<li>os.path.abspath(path)  返回path规范化的绝对路径</li>
+<li>os.path.split(path)  将path分割成目录和文件名二元组返回</li>
+<li>os.path.dirname(path)  返回path的目录。其实就是os.path.split(path)的第一个元素</li>
+<li>os.path.basename(path)  返回path最后的文件名。如何path以／或\结尾，那么就会返回空值。即os.path.split(path)的第二个元素</li>
+<li>os.path.exists(path)  如果path存在，返回True；如果path不存在，返回False</li>
+<li>os.path.isabs(path)  如果path是绝对路径，返回True</li>
+<li>os.path.isfile(path)  如果path是一个存在的文件，返回True。否则返回False</li>
+<li>os.path.isdir(path)  如果path是一个存在的目录，则返回True。否则返回False</li>
+<li>os.path.join(path1[, path2[, …]])  将多个路径组合后返回，第一个绝对路径之前的参数将被忽略</li>
+<li>os.path.getatime(path)  返回path所指向的文件或者目录的最后存取时间</li>
+<li>os.path.getmtime(path)  返回path所指向的文件或者目录的最后修改时间</li>
+</ul>
+<h2 id="六、sys"><a href="#六、sys" class="headerlink" title="六、sys"></a>六、sys</h2><ul>
+<li>sys.argv           命令行参数List，第一个元素是程序本身路径</li>
+<li>sys.exit(n)        退出程序，正常退出时exit(0)</li>
+<li>sys.version        获取Python解释程序的版本信息</li>
+<li>sys.maxint         最大的Int值</li>
+<li>sys.path           返回模块的搜索路径，初始化时使用PYTHONPATH环境变量的值</li>
+<li>sys.platform       返回操作系统平台名称</li>
+<li>sys.stdout.write(‘please:’)</li>
+<li>val = sys.stdin.readline()[:-1]</li>
+</ul>
+<h2 id="七、hashlib"><a href="#七、hashlib" class="headerlink" title="七、hashlib"></a>七、hashlib</h2><p>hashlib 是一个提供了一些流行的hash算法的 Python 标准库．其中所包括的算法有 md5, sha1, sha224, sha256, sha384, sha512. 另外，模块中所定义的 new(name, string=”) 方法可通过指定系统所支持的hash算法来构造相应的hash对象．</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> md5, sha1, sha224, sha256, sha384, sha512</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">hash_funcs = [md5, sha1, sha224, sha256, sha384, sha512]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hash_show</span><span class="params">(s)</span>:</span></span><br><span class="line">    result = []</span><br><span class="line">    <span class="keyword">for</span> func <span class="keyword">in</span> hash_funcs:</span><br><span class="line">        s_hash_obj = func(s.encode())</span><br><span class="line">        s_hash_hex = s_hash_obj.hexdigest()</span><br><span class="line">        result.append((s_hash_obj.name, s_hash_hex,  len(s_hash_hex)))</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="comment"># 1.各hashlib算法的使用案例</span></span><br><span class="line">    s = <span class="string">'hello python'</span></span><br><span class="line">    rs = hash_show(s)</span><br><span class="line">    pprint(rs)</span><br><span class="line">	<span class="comment"># 2.md5的使用案例</span></span><br><span class="line">    m1 = md5()    <span class="comment"># 构造hash对象</span></span><br><span class="line">    m1.update(<span class="string">'hello'</span>.encode())</span><br><span class="line">    m1.update(<span class="string">' '</span>.encode())</span><br><span class="line">    m1.update(<span class="string">'python'</span>.encode())</span><br><span class="line">    m2 = md5(<span class="string">'hello python'</span>.encode())</span><br><span class="line">    print(m1.hexdigest() == m2.hexdigest())    </span><br><span class="line">    <span class="comment"># 两种方式的效果相同</span></span><br><span class="line">    <span class="comment"># 3.使用 new(name, string=”) 构造新的哈系对象</span></span><br><span class="line">    h = hashlib.new(<span class="string">'ripemd160'</span>, <span class="string">'hello python'</span>.encode())    </span><br><span class="line">    <span class="comment"># ripemd160是一个160位的hash算法. ripemd系列算法基于md4, md5.</span></span><br><span class="line">    print(h.hexdigest(),len(h.hexdigest()))</span><br></pre></td></tr></table></figure>
+
+<p>以上加密算法虽然依然非常厉害，但时候存在缺陷，即：通过撞库可以反解。所以，有必要对加密算法中添加自定义key再来做加密。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"> </span><br><span class="line"><span class="comment"># ######## md5 ########</span></span><br><span class="line">hash = hashlib.md5(<span class="string">'898oaFs09f'</span>)</span><br><span class="line">hash.update(<span class="string">'admin'</span>)</span><br><span class="line">print(hash.hexdigest())</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，python 还有一个 hmac 模块，它内部对我们创建 key 和 内容 再进行处理然后再加密</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line">h = hmac.new(<span class="string">'zhangyafei'</span>)</span><br><span class="line">h.update(<span class="string">'hellowo'</span>)</span><br><span class="line">print(h.hexdigest())</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、json和pickle"><a href="#八、json和pickle" class="headerlink" title="八、json和pickle"></a>八、json和pickle</h2><p>用于序列化的两个模块</p>
+<ul>
+<li>json，用于字符串 和 python数据类型间进行转换</li>
+<li>pickle，用于python特有的类型 和 python的数据类型间进行转换</li>
+</ul>
+<p>Json模块提供了四个功能：dumps、dump、loads、load</p>
+<p>pickle模块提供了四个功能：dumps、dump、loads、load</p>
+<h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><ul>
+<li>json.dumps (obj)：将 python 对象编码转化为 json 字符串</li>
+<li>json.loads (str)：将 json 格式转化为 python dict格式</li>
+<li>json.dump(f, obj)：dump 和 dumps 的功能一样，将 dict 转化为 str 的格式，然后存入文件中。</li>
+<li>json.load(f) ：load 和 loads 的功能一样，从文件中读取 str 格式并将其转化为json。</li>
+</ul>
+<p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">        <span class="string">'Citizen_Wang'</span>:<span class="number">1</span>,</span><br><span class="line">        <span class="string">'Always fall in love'</span>:<span class="number">2</span>,</span><br><span class="line">        <span class="string">'with neighbours.'</span>:<span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">json_str = json.dumps(data)</span><br><span class="line"><span class="comment">#print('Python 原始数据是：', data)</span></span><br><span class="line"><span class="comment">#print('json 对象：',json_str)</span></span><br><span class="line">print(type(data))</span><br><span class="line">print(type(json_str))</span><br><span class="line"></span><br><span class="line">date2 = json.loads(json_str)</span><br><span class="line">print(type(json_str))</span><br><span class="line">print(type(date2))</span><br><span class="line"><span class="comment">#转化后的 json_str 是一个字符串类型，可以使用 enumerate 来查看一下 json_str 字符串的索引值和对应值。</span></span><br><span class="line"></span><br><span class="line">file = open(<span class="string">'2.txt'</span>, <span class="string">'wb'</span>)</span><br><span class="line">print(type(file))</span><br><span class="line"></span><br><span class="line">json.dump(data, file)</span><br><span class="line">json.dump(json_str, file)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">json字符串</span></span><br><span class="line"><span class="string">1.将json字符串json.loads转化为字典</span></span><br><span class="line"><span class="string">2.用key值提取value</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">json_str = <span class="string">'&#123;"demo":&#123;"demo1":&#123;"demo2":&#123;"demo3":"result"&#125;&#125;&#125;&#125;'</span></span><br><span class="line">print(type(json_str))</span><br><span class="line">str1 = json.loads(json_str)</span><br><span class="line">print(type(str1))</span><br><span class="line">str1[<span class="string">'demo'</span>][<span class="string">'demo1'</span>][<span class="string">'demo2'</span>][<span class="string">'demo3'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#load 在读取的时候，只需要文件对象一个参数即可。而 dump 在使用的时候，需要 python 对象作为第一个传入参数，文件对象作为第二个传入参数。</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">小结：</span></span><br><span class="line"><span class="string">json数据类型的字符串必须用单引号包起来，里面是双引号</span></span><br><span class="line"><span class="string">dump 或 dumps， 把其他对象或者格式，转化为 json str 格式，</span></span><br><span class="line"><span class="string">                dumps 用来处理字符串，dump 用来处理文件。</span></span><br><span class="line"><span class="string">load 或 loads ，把 json str 格式转化成其他格式，</span></span><br><span class="line"><span class="string">                loads 用来处理字符串，load 用来处理文件。</span></span><br><span class="line"><span class="string">注：json.loads(response.text) == response.json()</span></span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="pickle"><a href="#pickle" class="headerlink" title="pickle"></a>pickle</h3><p>pickle可以存储什么类型的数据呢？<br>所有python支持的原生类型：布尔值，整数，浮点数，复数，字符串，字节，None。由任何原生类型组成的列表，元组，字典和集合, 函数，类，类的实例<br>pickle模块可能出现三种异常：</p>
+<ul>
+<li>PickleError：封装和拆封时出现的异常类，继承自Exception</li>
+<li>PicklingError: 遇到不可封装的对象时出现的异常，继承自PickleError</li>
+<li>UnPicklingError: 拆封对象过程中出现的异常，继承自PickleError</li>
+</ul>
+<p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""dumps"""</span></span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line">list = [<span class="string">"aa"</span>,<span class="string">"bb"</span>,<span class="string">"cc"</span>]</span><br><span class="line"><span class="comment">#4 # dumps 将数据通过特殊的形式转换为只有python语言认识的字符串</span></span><br><span class="line">pickle_str = pickle.dumps(list)</span><br><span class="line">print(pickle_str)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">loads</span></span><br><span class="line"><span class="string">将pickle数据转换为python的数据结构</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">py_str = pickle.loads(pickle_str)</span><br><span class="line">print(py_str)</span><br><span class="line"><span class="string">"""dump功能</span></span><br><span class="line"><span class="string">dump 将数据通过特殊的形式转换为只有python语言认识的字符串，并写入文件</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'pickle.txt'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">   pickle.dump(list, f)</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">load: 从数据文件中读取数据，并转换为python的数据结构</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'pickle.txt'</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">     data = pickle.load(f)</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="json和pickle的区别"><a href="#json和pickle的区别" class="headerlink" title="json和pickle的区别"></a>json和pickle的区别</h3><ul>
+<li>pickle可以在python之间进行交互</li>
+<li>json可以实现python与不同开发语言的交互</li>
+<li>pickle可以序列化python中的任何数据类型</li>
+<li>json只能序列化python中的常归数据类型（列表等）</li>
+<li>pickle序列化后的对象不可读</li>
+<li>json序列化后的对象是可读的</li>
+</ul>
+<h2 id="九、logging"><a href="#九、logging" class="headerlink" title="九、logging"></a>九、logging</h2><p>日志：用来记录用户行为 或者 代码的执行的过程。用处：一键控制</p>
+<ul>
+<li>拍错的时候需要打印很多东西来帮助我排错</li>
+<li>严重的错误记录下来</li>
+<li>有一些用户行为，有没有错都要记录下来</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logging.debug(<span class="string">'debug message'</span>)      <span class="comment">#低级别的  排错信息</span></span><br><span class="line">logging.info(<span class="string">'info message'</span>)</span><br><span class="line">logging.warning(<span class="string">'warning message'</span>)</span><br><span class="line">logging.error(<span class="string">'error message'</span>)</span><br><span class="line">logging.critical(<span class="string">'critical message'</span>)   <span class="comment">#高级别的</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="basicConfig"><a href="#basicConfig" class="headerlink" title="basicConfig"></a>basicConfig</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line"><span class="comment"># basicconfig 简单 能做的事情相对少</span></span><br><span class="line">    <span class="comment">#中文乱码问题</span></span><br><span class="line">    <span class="comment">#不能同时往屏幕和文件输出</span></span><br><span class="line"><span class="comment"># 配置log对象 稍微有点复杂，能做的事相对多</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">CRITICAL = 50</span></span><br><span class="line"><span class="string">FATAL = CRITICAL</span></span><br><span class="line"><span class="string">ERROR = 40</span></span><br><span class="line"><span class="string">WARNING = 30</span></span><br><span class="line"><span class="string">WARN = WARNING</span></span><br><span class="line"><span class="string">INFO = 20</span></span><br><span class="line"><span class="string">DEBUG = 10</span></span><br><span class="line"><span class="string">NOTSET = 0</span></span><br><span class="line"><span class="string">只有大于当前日志等级的操作才会被记录。</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.DEBUG,</span><br><span class="line">                    format=<span class="string">'%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'</span>,</span><br><span class="line">                    <span class="comment"># datefmt='%a, %d %b %Y %H:%M:%S',</span></span><br><span class="line">                    datefmt=<span class="string">'%Y/%m/%d %H:%M:%S'</span>,</span><br><span class="line">                    filename=<span class="string">'test.log'</span>,</span><br><span class="line">                    filemode=<span class="string">'w'</span>,</span><br><span class="line">                    )</span><br><span class="line"></span><br><span class="line">logging.debug(<span class="string">'debug message'</span>)</span><br><span class="line">logging.info(<span class="string">'info message'</span>)</span><br><span class="line">logging.warning(<span class="string">'warning message'</span>)</span><br><span class="line">logging.error(<span class="string">'error message'</span>)</span><br><span class="line">logging.critical(<span class="string">'critical message'</span>)</span><br><span class="line"><span class="string">"""</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="logger对象"><a href="#logger对象" class="headerlink" title="logger对象"></a>logger对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># logger对象配置</span></span><br><span class="line"><span class="comment"># 程序的充分解耦</span></span><br><span class="line"><span class="comment"># 让程序变得高可定制性</span></span><br><span class="line"><span class="comment"># 5种级别的日志记录模式</span></span><br><span class="line"><span class="comment"># 两种配置方式basicconfig,log对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logger = logging.getLogger()</span><br><span class="line"><span class="comment"># 创建一个handler，用于写入日志文件</span></span><br><span class="line">fh = logging.FileHandler(<span class="string">'log.log'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="comment"># 再创建一个handler，用于输出到控制台</span></span><br><span class="line">sh = logging.StreamHandler()  <span class="comment">#创建一个屏幕控制对象</span></span><br><span class="line">formatter = logging.Formatter(<span class="string">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>)</span><br><span class="line">formatter2 = logging.Formatter(<span class="string">'%(asctime)s - %(name)s - %(levelno)s - %(levelname)s - [line-%(lineno)d] - %(message)s'</span>,datefmt=<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</span><br><span class="line">fh.setLevel(logging.DEBUG)</span><br><span class="line"><span class="comment">#文件操作符 和 格式 关联</span></span><br><span class="line">fh.setFormatter(formatter)</span><br><span class="line">sh.setFormatter(formatter2)</span><br><span class="line"><span class="comment">#logger对象和文件操作符关联</span></span><br><span class="line">logger.addHandler(fh)       <span class="comment">#logger对象可以添加多个fh和ch对象</span></span><br><span class="line">logger.addHandler(sh)</span><br><span class="line"></span><br><span class="line">logger.debug(<span class="string">'logger debug message'</span>)  <span class="comment">#细节</span></span><br><span class="line">logger.info(<span class="string">'logger info message'</span>)  <span class="comment">#正常信息</span></span><br><span class="line">logger.warning(<span class="string">'警告信息'</span>)    <span class="comment">#不影响程序，警告信息</span></span><br><span class="line">logger.error(<span class="string">'logger error message'</span>)        <span class="comment">#错误信息</span></span><br><span class="line">logger.critical(<span class="string">'logger critical message'</span>)  <span class="comment">#高级别的，严重错误信息</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="logger类"><a href="#logger类" class="headerlink" title="logger类"></a>logger类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Logger</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    logger对象：打印日志</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.run_log_file = RUN_LOG_FILE</span><br><span class="line">        self.error_log_file = ERROR_LOG_FILE</span><br><span class="line">        self.run_log = <span class="literal">None</span></span><br><span class="line">        self.error_log = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        self.initialize_run_log()</span><br><span class="line">        self.initialize_error_log()</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_path_exist</span><span class="params">(log_abs_file)</span>:</span></span><br><span class="line">        log_path = os.path.split(log_abs_file)[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(log_path):</span><br><span class="line">            os.mkdir(log_path)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize_run_log</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.check_path_exist(self.run_log_file)</span><br><span class="line">        fh = logging.FileHandler(self.run_log_file, <span class="string">'a'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">        sh = logging.StreamHandler()</span><br><span class="line">        <span class="comment"># fmt = logging.Formatter(fmt="%(asctime)s - %(levelname)s :  %(message)s")</span></span><br><span class="line">        <span class="comment"># fh.setFormatter(fmt)</span></span><br><span class="line">        <span class="comment"># sh.setFormatter(fmt)</span></span><br><span class="line">        logger1 = logging.Logger(<span class="string">'run_log'</span>, level=logging.INFO)</span><br><span class="line">        logger1.addHandler(fh)</span><br><span class="line">        logger1.addHandler(sh)</span><br><span class="line">        self.run_logger = logger1</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize_error_log</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.check_path_exist(self.error_log_file)</span><br><span class="line">        fh = logging.FileHandler(self.error_log_file, <span class="string">'a'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">        sh = logging.StreamHandler()</span><br><span class="line">        <span class="comment"># fmt = logging.Formatter(fmt="%(asctime)s  - %(levelname)s :  %(message)s")</span></span><br><span class="line">        <span class="comment"># fh.setFormatter(fmt)</span></span><br><span class="line">        <span class="comment"># sh.setFormatter(fmt)</span></span><br><span class="line">        logger1 = logging.Logger(<span class="string">'error_log'</span>, level=logging.ERROR)</span><br><span class="line">        logger1.addHandler(fh)</span><br><span class="line">        logger1.addHandler(sh)</span><br><span class="line">        self.error_logger = logger1</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(self, message, mode=True)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        写入日志</span></span><br><span class="line"><span class="string">        :param message: 日志信息</span></span><br><span class="line"><span class="string">        :param mode: True表示运行信息，False表示错误信息</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> mode:</span><br><span class="line">            self.run_logger.info(message)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.error_logger.error(message)</span><br><span class="line"></span><br><span class="line">logger = Logger()</span><br><span class="line">logger.log(content,<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="十：时间模块"><a href="#十：时间模块" class="headerlink" title="十：时间模块"></a>十：时间模块</h2><p>参考：<a href="https://www.cnblogs.com/zhangyafei/p/9836850.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/zhangyafei/p/9836850.html</a></p>
+<h2 id="十一、re正则"><a href="#十一、re正则" class="headerlink" title="十一、re正则"></a>十一、re正则</h2><p>参考：<a href="https://www.cnblogs.com/zhangyafei/articles/10113408.html" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/zhangyafei/articles/10113408.html</a></p>
+<h2 id="十二、random"><a href="#十二、random" class="headerlink" title="十二、random"></a>十二、random</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="comment"># 用于生成一个0到1的随机浮点数：0&lt;=n&lt;=1</span></span><br><span class="line">random.random()</span><br><span class="line"></span><br><span class="line"><span class="comment"># random.uniform(a,b)用于生成一个指定范围内的随机浮点数， 两个参数一个是上限，一个是下限</span></span><br><span class="line">random.uniform(<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># random.randint(a,b),用于生成一个指定范围内的随机整数</span></span><br><span class="line">random.randint(<span class="number">12</span>,<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># random.randrange(start,end,step)起始值，结束值，步长，从指定范围内找一个随机数</span></span><br><span class="line">list(range(<span class="number">60</span>,<span class="number">100</span>,<span class="number">2</span>))</span><br><span class="line">random.randrange(<span class="number">10</span>,<span class="number">100</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># random.choice()从序列（有序类型：；list,tuple,dict,string）里面获取一个随机元素</span></span><br><span class="line">random.choice((<span class="string">'Tuple'</span>,<span class="string">'list'</span>,<span class="string">'dict'</span>,<span class="string">'string'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># random.shuffle(x[,random]),用于将一个列表中的元素打乱</span></span><br><span class="line">p = [<span class="string">'python'</span>,<span class="string">'is'</span>,<span class="string">'powerful'</span>,<span class="string">'simple'</span>,<span class="string">'and'</span>,<span class="string">'so on……'</span>]</span><br><span class="line">random.shuffle(p)</span><br><span class="line">p </span><br><span class="line"></span><br><span class="line"><span class="comment"># random.sample(sequence,k),从指定序列中随机获取指定长度的片段，sample函数不会修改原有序列</span></span><br><span class="line">list_1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]</span><br><span class="line">slice_1 = random.sample(list_1,<span class="number">6</span>)</span><br><span class="line">print(slice_1)</span><br><span class="line">print(list_1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机选取0到100的偶数</span></span><br><span class="line">random.randrange(<span class="number">0</span>,<span class="number">101</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机字符</span></span><br><span class="line">random.choice(<span class="string">'ascdefg$%^WE#$*'</span>)</span><br><span class="line">              </span><br><span class="line"><span class="comment"># 多个字符中选取特定数量的字符</span></span><br><span class="line">random.sample(<span class="string">'ascdrfghijk'</span>,<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多个字符中选取特定数量的字符组成新字符串</span></span><br><span class="line"><span class="string">""</span>.join(random.sample([<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>,<span class="string">'g'</span>],<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机选取字符串</span></span><br><span class="line">random.choice([<span class="string">'apple'</span>,<span class="string">'pear'</span>,<span class="string">'peach'</span>,<span class="string">'orange'</span>,<span class="string">'lemon'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 洗牌</span></span><br><span class="line">items = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">items = list(range(<span class="number">1</span>,<span class="number">53</span>))</span><br><span class="line">random.shuffle(items)</span><br><span class="line">items</span><br></pre></td></tr></table></figure>
+
+<p>本节讲了十二个常用的内置标准库，当然这还不是python标准库的全部，其他的内容将会在之后的内容中补充以及你自己去发现，本节到此结束。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第10篇：列表和元组的应用\" rel="bookmark">第10篇：列表和元组的应用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第11篇：高级数据类型之集合\" rel="bookmark">第11篇：高级数据类型之集合</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC29%E7%AF%87%EF%BC%9A%E5%B8%B8%E7%94%A8%E6%A0%87%E5%87%86%E5%BA%93/" title="第29篇：常用标准库">https://tongsiying.github.io/2021/11/24/python/python_基础篇/第29篇：常用标准库/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC28%E7%AF%87%EF%BC%9A%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8/" rel="prev" title="第28篇：迭代器和生成器">
+      <i class="fa fa-chevron-left"></i> 第28篇：迭代器和生成器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC30%E7%AF%87%EF%BC%9A%E7%88%AC%E8%99%AB/" rel="next" title="第30篇：爬虫">
+      第30篇：爬虫 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二、tqdm-进度条"><span class="nav-text">二、tqdm: 进度条</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、itertools"><span class="nav-text">三、itertools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、collections"><span class="nav-text">四、collections</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、os"><span class="nav-text">五、os</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、sys"><span class="nav-text">六、sys</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、hashlib"><span class="nav-text">七、hashlib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八、json和pickle"><span class="nav-text">八、json和pickle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#json"><span class="nav-text">json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pickle"><span class="nav-text">pickle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#json和pickle的区别"><span class="nav-text">json和pickle的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#九、logging"><span class="nav-text">九、logging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#basicConfig"><span class="nav-text">basicConfig</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logger对象"><span class="nav-text">logger对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logger类"><span class="nav-text">logger类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十：时间模块"><span class="nav-text">十：时间模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十一、re正则"><span class="nav-text">十一、re正则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#十二、random"><span class="nav-text">十二、random</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="20-函数">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/20-%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://img.smyhvae.com/20180118_1130.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180315_0903.png">
+<meta property="og:image" content="http://img.smyhvae.com/20180125_2140.png">
+<meta property="og:image" content="http://img.smyhvae.com/2016040102.jpg">
+<meta property="article:published_time" content="2021-11-25T15:19:02.718Z">
+<meta property="article:modified_time" content="2021-11-25T15:19:02.719Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.smyhvae.com/20180118_1130.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/20-%E5%87%BD%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>20-函数 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/20-%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20-函数
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:19:02" itemprop="dateCreated datePublished" datetime="2021-11-25T23:19:02+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>关于函数的核心内容：</p>
+<ul>
+<li><p>函数有哪几种定义和调用方式</p>
+</li>
+<li><p>this：函数内部的 this 指向、如何改变 this 的指向。</p>
+</li>
+<li><p>函数的严格模式</p>
+</li>
+<li><p>高阶函数：函数作为参数传递、函数作为返回值传递</p>
+</li>
+<li><p>闭包：闭包的作用</p>
+</li>
+<li><p>递归：递归的两个条件</p>
+</li>
+<li><p>深拷贝和浅拷贝的区别</p>
+</li>
+</ul>
+<h2 id="函数的介绍"><a href="#函数的介绍" class="headerlink" title="函数的介绍"></a>函数的介绍</h2><p>函数：就是将一些功能或语句进行<strong>封装</strong>，在需要的时候，通过<strong>调用</strong>的形式，执行这些语句。</p>
+<ul>
+<li><p><strong>函数也是一个对象</strong></p>
+</li>
+<li><p>使用<code>typeof</code>检查一个函数对象时，会返回function</p>
+</li>
+</ul>
+<p><strong>函数的作用</strong>：</p>
+<ul>
+<li><p>将大量重复的语句抽取出来，写在函数里，以后需要这些语句的时候，可以直接调用函数，避免重复劳动。</p>
+</li>
+<li><p>简化编程，让编程模块化。高内聚、低耦合。</p>
+</li>
+</ul>
+<p>来看个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"你好"</span>);</span><br><span class="line">sayHello();	<span class="comment">// 调用函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"欢迎"</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"welcome"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数的定义-声明"><a href="#函数的定义-声明" class="headerlink" title="函数的定义/声明"></a>函数的定义/声明</h2><h3 id="方式一：利用函数关键字自定义函数（命名函数）"><a href="#方式一：利用函数关键字自定义函数（命名函数）" class="headerlink" title="方式一：利用函数关键字自定义函数（命名函数）"></a>方式一：利用函数关键字自定义函数（命名函数）</h3><p>使用<code>函数声明</code>来创建一个函数（也就是 function 关键字）。语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> 函数名(<span class="params">[形参<span class="number">1</span>,形参<span class="number">2.</span>..形参N]</span>)</span>&#123;  <span class="comment">// 备注：语法中的中括号，表示“可选”</span></span><br><span class="line">	语句...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun1</span>(<span class="params">a, b</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>解释如下：</p>
+<ul>
+<li><p>function：是一个关键字。中文是“函数”、“功能”。</p>
+</li>
+<li><p>函数名字：命名规定和变量的命名规定一样。只能是字母、数字、下划线、美元符号，不能以数字开头。</p>
+</li>
+<li><p>参数：可选。</p>
+</li>
+<li><p>大括号里面，是这个函数的语句。</p>
+</li>
+</ul>
+<p>PS：在有些编辑器中，方法写完之后，我们在方法的前面输入<code>/**</code>，然后回车，会发现，注释的格式会自动补齐。</p>
+<h3 id="方式二：函数表达式（匿名函数）"><a href="#方式二：函数表达式（匿名函数）" class="headerlink" title="方式二：函数表达式（匿名函数）"></a>方式二：函数表达式（匿名函数）</h3><p>使用<code>函数表达式</code>来创建一个函数。语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名  = <span class="function"><span class="keyword">function</span>(<span class="params">[形参<span class="number">1</span>,形参<span class="number">2.</span>..形参N]</span>)</span>&#123;</span><br><span class="line">	语句....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"我是匿名函数中封装的代码"</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>解释如下：</p>
+<ul>
+<li><p>上面的 fun2 是变量名，不是函数名。</p>
+</li>
+<li><p>函数表达式的声明方式跟声明变量类似，只不过变量里面存的是值，而函数表达式里面存的是函数。</p>
+</li>
+<li><p>函数表达式也可以传递参数。</p>
+</li>
+</ul>
+<p>从方式二的举例中可以看出：所谓的“函数表达式”，其实就是将匿名函数赋值给一个变量。</p>
+<h3 id="方式三：使用构造函数-new-Function"><a href="#方式三：使用构造函数-new-Function" class="headerlink" title="方式三：使用构造函数 new Function()"></a>方式三：使用构造函数 new Function()</h3><p>使用构造函数<code>new Function()</code>来创建一个对象。这种方式，用的少。</p>
+<p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> 变量名/函数名  = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'形参1'</span>, <span class="string">'形参2'</span>, <span class="string">'函数体'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意，Function 里面的参数都必须是<strong>字符串</strong>格式。也就是说，形参也必须放在<strong>字符串</strong>里；函数体也是放在<strong>字符串</strong>里包裹起来，放在 Function 的最后一个参数的位置。</p>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun3 = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'console.log("我是函数内部的内容");  console.log(a + b);'</span>);</span><br><span class="line"></span><br><span class="line">fun3(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 调用函数</span></span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我是函数内部的内容</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>分析</strong>：</p>
+<p>方式3的写法很少用，原因如下：</p>
+<ul>
+<li><p>不方便书写：写法过于啰嗦和麻烦。</p>
+</li>
+<li><p>执行效率较低：首先需要把字符串转换为 js 代码，然后再执行。</p>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>1、<strong>所有的函数，都是 <code>Fuction</code> 的“实例”</strong>（或者说是“实例对象”）。函数本质上都是通过 new Function 得到的。</p>
+<p>2、函数既然是实例对象，那么，<strong>函数也属于“对象”</strong>。还可以通过如下特征，来佐证函数属于对象：</p>
+<p>（1）我们直接打印某一个函数，比如 <code>console.log(fun2)</code>，发现它的里面有<code>__proto__</code>。（这个是属于原型的知识，后续再讲）</p>
+<p>（2）我们还可以打印 <code>console.log(fun2 instanceof Object)</code>，发现打印结果为 <code>true</code>。这说明 fun2 函数就是属于 Object。</p>
+<h2 id="函数的调用"><a href="#函数的调用" class="headerlink" title="函数的调用"></a>函数的调用</h2><h3 id="方式1：普通函数的调用"><a href="#方式1：普通函数的调用" class="headerlink" title="方式1：普通函数的调用"></a>方式1：普通函数的调用</h3><p>函数调用的语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">函数名();</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">函数名.<span class="keyword">call</span>();</span><br></pre></td></tr></table></figure>
+
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'我是函数体里面的内容1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'我是函数体里面的内容2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fn1(); <span class="comment">// 调用函数</span></span><br><span class="line"></span><br><span class="line">fn2.call(); <span class="comment">// 调用函数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方式2：通过对象的方法来调用"><a href="#方式2：通过对象的方法来调用" class="headerlink" title="方式2：通过对象的方法来调用"></a>方式2：通过对象的方法来调用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	a: <span class="string">'qianguyihao'</span>,</span><br><span class="line">	fn2: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'千古壹号，永不止步!'</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">obj.fn2(); <span class="comment">// 调用函数</span></span><br></pre></td></tr></table></figure>
+
+<p>如果一个函数是作为一个对象的属性保存，那么，我们称这个函数是这个对象的<strong>方法</strong>。</p>
+<p>PS：关于函数和方法的区别，本文的后续内容里有讲到，可以往下面翻。</p>
+<h3 id="方式3：立即执行函数"><a href="#方式3：立即执行函数" class="headerlink" title="方式3：立即执行函数"></a>方式3：立即执行函数</h3><p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'我是立即执行函数'</span>);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>立即执行函数在定义后，会自动调用。</p>
+<p>PS：关于立即执行函数，本文的后续内容里有讲到，可以往下面翻。</p>
+<p>上面讲到的这三种方式，是用得最多的。接下来讲到的三种方式，暂时看不懂也没关系，可以等学完其他的知识点，再回过头来看。</p>
+<h3 id="方式4：通过构造函数来调用"><a href="#方式4：通过构造函数来调用" class="headerlink" title="方式4：通过构造函数来调用"></a>方式4：通过构造函数来调用</h3><p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Fun3</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'千古壹号，永不止步~'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Fun3();</span><br></pre></td></tr></table></figure>
+
+<p>这种方式用得不多。</p>
+<h3 id="方式5：绑定事件函数"><a href="#方式5：绑定事件函数" class="headerlink" title="方式5：绑定事件函数"></a>方式5：绑定事件函数</h3><p>代码举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>我是按钮，请点击我<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span></span><br><span class="line"><span class="actionscript">            <span class="comment">//2.绑定事件</span></span></span><br><span class="line"><span class="actionscript">            btn.onclick = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">'点击按钮后，要做的事情'</span>);</span></span><br><span class="line">            &#125;;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这里涉及到DOM操作和事件的知识点，后续再讲。</p>
+<h3 id="方式6：定时器函数"><a href="#方式6：定时器函数" class="headerlink" title="方式6：定时器函数"></a>方式6：定时器函数</h3><p>代码举例：（每间隔一秒，将 数字 加1）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">let</span> num = <span class="number">1</span>;</span><br><span class="line">setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    num ++;</span><br><span class="line">    <span class="built_in">console</span>.log(num);</span><br><span class="line">&#125;, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里涉及到定时器的知识点。</p>
+<h2 id="函数的参数：形参和实参"><a href="#函数的参数：形参和实参" class="headerlink" title="函数的参数：形参和实参"></a>函数的参数：形参和实参</h2><p>函数的参数包括形参和实参。先来看下面的图就很好懂了：</p>
+<p><img src="http://img.smyhvae.com/20180118_1130.png" alt></p>
+<p><strong>形参：</strong></p>
+<ul>
+<li><p>概念：形式上的参数。定义函数时传递的参数，当时并不知道是什么值。</p>
+</li>
+<li><p>定义函数时，可以在函数的<code>()</code>中来指定一个或多个形参。</p>
+</li>
+<li><p>多个形参之间使用<code>,</code>隔开，声明形参就相当于在函数内部声明了对应的变量，但是并不赋值。</p>
+</li>
+</ul>
+<p><strong>实参</strong>：</p>
+<ul>
+<li><p>概念：实际上的参数。调用函数时传递的参数，实参将会传递给函数中对应的形参。</p>
+</li>
+<li><p>在调用函数时，可以在函数的 <code>()</code>中指定实参。</p>
+</li>
+</ul>
+<p>注意：实际参数和形式参数的个数，一般要相同。</p>
+<p>举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用函数</span></span><br><span class="line">sum(<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line">sum(<span class="string">"3"</span>,<span class="number">4</span>);</span><br><span class="line">sum(<span class="string">"Hello"</span>,<span class="string">"World"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义函数：求和</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>控制台输出结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">34</span></span><br><span class="line">helloworld</span><br></pre></td></tr></table></figure>
+
+<h3 id="实参的类型"><a href="#实参的类型" class="headerlink" title="实参的类型"></a>实参的类型</h3><p>函数的实参可以是任意的数据类型。</p>
+<p>调用函数时，解析器不会检查实参的类型，所以要注意，是否有可能会接收到非法的参数，如果有可能则需要对参数进行类型的检查。</p>
+<h3 id="实参的数量（实参和形参的个数不匹配时）"><a href="#实参的数量（实参和形参的个数不匹配时）" class="headerlink" title="实参的数量（实参和形参的个数不匹配时）"></a>实参的数量（实参和形参的个数不匹配时）</h3><p>调用函数时，解析器也不会检查实参的数量。</p>
+<ul>
+<li><p>如果实参的数量多余形参的数量，多余实参不会被赋值。</p>
+</li>
+<li><p>如果实参的数量少于形参的数量，多余的形参会被定义为 undefined。表达式的运行结果为 NaN。</p>
+</li>
+</ul>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a + b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">sum(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="number">3</span></span><br><span class="line"></span><br><span class="line">NaN</span><br></pre></td></tr></table></figure>
+
+<p>注意：在 JS 中，形参的默认值是 undefined。</p>
+<h2 id="函数的返回值"><a href="#函数的返回值" class="headerlink" title="函数的返回值"></a>函数的返回值</h2><p>举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(sum(<span class="number">3</span>, <span class="number">4</span>)); <span class="comment">// 将函数的返回值打印出来</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//函数：求和</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>return 的作用是结束方法（终止函数）。</p>
+<p>注意：</p>
+<ul>
+<li><p>return 的值将会作为函数的执行结果返回，可以定义一个变量，来接收该结果。</p>
+</li>
+<li><p>在函数中，return后的语句都不会执行（函数在执行完 return 语句之后停止并立即退出函数）</p>
+</li>
+<li><p>如果return语句后不跟任何值，就相当于返回一个undefined</p>
+</li>
+<li><p>如果函数中不写return，则也会返回undefined</p>
+</li>
+<li><p>返回值可以是任意的数据类型，可以是对象，也可以是函数。</p>
+</li>
+<li><p>return 只能返回一个值。如果用逗号隔开多个值，则以最后一个为准。</p>
+</li>
+</ul>
+<h2 id="函数名、函数体和函数加载问题（重要，请记住）"><a href="#函数名、函数体和函数加载问题（重要，请记住）" class="headerlink" title="函数名、函数体和函数加载问题（重要，请记住）"></a>函数名、函数体和函数加载问题（重要，请记住）</h2><p>我们要记住：<strong>函数名 == 整个函数</strong>。举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(fn) == <span class="built_in">console</span>.log(<span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;alert(<span class="number">1</span>)&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义fn方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="number">1</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们知道，当我们在调用一个函数时，通常使用<code>函数()</code>这种格式；可如果，我们是直接使用<code>函数</code>这种格式，它的作用相当于整个函数。</p>
+<p><strong>函数的加载问题</strong>：JS加载的时候，只加载函数名，不加载函数体。所以如果想使用内部的成员变量，需要调用函数。</p>
+<h3 id="fn-和-fn-的区别【重要】"><a href="#fn-和-fn-的区别【重要】" class="headerlink" title="fn()  和 fn 的区别【重要】"></a>fn()  和 fn 的区别【重要】</h3><ul>
+<li><p><code>fn()</code>：调用函数。调用之后，还获取了函数的返回值。</p>
+</li>
+<li><p><code>fn</code>：函数对象。相当于直接获取了整个函数对象。</p>
+</li>
+</ul>
+<h2 id="break、continue、return-的区别"><a href="#break、continue、return-的区别" class="headerlink" title="break、continue、return 的区别"></a>break、continue、return 的区别</h2><ul>
+<li><p>break ：结束当前的循环体（如 for、while）</p>
+</li>
+<li><p>continue ：跳出本次循环，继续执行下次循环（如 for、while）</p>
+</li>
+<li><p>return ：1、退出循环。2、返回 return 语句中的值，同时结束当前的函数体内的代码，退出当前函数。</p>
+</li>
+</ul>
+<h2 id="立即执行函数"><a href="#立即执行函数" class="headerlink" title="立即执行函数"></a>立即执行函数</h2><p>现有匿名函数如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"a = "</span> + a);</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"b = "</span> + b);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>立即执行函数如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"a = "</span> + a);</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"b = "</span> + b);</span><br><span class="line">&#125;)(<span class="number">123</span>, <span class="number">456</span>);</span><br></pre></td></tr></table></figure>
+
+<p>立即执行函数：函数定义完，立即被调用，这种函数叫做立即执行函数。</p>
+<p>立即执行函数往往只会执行一次。为什么呢？因为没有变量保存它，执行完了之后，就找不到它了。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>函数也可以成为对象的属性。<strong>如果一个函数是作为一个对象的属性保存，那么，我们称这个函数是这个对象的方法</strong>。</p>
+<p>调用这个函数就说调用对象的方法（method）。函数和方法，有什么本质的区别吗？它只是名称上的区别，并没有其他的区别。</p>
+<p>函数举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用函数</span></span><br><span class="line">fn();</span><br></pre></td></tr></table></figure>
+
+<p>方法举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line">obj.fn();</span><br></pre></td></tr></table></figure>
+
+<p>我们可以这样说，如果直接是<code>fn()</code>，那就说明是函数调用。如果是<code>XX.fn()</code>的这种形式，那就说明是<strong>方法</strong>调用。</p>
+<h2 id="类数组-arguments"><a href="#类数组-arguments" class="headerlink" title="类数组 arguments"></a>类数组 arguments</h2><blockquote>
+<p>这部分，小白可能看不懂。所以，这一段，暂时可以忽略。</p>
+</blockquote>
+<p>在调用函数时，浏览器每次都会传递进两个隐含的参数：</p>
+<ul>
+<li><p>1.函数的上下文对象 this</p>
+</li>
+<li><p>2.<strong>封装实参的对象</strong> arguments</p>
+</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="built_in">arguments</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://img.smyhvae.com/20180315_0903.png" alt></p>
+<p>arguments 是一个类数组对象，它可以通过索引来操作数据，也可以获取长度。</p>
+<p><strong>arguments 代表的是实参</strong>。在调用函数时，我们所传递的实参都会在 arguments 中保存。有个讲究的地方是：arguments<strong>只在函数中使用</strong>。</p>
+<h3 id="1、返回函数实参的个数：arguments-length"><a href="#1、返回函数实参的个数：arguments-length" class="headerlink" title="1、返回函数实参的个数：arguments.length"></a>1、返回函数<strong>实参</strong>的个数：arguments.length</h3><p>arguments.length 可以用来获取<strong>实参的长度</strong>。</p>
+<p>举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fn(<span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">fn(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>);</span><br><span class="line">fn(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(fn.length); <span class="comment">//获取形参的个数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.length); <span class="comment">//获取实参的个数</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'----------------'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<p><img src="http://img.smyhvae.com/20180125_2140.png" alt></p>
+<p>我们即使不定义形参，也可以通过 arguments 来使用实参（只不过比较麻烦）：arguments[0] 表示第一个实参、arguments[1] 表示第二个实参…</p>
+<h3 id="2、返回正在执行的函数：arguments-callee"><a href="#2、返回正在执行的函数：arguments-callee" class="headerlink" title="2、返回正在执行的函数：arguments.callee"></a>2、返回正在执行的函数：arguments.callee</h3><p>arguments 里边有一个属性叫做 callee，这个属性对应一个函数对象，就是当前正在指向的函数对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">arguments</span>.callee == fun); <span class="comment">//打印结果为true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun(<span class="string">'hello'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在使用函数<strong>递归</strong>调用时，推荐使用 arguments.callee 代替函数名本身。</p>
+<h3 id="3、arguments-可以修改元素"><a href="#3、arguments-可以修改元素" class="headerlink" title="3、arguments 可以修改元素"></a>3、arguments 可以修改元素</h3><p>之所以说 arguments 是伪数组，是因为：<strong>arguments 可以修改元素，但不能改变数组的长短</strong>。举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fn(<span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">fn(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>);</span><br><span class="line">fn(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">arguments</span>[<span class="number">0</span>] = <span class="number">99</span>; <span class="comment">//将实参的第一个数改为99</span></span><br><span class="line">    <span class="built_in">arguments</span>.push(<span class="number">8</span>); <span class="comment">//此方法不通过，因为无法增加元素</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="arguments-的使用"><a href="#arguments-的使用" class="headerlink" title="arguments 的使用"></a>arguments 的使用</h2><p>当我们不确定有多少个参数传递的时候，可以用 <strong>arguments</strong> 来获取。在 JavaScript 中，arguments 实际上是当前函数的一个<strong>内置对象</strong>。所有函数都内置了一个 arguments 对象（只有函数才有 arguments 对象），arguments 对象中存储了<strong>传递的所有实参</strong>.</p>
+<p>arguments的展示形式是一个<strong>伪数组</strong>。伪数组具有以下特点：</p>
+<ul>
+<li><p>可以进行遍历；具有数组的 length 属性。</p>
+</li>
+<li><p>按索引方式存储数据。</p>
+</li>
+<li><p>不具有数组的 push()、pop() 等方法。</p>
+</li>
+</ul>
+<p><strong>代码举例</strong>：利用 arguments 求函数实参中的最大值</p>
+<p>代码实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMaxValue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> max = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">	<span class="comment">// 通过 arguments 遍历实参</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">arguments</span>.length; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (max &lt; <span class="built_in">arguments</span>[i]) &#123;</span><br><span class="line">			max = <span class="built_in">arguments</span>[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(getMaxValue(<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">5</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<font color="#0000ff"><strong>更多技能</strong></font>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="http://img.smyhvae.com/2016040102.jpg" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/20-%E5%87%BD%E6%95%B0/" title="20-函数">https://tongsiying.github.io/2021/11/25/web/04-JavaScript基础/20-函数/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/19-%E6%95%B0%E7%BB%84%E7%9A%84%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95/" rel="prev" title="19-数组的常见方法">
+      <i class="fa fa-chevron-left"></i> 19-数组的常见方法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/21-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8F%98%E9%87%8F%E6%8F%90%E5%8D%87/" rel="next" title="21-作用域和变量提升">
+      21-作用域和变量提升 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的介绍"><span class="nav-text">函数的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的定义-声明"><span class="nav-text">函数的定义&#x2F;声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式一：利用函数关键字自定义函数（命名函数）"><span class="nav-text">方式一：利用函数关键字自定义函数（命名函数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式二：函数表达式（匿名函数）"><span class="nav-text">方式二：函数表达式（匿名函数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式三：使用构造函数-new-Function"><span class="nav-text">方式三：使用构造函数 new Function()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的调用"><span class="nav-text">函数的调用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式1：普通函数的调用"><span class="nav-text">方式1：普通函数的调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式2：通过对象的方法来调用"><span class="nav-text">方式2：通过对象的方法来调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式3：立即执行函数"><span class="nav-text">方式3：立即执行函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式4：通过构造函数来调用"><span class="nav-text">方式4：通过构造函数来调用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式5：绑定事件函数"><span class="nav-text">方式5：绑定事件函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式6：定时器函数"><span class="nav-text">方式6：定时器函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的参数：形参和实参"><span class="nav-text">函数的参数：形参和实参</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实参的类型"><span class="nav-text">实参的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实参的数量（实参和形参的个数不匹配时）"><span class="nav-text">实参的数量（实参和形参的个数不匹配时）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的返回值"><span class="nav-text">函数的返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数名、函数体和函数加载问题（重要，请记住）"><span class="nav-text">函数名、函数体和函数加载问题（重要，请记住）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fn-和-fn-的区别【重要】"><span class="nav-text">fn()  和 fn 的区别【重要】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#break、continue、return-的区别"><span class="nav-text">break、continue、return 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#立即执行函数"><span class="nav-text">立即执行函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类数组-arguments"><span class="nav-text">类数组 arguments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、返回函数实参的个数：arguments-length"><span class="nav-text">1、返回函数实参的个数：arguments.length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、返回正在执行的函数：arguments-callee"><span class="nav-text">2、返回正在执行的函数：arguments.callee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、arguments-可以修改元素"><span class="nav-text">3、arguments 可以修改元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arguments-的使用"><span class="nav-text">arguments 的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

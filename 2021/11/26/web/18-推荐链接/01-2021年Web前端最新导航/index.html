@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="01-2021年Web前端最新导航">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/26/web/18-%E6%8E%A8%E8%8D%90%E9%93%BE%E6%8E%A5/01-2021%E5%B9%B4Web%E5%89%8D%E7%AB%AF%E6%9C%80%E6%96%B0%E5%AF%BC%E8%88%AA/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-25T23:53:36.052Z">
+<meta property="article:modified_time" content="2021-11-25T23:53:36.053Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/26/web/18-%E6%8E%A8%E8%8D%90%E9%93%BE%E6%8E%A5/01-2021%E5%B9%B4Web%E5%89%8D%E7%AB%AF%E6%9C%80%E6%96%B0%E5%AF%BC%E8%88%AA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>01-2021年Web前端最新导航 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/26/web/18-%E6%8E%A8%E8%8D%90%E9%93%BE%E6%8E%A5/01-2021%E5%B9%B4Web%E5%89%8D%E7%AB%AF%E6%9C%80%E6%96%B0%E5%AF%BC%E8%88%AA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          01-2021年Web前端最新导航
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-26 07:53:36" itemprop="dateCreated datePublished" datetime="2021-11-26T07:53:36+08:00">2021-11-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+<blockquote>
+<p>本文的最新内容将在<a href="https://github.com/qianguyihao/Web" target="_blank" rel="noopener external nofollow noreferrer">GitHub</a>上实时更新。欢迎在GitHub上关注我，一起入门和进阶前端。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文列出了很多与前端有关的常见网站、博客、工具等，整体来看比较权威。有些东西已经过时了，我就不列出来了。</p>
+<p>学是一方面，也是最主要的方面；但还有一个作用，比如，“这个前端框架你都不知道啊”、“这个前端大牛你都没听说过啊” ，此时，这份清单就能起到作用了。如果你能把清单里列出的内容都了解下，逼格也会高很多。</p>
+<h2 id="技术社区"><a href="#技术社区" class="headerlink" title="技术社区"></a>技术社区</h2><ul>
+<li>GitHub：<a href="https://github.com/" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/</a></li>
+</ul>
+<p>高质量的内容创作和分享平台。</p>
+<p>请记住，作为一个码农，GitHub 代表了你的名片。</p>
+<ul>
+<li>stackoverflow：<a href="https://stackoverflow.com/" target="_blank" rel="noopener external nofollow noreferrer">https://stackoverflow.com/</a></li>
+</ul>
+<p>遇到技术问题请先Google，很多答案都能在 stackoverflow 上找到。</p>
+<h2 id="技术博客"><a href="#技术博客" class="headerlink" title="技术博客"></a>技术博客</h2><ul>
+<li>掘金：<a href="https://juejin.im/" target="_blank" rel="noopener external nofollow noreferrer">https://juejin.im/</a></li>
+</ul>
+<p>掘金已经被前端同学攻陷了。目前来看，国内的很多优质前端文章，都在掘金上。</p>
+<p>如果你刚开始写前端博客，可以考虑在掘金上发文章。当然，文章最好在<strong>掘金、博客园、知乎</strong>上做同步。</p>
+<ul>
+<li>博客园：<a href="https://www.cnblogs.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.cnblogs.com/</a></li>
+</ul>
+<p>一个很纯粹的技术博客平台。</p>
+<ul>
+<li>知乎：<a href="https://www.zhihu.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/</a></li>
+</ul>
+<p>很多做技术的同学也开始玩知乎了，阿里的不少前端大牛在知乎上就非常活跃。</p>
+<ul>
+<li>CSDN：<a href="https://www.csdn.net/" target="_blank" rel="noopener external nofollow noreferrer">https://www.csdn.net/</a></li>
+</ul>
+<p>广告太多，但奈何你这么老牌。</p>
+<ul>
+<li>segmentfault：<a href="https://segmentfault.com/" target="_blank" rel="noopener external nofollow noreferrer">https://segmentfault.com/</a></li>
+</ul>
+<p>比较低调的技术博客平台。</p>
+<h2 id="GitHub-排名统计"><a href="#GitHub-排名统计" class="headerlink" title="GitHub 排名统计"></a>GitHub 排名统计</h2><ul>
+<li>GitHub 中文排行榜、高分优秀中文项目：<a href="https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/kon9chunkit/GitHub-Chinese-Top-Charts</a></li>
+</ul>
+<p>中国区的高分项目，都在这里了。</p>
+<ul>
+<li>GitHub 全球排名：<a href="https://gitstar-ranking.com/" target="_blank" rel="noopener external nofollow noreferrer">https://gitstar-ranking.com/</a></li>
+</ul>
+<p>这个排名很权威。如果你的项目超过 10k star，就能上榜，跻身全球 GitHub 项目前1000名。</p>
+<ul>
+<li>GitHub trending（官网推荐）：<a href="https://github.com/trending" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/trending</a></li>
+</ul>
+<p>你的项目要是能上 GitHub trending，绝对火得一塌糊涂。</p>
+<p>2019-12备注：现在的 GitHub trending 已经不是严格按照新增的 star 数来排行了。所以说，这个排名，也不是那么权威了。</p>
+<ul>
+<li>GitHub 中国区排名：<a href="https://githuber.cn/search?language=JavaScript" target="_blank" rel="noopener external nofollow noreferrer">https://githuber.cn/search?language=JavaScript</a></li>
+</ul>
+<p>这个网站虽然比较小众，但排名还是相对比较准的。</p>
+<ul>
+<li>GitHub 中国区排名：<a href="http://githubrank.com/" target="_blank" rel="noopener external nofollow noreferrer">http://githubrank.com/</a></li>
+</ul>
+<p>这个排名很久没更新了，早就不准了；而且还经常打不开。</p>
+<h2 id="资讯"><a href="#资讯" class="headerlink" title="资讯"></a>资讯</h2><ul>
+<li><p>36氪：<a href="https://36kr.com/" target="_blank" rel="noopener external nofollow noreferrer">https://36kr.com/</a></p>
+</li>
+<li><p>虎嗅网：<a href="https://www.huxiu.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.huxiu.com/</a></p>
+</li>
+<li><p>利器：<a href="https://liqi.io/" target="_blank" rel="noopener external nofollow noreferrer">https://liqi.io/</a></p>
+</li>
+</ul>
+<p>采访优秀的创造者，邀请他们来分享工作时所使用的工具。</p>
+<ul>
+<li>湾区日报：<a href="https://wanqu.co/" target="_blank" rel="noopener external nofollow noreferrer">https://wanqu.co/</a></li>
+</ul>
+<p>每天推送 5 篇优质英文文章。</p>
+<ul>
+<li><p>Solidot：<a href="https://www.solidot.org/" target="_blank" rel="noopener external nofollow noreferrer">https://www.solidot.org/</a></p>
+</li>
+<li><p>品玩：<a href="https://www.pingwest.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.pingwest.com/</a></p>
+</li>
+<li><p>极客公园：<a href="http://www.geekpark.net/" target="_blank" rel="noopener external nofollow noreferrer">http://www.geekpark.net/</a></p>
+</li>
+</ul>
+<h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><ul>
+<li><p>Vue.js：<a href="https://cn.vuejs.org/" target="_blank" rel="noopener external nofollow noreferrer">https://cn.vuejs.org/</a></p>
+</li>
+<li><p>React：<a href="https://reactjs.org/" target="_blank" rel="noopener external nofollow noreferrer">https://reactjs.org/</a></p>
+</li>
+<li><p>Angular：<a href="https://angular.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://angular.cn/</a></p>
+</li>
+<li><p>AngularJS：<a href="https://angularjs.org/" target="_blank" rel="noopener external nofollow noreferrer">https://angularjs.org/</a></p>
+</li>
+<li><p>Koa：<a href="https://koa.bootcss.com/" target="_blank" rel="noopener external nofollow noreferrer">https://koa.bootcss.com/</a></p>
+</li>
+</ul>
+<p>基于 Node.js 平台的下一代 Web 开发框架。</p>
+<ul>
+<li>Express：<a href="http://www.expressjs.com.cn/" target="_blank" rel="noopener external nofollow noreferrer">http://www.expressjs.com.cn/</a></li>
+</ul>
+<p>基于 Node.js 平台，快速、开放、极简的 Web 开发框架。</p>
+<ul>
+<li>Egg：<a href="https://eggjs.org/zh-cn/" target="_blank" rel="noopener external nofollow noreferrer">https://eggjs.org/zh-cn/</a></li>
+</ul>
+<p>Egg 继承于 Koa。</p>
+<p>Koa 是一个非常优秀的框架，然而对于企业级应用来说，它还比较基础。而 Egg 选择了 Koa 作为其基础框架，在它的模型基础上，进一步对它进行了一些增强。</p>
+<ul>
+<li>Electron：<a href="https://www.electronjs.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://www.electronjs.cn/</a></li>
+</ul>
+<p>Electron（原名为Atom Shell）是GitHub开发的一个开源js框架。 它允许使用Node.js（作为后端）和Chromium（作为前端）完成桌面GUI应用程序的开发。</p>
+<p>也就是说，我们可以用 js 语言开发客户端软件了。比如说，VS Code 这个客户端软件就是用 js 语言写的。</p>
+<ul>
+<li>Redux：<a href="https://www.redux.org.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://www.redux.org.cn/</a></li>
+</ul>
+<p>Redux 是 JavaScript 状态容器，提供可预测化的状态管理。</p>
+<ul>
+<li>ReactNative：<a href="https://reactnative.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://reactnative.cn/</a></li>
+</ul>
+<p>使用JavaScript编写原生移动应用。</p>
+<ul>
+<li>mpvue：<a href="http://mpvue.com/" target="_blank" rel="noopener external nofollow noreferrer">http://mpvue.com/</a></li>
+</ul>
+<p>基于 Vue.js 的小程序开发框架。</p>
+<h2 id="UI框架"><a href="#UI框架" class="headerlink" title="UI框架"></a>UI框架</h2><ul>
+<li><p>Bootstrap：<a href="http://www.bootcss.com/" target="_blank" rel="noopener external nofollow noreferrer">http://www.bootcss.com/</a></p>
+</li>
+<li><p>Ant Design：<a href="https://ant.design" target="_blank" rel="noopener external nofollow noreferrer">https://ant.design</a></p>
+</li>
+</ul>
+<p>基于 React 的 UI 组件库，主要用于研发企业级中后台产品。官网推出了 <a href="https://pro.ant.design/" target="_blank" rel="noopener external nofollow noreferrer">Ant Design pro</a> 作为示例，可以看看。</p>
+<ul>
+<li>Ant Design Mobile：<a href="https://mobile.ant.design/" target="_blank" rel="noopener external nofollow noreferrer">https://mobile.ant.design/</a></li>
+</ul>
+<p>一个基于 Preact / React / React Native 的 移动端 UI 组件库。</p>
+<ul>
+<li>Ant Design of Vue：<a href="https://vue.ant.design/docs/vue/introduce-cn/" target="_blank" rel="noopener external nofollow noreferrer">https://vue.ant.design/docs/vue/introduce-cn/</a></li>
+</ul>
+<p>Ant Design 的 Vue 实现，开发和服务于企业级后台产品。</p>
+<ul>
+<li>ElementUI：<a href="http://element-cn.eleme.io/" target="_blank" rel="noopener external nofollow noreferrer">http://element-cn.eleme.io/</a></li>
+</ul>
+<p>基于 Vue.js 的组件库。</p>
+<ul>
+<li>iView：<a href="https://www.iviewui.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.iviewui.com/</a></li>
+</ul>
+<p>一套基于 Vue.js 的高质量 UI 组件库。</p>
+<h2 id="类库"><a href="#类库" class="headerlink" title="类库"></a>类库</h2><ul>
+<li><p>jQuery：<a href="http://jquery.com/" target="_blank" rel="noopener external nofollow noreferrer">http://jquery.com/</a></p>
+</li>
+<li><p>Zepto.js：<a href="https://zeptojs.com/" target="_blank" rel="noopener external nofollow noreferrer">https://zeptojs.com/</a></p>
+</li>
+</ul>
+<p>可以理解成是移动端的 jQuery。</p>
+<ul>
+<li>ECharts：<a href="https://echarts.baidu.com/" target="_blank" rel="noopener external nofollow noreferrer">https://echarts.baidu.com/</a></li>
+</ul>
+<p>使用 JavaScript 实现的开源可视化库。</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><ul>
+<li>Sass：<a href="https://sass-lang.com/" target="_blank" rel="noopener external nofollow noreferrer">https://sass-lang.com/</a></li>
+</ul>
+<p>Sass 是成熟、稳定、强大的 CSS 扩展语言。入门文档可以看：<a href="http://sass.bootcss.com/" target="_blank" rel="noopener external nofollow noreferrer">http://sass.bootcss.com/</a></p>
+<ul>
+<li>Less：<a href="http://lesscss.org/" target="_blank" rel="noopener external nofollow noreferrer">http://lesscss.org/</a></li>
+</ul>
+<p>给 CSS 加点料。入门文档可以看：<a href="https://less.bootcss.com/" target="_blank" rel="noopener external nofollow noreferrer">https://less.bootcss.com/</a></p>
+<ul>
+<li>Stylus：<a href="http://stylus-lang.com/" target="_blank" rel="noopener external nofollow noreferrer">http://stylus-lang.com/</a></li>
+</ul>
+<h2 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h2><ul>
+<li><p>NPM：<a href="https://www.npmjs.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/</a></p>
+</li>
+<li><p>Yarn：<a href="https://yarnpkg.com/zh-Hans/" target="_blank" rel="noopener external nofollow noreferrer">https://yarnpkg.com/zh-Hans/</a></p>
+</li>
+<li><p>Webpack：<a href="https://webpack.js.org/" target="_blank" rel="noopener external nofollow noreferrer">https://webpack.js.org/</a></p>
+</li>
+<li><p>Gulp：<a href="https://www.gulpjs.com.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://www.gulpjs.com.cn/</a></p>
+</li>
+<li><p>Babel：<a href="https://babeljs.io/" target="_blank" rel="noopener external nofollow noreferrer">https://babeljs.io/</a></p>
+</li>
+<li><p>ESLint：<a href="https://cn.eslint.org/" target="_blank" rel="noopener external nofollow noreferrer">https://cn.eslint.org/</a></p>
+</li>
+</ul>
+<p>可组装的JavaScript和JSX检查工具。</p>
+<ul>
+<li>PostCSS：<a href="https://www.postcss.com.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://www.postcss.com.cn/</a></li>
+</ul>
+<p>用 JavaScript 工具和插件转换 CSS 代码的工具</p>
+<h2 id="调试抓包"><a href="#调试抓包" class="headerlink" title="调试抓包"></a>调试抓包</h2><ul>
+<li>whistle：<a href="https://wproxy.org/whistle/" target="_blank" rel="noopener external nofollow noreferrer">https://wproxy.org/whistle/</a></li>
+</ul>
+<p>代理抓包工具，很好很强大。</p>
+<ul>
+<li>Fiddler：<a href="https://www.telerik.com/fiddler" target="_blank" rel="noopener external nofollow noreferrer">https://www.telerik.com/fiddler</a></li>
+</ul>
+<p>代理抓包工具。</p>
+<h2 id="Mock数据"><a href="#Mock数据" class="headerlink" title="Mock数据"></a>Mock数据</h2><ul>
+<li>Easy Mock：<a href="https://www.easy-mock.com" target="_blank" rel="noopener external nofollow noreferrer">https://www.easy-mock.com</a></li>
+</ul>
+<h2 id="编辑器-amp-amp-IDE"><a href="#编辑器-amp-amp-IDE" class="headerlink" title="编辑器 &amp;&amp; IDE"></a>编辑器 &amp;&amp; IDE</h2><ul>
+<li><p>VS Code：<a href="https://code.visualstudio.com/" target="_blank" rel="noopener external nofollow noreferrer">https://code.visualstudio.com/</a></p>
+</li>
+<li><p>Sublime Text：<a href="https://www.sublimetext.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.sublimetext.com/</a></p>
+</li>
+<li><p>WebStorm：<a href="https://www.jetbrains.com/webstorm/" target="_blank" rel="noopener external nofollow noreferrer">https://www.jetbrains.com/webstorm/</a></p>
+</li>
+<li><p>Atom：<a href="https://atom.io/" target="_blank" rel="noopener external nofollow noreferrer">https://atom.io/</a></p>
+</li>
+</ul>
+<h2 id="编码规范"><a href="#编码规范" class="headerlink" title="编码规范"></a>编码规范</h2><ul>
+<li><p>Bootstrap编码规范：<a href="https://codeguide.bootcss.com/" target="_blank" rel="noopener external nofollow noreferrer">https://codeguide.bootcss.com/</a></p>
+</li>
+<li><p>es6编程风格：<a href="http://es6.ruanyifeng.com/#docs/style" target="_blank" rel="noopener external nofollow noreferrer">http://es6.ruanyifeng.com/#docs/style</a></p>
+</li>
+<li><p>Airbnb Javascript Style Guide：<a href="https://github.com/airbnb/javascript" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/airbnb/javascript</a></p>
+</li>
+</ul>
+<h2 id="静态站点搭建工具"><a href="#静态站点搭建工具" class="headerlink" title="静态站点搭建工具"></a>静态站点搭建工具</h2><ul>
+<li><p>Hexo：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener external nofollow noreferrer">https://hexo.io/zh-cn/</a></p>
+</li>
+<li><p>VuePress：<a href="https://www.vuepress.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://www.vuepress.cn/</a></p>
+</li>
+<li><p>GitBook：<a href="https://www.gitbook.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.gitbook.com/</a></p>
+</li>
+</ul>
+<h2 id="设计工具"><a href="#设计工具" class="headerlink" title="设计工具"></a>设计工具</h2><ul>
+<li><p><strong>墨刀</strong>：原型设计工具。网址：<a href="https://modao.cc/" target="_blank" rel="noopener external nofollow noreferrer">https://modao.cc/</a></p>
+</li>
+<li><p><strong>蓝湖</strong>：一款产品文档和设计图的在线协作平台。网址：<a href="https://lanhuapp.com" target="_blank" rel="noopener external nofollow noreferrer">https://lanhuapp.com</a></p>
+</li>
+<li><p><strong>PxCook（像素大厨）</strong>：高效易用的自动标注工具。软件下载链接：<a href="https://www.fancynode.com.cn/pxcook" target="_blank" rel="noopener external nofollow noreferrer">https://www.fancynode.com.cn/pxcook</a></p>
+</li>
+</ul>
+<h2 id="图标"><a href="#图标" class="headerlink" title="图标"></a>图标</h2><ul>
+<li><p>Font Awesome：<a href="http://www.fontawesome.com.cn/" target="_blank" rel="noopener external nofollow noreferrer">http://www.fontawesome.com.cn/</a></p>
+</li>
+<li><p>Iconfont：<a href="https://www.iconfont.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://www.iconfont.cn/</a></p>
+</li>
+<li><p>icomoon：<a href="https://icomoon.io/" target="_blank" rel="noopener external nofollow noreferrer">https://icomoon.io/</a></p>
+</li>
+<li><p>EasyIcon：<a href="https://www.easyicon.net/" target="_blank" rel="noopener external nofollow noreferrer">https://www.easyicon.net/</a></p>
+</li>
+<li><p>icons8：<a href="https://icons8.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://icons8.cn/</a></p>
+</li>
+<li><p>IconStore：<a href="https://iconstore.co/" target="_blank" rel="noopener external nofollow noreferrer">https://iconstore.co/</a></p>
+</li>
+<li><p>iconninja：<a href="http://www.iconninja.com/" target="_blank" rel="noopener external nofollow noreferrer">http://www.iconninja.com/</a></p>
+</li>
+</ul>
+<h2 id="设计素材"><a href="#设计素材" class="headerlink" title="设计素材"></a>设计素材</h2><ul>
+<li>设优 SHEUI：<a href="http://www.sheui.com/Contact/" target="_blank" rel="noopener external nofollow noreferrer">http://www.sheui.com/Contact/</a></li>
+</ul>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="综合类"><a href="#综合类" class="headerlink" title="综合类"></a>综合类</h3><ul>
+<li>CanIUse：<a href="https://caniuse.com/" target="_blank" rel="noopener external nofollow noreferrer">https://caniuse.com/</a></li>
+</ul>
+<p>浏览器兼容性查询。前端同学必须要知道。</p>
+<ul>
+<li>国家企业信用信息公示系统：<a href="http://www.gsxt.gov.cn" target="_blank" rel="noopener external nofollow noreferrer">http://www.gsxt.gov.cn</a></li>
+</ul>
+<p>通过这个网站，我们可以查到任何一家公司的基本信息（成立时间、法定代表人等）。如果你在这个网站上没有找到某公司的信息，放心吧，这个公司一定是个骗子。</p>
+<ul>
+<li>ProcessOn：<a href="https://www.processon.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.processon.com/</a></li>
+</ul>
+<p>在线制作流程图。推荐。</p>
+<ul>
+<li><strong>幕布</strong>：<a href="https://mubu.com" target="_blank" rel="noopener external nofollow noreferrer">https://mubu.com</a></li>
+</ul>
+<p>极简大纲笔记、一键生成思维导图。非常好用。</p>
+<ul>
+<li><p>JSON格式化：<a href="http://www.bejson.com/" target="_blank" rel="noopener external nofollow noreferrer">http://www.bejson.com/</a></p>
+</li>
+<li><p>草料二维码：<a href="https://cli.im/" target="_blank" rel="noopener external nofollow noreferrer">https://cli.im/</a></p>
+</li>
+<li><p>短链生成：<a href="http://www.sina.lt" target="_blank" rel="noopener external nofollow noreferrer">http://www.sina.lt</a></p>
+</li>
+<li><p>GitHub短网址：<a href="https://git.io/" target="_blank" rel="noopener external nofollow noreferrer">https://git.io/</a></p>
+</li>
+<li><p><strong>图片压缩</strong>：<a href="https://tinypng.com/" target="_blank" rel="noopener external nofollow noreferrer">https://tinypng.com/</a></p>
+</li>
+</ul>
+<p>熊猫压缩。压缩后图片清晰度不会有太大变化。</p>
+<ul>
+<li><p><strong>图片压缩</strong>：<a href="https://www.yasuotu.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.yasuotu.com/</a></p>
+</li>
+<li><p>在线PS：<a href="https://www.photopea.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.photopea.com/</a></p>
+</li>
+<li><p>图片在线裁剪：<a href="https://www.asqql.com/gifc/" target="_blank" rel="noopener external nofollow noreferrer">https://www.asqql.com/gifc/</a></p>
+</li>
+<li><p>多数据源IP地址查询：<a href="https://haoip.cn/" target="_blank" rel="noopener external nofollow noreferrer">https://haoip.cn/</a></p>
+</li>
+<li><p>Gif添加字幕：<a href="http://www.yingjingtu.com/" target="_blank" rel="noopener external nofollow noreferrer">http://www.yingjingtu.com/</a></p>
+</li>
+<li><p>Photoshop的投影参数转换为 CSS代码：<a href="https://psd2css.mezw.com/" target="_blank" rel="noopener external nofollow noreferrer">https://psd2css.mezw.com/</a></p>
+</li>
+</ul>
+<p>将Photoshop设计文件图层中的混合选项参数快速转换为CSS3代码，以节省前端开发人员的时间和精力。</p>
+<ul>
+<li><p>Get Emoji：<a href="https://emoji.svend.cc/" target="_blank" rel="noopener external nofollow noreferrer">https://emoji.svend.cc/</a></p>
+</li>
+<li><p>图片转Ascii：<a href="http://picascii.com/" target="_blank" rel="noopener external nofollow noreferrer">http://picascii.com/</a></p>
+</li>
+<li><p>视频转GIF：<a href="https://github.com/vvo/gifify" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/vvo/gifify</a></p>
+</li>
+<li><p>OCR文字识别：<a href="https://app.xunjiepdf.com/ocr" target="_blank" rel="noopener external nofollow noreferrer">https://app.xunjiepdf.com/ocr</a></p>
+</li>
+</ul>
+<h3 id="图片类"><a href="#图片类" class="headerlink" title="图片类"></a>图片类</h3><ul>
+<li>图片转base64：<a href="http://imgbase64.duoshitong.com/" target="_blank" rel="noopener external nofollow noreferrer">http://imgbase64.duoshitong.com/</a></li>
+</ul>
+<h2 id="前端周刊"><a href="#前端周刊" class="headerlink" title="前端周刊"></a>前端周刊</h2><ul>
+<li><p>WecTeam 前端周刊：<a href="https://github.com/wecteam/weekly" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/wecteam/weekly</a></p>
+</li>
+<li><p>Js中文网周刊：<a href="https://www.javascriptc.com/category/javascript-weekly" target="_blank" rel="noopener external nofollow noreferrer">https://www.javascriptc.com/category/javascript-weekly</a></p>
+</li>
+<li><p>政采云 前端周刊：<a href="https://weekly.zoo.team/" target="_blank" rel="noopener external nofollow noreferrer">https://weekly.zoo.team/</a></p>
+</li>
+</ul>
+<h2 id="团队"><a href="#团队" class="headerlink" title="团队"></a>团队</h2><ul>
+<li><p>腾讯AlloyTeam：<a href="http://www.alloyteam.com/" target="_blank" rel="noopener external nofollow noreferrer">http://www.alloyteam.com/</a></p>
+</li>
+<li><p>腾讯社交用户体验ISUX：<a href="https://isux.tencent.com/" target="_blank" rel="noopener external nofollow noreferrer">https://isux.tencent.com/</a></p>
+</li>
+<li><p>淘宝FED | 淘宝前端团队：<a href="http://taobaofed.org/" target="_blank" rel="noopener external nofollow noreferrer">http://taobaofed.org/</a></p>
+</li>
+<li><p>阿里巴巴国际UED：<a href="http://www.aliued.com/" target="_blank" rel="noopener external nofollow noreferrer">http://www.aliued.com/</a></p>
+</li>
+<li><p>京东 | 凹凸实验室：<a href="https://aotu.io/" target="_blank" rel="noopener external nofollow noreferrer">https://aotu.io/</a></p>
+</li>
+<li><p>饿了么前端:<a href="https://zhuanlan.zhihu.com/ElemeFE" target="_blank" rel="noopener external nofollow noreferrer">https://zhuanlan.zhihu.com/ElemeFE</a></p>
+</li>
+<li><p>百度前端研发部FEX：<a href="http://fex.baidu.com/" target="_blank" rel="noopener external nofollow noreferrer">http://fex.baidu.com/</a></p>
+</li>
+<li><p>360 | 奇舞团：<a href="https://75team.com/" target="_blank" rel="noopener external nofollow noreferrer">https://75team.com/</a></p>
+</li>
+<li><p>知道创宇FED：<a href="https://knownsec-fed.com/" target="_blank" rel="noopener external nofollow noreferrer">https://knownsec-fed.com/</a></p>
+</li>
+</ul>
+<h2 id="前端大牛"><a href="#前端大牛" class="headerlink" title="前端大牛"></a>前端大牛</h2><h3 id="阮一峰（蚂蚁金服）"><a href="#阮一峰（蚂蚁金服）" class="headerlink" title="阮一峰（蚂蚁金服）"></a>阮一峰（蚂蚁金服）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/ruanyf" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/ruanyf</a></p>
+</li>
+<li><p>博客：<a href="http://www.ruanyifeng.com/blog/" target="_blank" rel="noopener external nofollow noreferrer">http://www.ruanyifeng.com/blog/</a></p>
+</li>
+</ul>
+<h3 id="尤雨溪"><a href="#尤雨溪" class="headerlink" title="尤雨溪"></a>尤雨溪</h3><ul>
+<li><p>GitHub：<a href="https://github.com/yyx990803" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/yyx990803</a></p>
+</li>
+<li><p>博客：<a href="http://blog.evanyou.me/" target="_blank" rel="noopener external nofollow noreferrer">http://blog.evanyou.me/</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/evanyou" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/evanyou</a></p>
+</li>
+</ul>
+<h3 id="玉伯"><a href="#玉伯" class="headerlink" title="玉伯"></a>玉伯</h3><ul>
+<li><p>GitHub：<a href="https://github.com/lifesinger" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/lifesinger</a></p>
+</li>
+<li><p>博客：<a href="https://github.com/lifesinger/blog" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/lifesinger/blog</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/lifesinger" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/lifesinger</a></p>
+</li>
+</ul>
+<h3 id="司徒正美（去哪儿）"><a href="#司徒正美（去哪儿）" class="headerlink" title="司徒正美（去哪儿）"></a>司徒正美（去哪儿）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/RubyLouvre" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/RubyLouvre</a></p>
+</li>
+<li><p>博客：<a href="http://www.cnblogs.com/rubylouvre/" target="_blank" rel="noopener external nofollow noreferrer">http://www.cnblogs.com/rubylouvre/</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/si-tu-zheng-mei" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/si-tu-zheng-mei</a></p>
+</li>
+</ul>
+<h3 id="张鑫旭（腾讯）"><a href="#张鑫旭（腾讯）" class="headerlink" title="张鑫旭（腾讯）"></a>张鑫旭（腾讯）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/zhangxinxu" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/zhangxinxu</a></p>
+</li>
+<li><p>博客：<a href="https://www.zhangxinxu.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhangxinxu.com/</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/iamzhangxinxu" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/iamzhangxinxu</a></p>
+</li>
+</ul>
+<h3 id="迷渡"><a href="#迷渡" class="headerlink" title="迷渡"></a>迷渡</h3><ul>
+<li><p>GitHub：<a href="https://github.com/justjavac" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/justjavac</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/justjavac.com" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/justjavac.com</a></p>
+</li>
+</ul>
+<h3 id="羡辙-Ovilia"><a href="#羡辙-Ovilia" class="headerlink" title="羡辙 | Ovilia"></a>羡辙 | Ovilia</h3><ul>
+<li><p>GitHub：<a href="https://github.com/Ovilia" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/Ovilia</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/ovilia" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/ovilia</a></p>
+</li>
+</ul>
+<h3 id="云谦（陈成）"><a href="#云谦（陈成）" class="headerlink" title="云谦（陈成）"></a>云谦（陈成）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/sorrycc" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/sorrycc</a></p>
+</li>
+<li><p>博客：<a href="https://sorrycc.com/" target="_blank" rel="noopener external nofollow noreferrer">https://sorrycc.com/</a></p>
+</li>
+</ul>
+<p>云谦装了啥：<a href="https://github.com/sorrycc/awesome-tools" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/sorrycc/awesome-tools</a></p>
+<h3 id="偏右"><a href="#偏右" class="headerlink" title="偏右"></a>偏右</h3><ul>
+<li><p>GitHub：<a href="https://github.com/afc163" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/afc163</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/afc163" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/afc163</a></p>
+</li>
+</ul>
+<h3 id="黄峰达-Phodal-Huang（ThoughtWorks）"><a href="#黄峰达-Phodal-Huang（ThoughtWorks）" class="headerlink" title="黄峰达/Phodal Huang（ThoughtWorks）"></a>黄峰达/Phodal Huang（ThoughtWorks）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/phodal" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/phodal</a></p>
+</li>
+<li><p>博客：<a href="https://www.phodal.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.phodal.com/</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/phodal" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/phodal</a></p>
+</li>
+</ul>
+<h3 id="贺师俊-Hax（百姓网）"><a href="#贺师俊-Hax（百姓网）" class="headerlink" title="贺师俊/Hax（百姓网）"></a>贺师俊/Hax（百姓网）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/hax" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/hax</a></p>
+</li>
+<li><p>博客：<a href="http://johnhax.net/" target="_blank" rel="noopener external nofollow noreferrer">http://johnhax.net/</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/he-shi-jun" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/he-shi-jun</a></p>
+</li>
+</ul>
+<h3 id="大漠"><a href="#大漠" class="headerlink" title="大漠"></a>大漠</h3><p><strong>链接</strong>：</p>
+<ul>
+<li>GitHub：<a href="https://github.com/airen" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/airen</a></li>
+</ul>
+<p>大漠的GitHub上没啥东西。</p>
+<ul>
+<li><p>博客：<a href="https://www.w3cplus.com" target="_blank" rel="noopener external nofollow noreferrer">https://www.w3cplus.com</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/w3cplus" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/w3cplus</a></p>
+</li>
+</ul>
+<p><strong>介绍</strong>：</p>
+<p>常用昵称“大漠”，W3CPlus创始人，目前就职于淘宝。对HTML5、CSS3和CSS处理器等前端脚本语言有非常深入的认识和丰富的实践经验，尤其专注对CSS3和动画的研究，是国内最早研究和使用CSS3和CSS处理器技术的一批人。现在主要在探讨学习JavaScript、React和Vue相关技术知识。CSS、CSS处理器和Web动画中国布道者。2014年出版《图解CSS3：核心技术与案例实战》。</p>
+<h3 id="EGOIST"><a href="#EGOIST" class="headerlink" title="EGOIST"></a>EGOIST</h3><ul>
+<li><p>博客：<a href="https://egoist.sh/" target="_blank" rel="noopener external nofollow noreferrer">https://egoist.sh/</a></p>
+</li>
+<li><p>GitHub：<a href="https://github.com/egoist" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/egoist</a></p>
+</li>
+</ul>
+<h3 id="冴羽"><a href="#冴羽" class="headerlink" title="冴羽"></a>冴羽</h3><p><strong>链接</strong>：</p>
+<ul>
+<li><p>GitHub：<a href="https://github.com/mqyqingfeng" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/mqyqingfeng</a></p>
+</li>
+<li><p>博客：<a href="https://github.com/mqyqingfeng/Blog" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/mqyqingfeng/Blog</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/qing-feng-yi-yang" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/qing-feng-yi-yang</a></p>
+</li>
+</ul>
+<h3 id="李靖-小胡子哥（淘宝网）"><a href="#李靖-小胡子哥（淘宝网）" class="headerlink" title="李靖/小胡子哥（淘宝网）"></a>李靖/小胡子哥（淘宝网）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/barretlee" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/barretlee</a></p>
+</li>
+<li><p>博客：<a href="https://www.barretlee.com/" target="_blank" rel="noopener external nofollow noreferrer">https://www.barretlee.com/</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/barretlee/" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/barretlee/</a></p>
+</li>
+</ul>
+<h3 id="cangdu"><a href="#cangdu" class="headerlink" title="cangdu"></a>cangdu</h3><ul>
+<li>GitHub：<a href="https://github.com/bailicangdu" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/bailicangdu</a></li>
+</ul>
+<h3 id="Jackson-Tian"><a href="#Jackson-Tian" class="headerlink" title="Jackson Tian"></a>Jackson Tian</h3><ul>
+<li><p>GitHub：<a href="https://github.com/JacksonTian" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/JacksonTian</a></p>
+</li>
+<li><p>博客：<a href="http://jacksontian.org/" target="_blank" rel="noopener external nofollow noreferrer">http://jacksontian.org/</a></p>
+</li>
+</ul>
+<h3 id="题叶（饿了么、前-Teambition）"><a href="#题叶（饿了么、前-Teambition）" class="headerlink" title="题叶（饿了么、前 Teambition）"></a>题叶（饿了么、前 Teambition）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/jiyinyiyong" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/jiyinyiyong</a></p>
+</li>
+<li><p>博客：<a href="http://tiye.me/" target="_blank" rel="noopener external nofollow noreferrer">http://tiye.me/</a></p>
+</li>
+</ul>
+<h3 id="杨健（今日头条）"><a href="#杨健（今日头条）" class="headerlink" title="杨健（今日头条）"></a>杨健（今日头条）</h3><ul>
+<li><p>GitHub：<a href="https://github.com/hardfist" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/hardfist</a></p>
+</li>
+<li><p>知乎：<a href="https://www.zhihu.com/people/hardfist" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/hardfist</a></p>
+</li>
+</ul>
+<h3 id="流形"><a href="#流形" class="headerlink" title="流形"></a>流形</h3><blockquote>
+<p>（阿里巴巴数据技术与产品部前端团队负责人）</p>
+</blockquote>
+<ul>
+<li>知乎：<a href="https://www.zhihu.com/people/arcthur/" target="_blank" rel="noopener external nofollow noreferrer">https://www.zhihu.com/people/arcthur/</a></li>
+</ul>
+<h2 id="GitHub-作者推荐"><a href="#GitHub-作者推荐" class="headerlink" title="GitHub 作者推荐"></a>GitHub 作者推荐</h2><h3 id="晴小篆"><a href="#晴小篆" class="headerlink" title="晴小篆"></a>晴小篆</h3><ul>
+<li>GitHub：<a href="https://github.com/yanlele" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/yanlele</a></li>
+</ul>
+<h3 id="MuYunyun"><a href="#MuYunyun" class="headerlink" title="MuYunyun"></a>MuYunyun</h3><ul>
+<li>GitHub：<a href="https://github.com/MuYunyun" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/MuYunyun</a></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果你有发现新的内容，欢迎在 GitHub 上提交 <a href="https://github.com/qianguyihao/web/issues" target="_blank" rel="noopener external nofollow noreferrer">issues</a>。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/26/web/18-%E6%8E%A8%E8%8D%90%E9%93%BE%E6%8E%A5/01-2021%E5%B9%B4Web%E5%89%8D%E7%AB%AF%E6%9C%80%E6%96%B0%E5%AF%BC%E8%88%AA/" title="01-2021年Web前端最新导航">https://tongsiying.github.io/2021/11/26/web/18-推荐链接/01-2021年Web前端最新导航/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/26/web/17-%E5%89%8D%E7%AB%AF%E7%BB%BC%E5%90%88/%E7%BD%91%E5%8F%8B%E5%AF%B9%E6%9C%AC%E9%A1%B9%E7%9B%AE%E6%8F%90%E7%9A%84%E5%BB%BA%E8%AE%AE/" rel="prev" title="网友对本项目提的建议">
+      <i class="fa fa-chevron-left"></i> 网友对本项目提的建议
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/26/web/18-%E6%8E%A8%E8%8D%90%E9%93%BE%E6%8E%A5/02-GitHub%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%8D%90/" rel="next" title="02-GitHub项目推荐">
+      02-GitHub项目推荐 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术社区"><span class="nav-text">技术社区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#技术博客"><span class="nav-text">技术博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-排名统计"><span class="nav-text">GitHub 排名统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资讯"><span class="nav-text">资讯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架"><span class="nav-text">框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UI框架"><span class="nav-text">UI框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类库"><span class="nav-text">类库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建"><span class="nav-text">构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调试抓包"><span class="nav-text">调试抓包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mock数据"><span class="nav-text">Mock数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编辑器-amp-amp-IDE"><span class="nav-text">编辑器 &amp;&amp; IDE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码规范"><span class="nav-text">编码规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态站点搭建工具"><span class="nav-text">静态站点搭建工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计工具"><span class="nav-text">设计工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图标"><span class="nav-text">图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设计素材"><span class="nav-text">设计素材</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工具"><span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#综合类"><span class="nav-text">综合类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片类"><span class="nav-text">图片类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端周刊"><span class="nav-text">前端周刊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#团队"><span class="nav-text">团队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端大牛"><span class="nav-text">前端大牛</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阮一峰（蚂蚁金服）"><span class="nav-text">阮一峰（蚂蚁金服）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尤雨溪"><span class="nav-text">尤雨溪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#玉伯"><span class="nav-text">玉伯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#司徒正美（去哪儿）"><span class="nav-text">司徒正美（去哪儿）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张鑫旭（腾讯）"><span class="nav-text">张鑫旭（腾讯）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迷渡"><span class="nav-text">迷渡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#羡辙-Ovilia"><span class="nav-text">羡辙 | Ovilia</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#云谦（陈成）"><span class="nav-text">云谦（陈成）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏右"><span class="nav-text">偏右</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黄峰达-Phodal-Huang（ThoughtWorks）"><span class="nav-text">黄峰达&#x2F;Phodal Huang（ThoughtWorks）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#贺师俊-Hax（百姓网）"><span class="nav-text">贺师俊&#x2F;Hax（百姓网）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大漠"><span class="nav-text">大漠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EGOIST"><span class="nav-text">EGOIST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冴羽"><span class="nav-text">冴羽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#李靖-小胡子哥（淘宝网）"><span class="nav-text">李靖&#x2F;小胡子哥（淘宝网）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cangdu"><span class="nav-text">cangdu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jackson-Tian"><span class="nav-text">Jackson Tian</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#题叶（饿了么、前-Teambition）"><span class="nav-text">题叶（饿了么、前 Teambition）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杨健（今日头条）"><span class="nav-text">杨健（今日头条）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流形"><span class="nav-text">流形</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub-作者推荐"><span class="nav-text">GitHub 作者推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#晴小篆"><span class="nav-text">晴小篆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MuYunyun"><span class="nav-text">MuYunyun</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

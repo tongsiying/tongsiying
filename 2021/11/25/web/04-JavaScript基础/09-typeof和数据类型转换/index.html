@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="09-typeof和数据类型转换">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/09-typeof%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.smyhvae.com/20211116_1458.png">
+<meta property="og:image" content="https://img.smyhvae.com/20200102.png">
+<meta property="article:published_time" content="2021-11-25T15:18:46.240Z">
+<meta property="article:modified_time" content="2021-11-25T15:18:46.242Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.smyhvae.com/20211116_1458.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/09-typeof%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>09-typeof和数据类型转换 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/09-typeof%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          09-typeof和数据类型转换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:18:46" itemprop="dateCreated datePublished" datetime="2021-11-25T23:18:46+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><strong>变量的数据类型转换</strong>：将一种数据类型转换为另外一种数据类型。</p>
+<p>通常有三种形式的类型转换：</p>
+<ul>
+<li><p>转换为字符串类型</p>
+</li>
+<li><p>转换为数字型</p>
+</li>
+<li><p>转换为布尔型</p>
+</li>
+</ul>
+<p>你会专门把某个数据类型转换成 null 或者 undefined 吗？不会，因为这样做，没有意义。</p>
+<h2 id="typeof-运算符"><a href="#typeof-运算符" class="headerlink" title="typeof 运算符"></a>typeof 运算符</h2><blockquote>
+<p>我们先来讲一下 typeof，再讲类型转换。</p>
+</blockquote>
+<p><code>typeof()</code>表示“<strong>获取变量的数据类型</strong>”，它是 JS 提供的一个操作符。返回的是小写，语法为：（两种写法都可以）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写法1</span></span><br><span class="line"><span class="keyword">typeof</span> 变量;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写法2</span></span><br><span class="line"><span class="keyword">typeof</span>(变量);</span><br></pre></td></tr></table></figure>
+
+<p>typeof 这个运算符的返回结果就是变量的类型。那返回结果的类型是什么呢？是字符串。</p>
+<p><strong>返回结果</strong>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">typeof 的代码写法</th>
+<th align="center">返回结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">typeof 数字</td>
+<td align="center">number</td>
+</tr>
+<tr>
+<td align="left">typeof 字符串</td>
+<td align="center">string</td>
+</tr>
+<tr>
+<td align="left">typeof 布尔型</td>
+<td align="center">boolean</td>
+</tr>
+<tr>
+<td align="left">typeof 对象</td>
+<td align="center">object</td>
+</tr>
+<tr>
+<td align="left">typeof 方法</td>
+<td align="center">function</td>
+</tr>
+<tr>
+<td align="left">typeof null</td>
+<td align="center">object</td>
+</tr>
+<tr>
+<td align="left">typeof undefined</td>
+<td align="center">undefined</td>
+</tr>
+</tbody></table>
+<p>备注 1：为啥 <code>typeof null</code>的返回值也是 object 呢？因为 null 代表的是<strong>空对象</strong>。</p>
+<p>备注 2：<code>typeof NaN</code>的返回值是 number，上一篇文章中讲过，NaN 是一个特殊的数字。</p>
+<p><strong>返回结果举例</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> []); <span class="comment">// 空数组的打印结果：object</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> &#123;&#125;); <span class="comment">// 空对象的打印结果：object</span></span><br></pre></td></tr></table></figure>
+
+<p>代码解释：这里的空数组<code>[]</code>、空对象<code>{}</code> ，为啥他们在使用 typeof 时，返回值也是 <code>object</code>呢？因为空数组、空对象都是<strong>引用数据类型 Object</strong>。</p>
+<p>typeof 无法区分数组，但 instanceof 可以。比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log([] <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// 打印结果：true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Array</span>); <span class="comment">// 打印结果：false</span></span><br></pre></td></tr></table></figure>
+
+<p>关于 instanceof 的详细内容，以后讲对象的时候，会详细介绍。</p>
+<h2 id="变量的类型转换的分类"><a href="#变量的类型转换的分类" class="headerlink" title="变量的类型转换的分类"></a>变量的类型转换的分类</h2><p>类型转换分为两种：显式类型转换、隐式类型转换。</p>
+<h3 id="显式类型转换"><a href="#显式类型转换" class="headerlink" title="显式类型转换"></a>显式类型转换</h3><ul>
+<li><p>toString()</p>
+</li>
+<li><p>String()</p>
+</li>
+<li><p>Number()</p>
+</li>
+<li><p>parseInt(string)</p>
+</li>
+<li><p>parseFloat(string)</p>
+</li>
+<li><p>Boolean()</p>
+</li>
+</ul>
+<h3 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h3><ul>
+<li><p>isNaN ()</p>
+</li>
+<li><p>自增/自减运算符：<code>++</code>、<code>—-</code></p>
+</li>
+<li><p>正号/负号：<code>+a</code>、<code>-a</code></p>
+</li>
+<li><p>加号：<code>+</code></p>
+</li>
+<li><p>运算符：<code>-</code>、<code>*</code>、<code>/</code></p>
+</li>
+</ul>
+<h3 id="隐式类型转换（特殊）"><a href="#隐式类型转换（特殊）" class="headerlink" title="隐式类型转换（特殊）"></a>隐式类型转换（特殊）</h3><ul>
+<li><p>逻辑运算符：<code>&amp;&amp;</code>、<code>||</code>、<code>!</code> 。非布尔值进行<strong>与或</strong>运算时，会先将其转换为布尔值，然后再运算。<code>&amp;&amp;</code>、<code>||</code>的运算结果是<strong>原值</strong>，<code>!</code>的运算结果为布尔值。具体可以看下一篇文章《运算符》。</p>
+</li>
+<li><p>关系运算符：<code>&lt;</code>、<code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code>等。关系运算符，得到的运算结果都是布尔值：要么是 true，要么是 false。具体可以看下一篇文章《运算符》。</p>
+</li>
+</ul>
+<p>针对上面这两种类型转换，这篇文章来详细介绍。</p>
+<h2 id="一、其他的简单类型-–-gt-String"><a href="#一、其他的简单类型-–-gt-String" class="headerlink" title="一、其他的简单类型 –&gt; String"></a>一、其他的简单类型 –&gt; String</h2><h3 id="1-隐式类型转换：字符串拼接"><a href="#1-隐式类型转换：字符串拼接" class="headerlink" title="1. 隐式类型转换：字符串拼接"></a>1. 隐式类型转换：字符串拼接</h3><p>格式：变量+”” 或者 变量+”abc”</p>
+<p>举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">123</span>; <span class="comment">// Number 类型</span></span><br><span class="line"><span class="built_in">console</span>.log(a + <span class="string">''</span>); <span class="comment">// 转换成 String 类型</span></span><br><span class="line"><span class="built_in">console</span>.log(a + <span class="string">'haha'</span>); <span class="comment">// 转换成 String 类型：123haha</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，打印的结果，都是字符串类型的数据。实际上内部是调用的 String() 函数。</p>
+<h3 id="2-调用-toString-方法"><a href="#2-调用-toString-方法" class="headerlink" title="2. 调用 toString()方法"></a>2. 调用 toString()方法</h3><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">变量.toString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者用一个新的变量接收转换结果</span></span><br><span class="line"><span class="keyword">var</span> result = 变量.toString();</span><br></pre></td></tr></table></figure>
+
+<p>【重要】该方法<strong>不会影响到原变量</strong>，它会将转换的结果返回。当然我们还可以直接写成<code>a = a.toString()</code>，这样的话，就是直接修改原变量。</p>
+<p>举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本数据类型</span></span><br><span class="line"><span class="keyword">var</span> a1 = <span class="string">'qianguyihao'</span>;</span><br><span class="line"><span class="keyword">var</span> a2 = <span class="number">29</span>;</span><br><span class="line"><span class="keyword">var</span> a3 = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引用数据类型</span></span><br><span class="line"><span class="keyword">var</span> a4 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> a5 = &#123; <span class="attr">name</span>: <span class="string">'qianguyihao'</span>, <span class="attr">age</span>: <span class="number">29</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// null 和 undefined</span></span><br><span class="line"><span class="keyword">var</span> a6 = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">var</span> a7 = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印结果都是字符串</span></span><br><span class="line"><span class="built_in">console</span>.log(a1.toString()); <span class="comment">// qianguyihao</span></span><br><span class="line"><span class="built_in">console</span>.log(a2.toString()); <span class="comment">// 29</span></span><br><span class="line"><span class="built_in">console</span>.log(a3.toString()); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(a4.toString()); <span class="comment">// 1,2,3</span></span><br><span class="line"><span class="built_in">console</span>.log(a5.toString()); <span class="comment">// object</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面这两个，打印报错</span></span><br><span class="line"><span class="built_in">console</span>.log(a6.toString()); <span class="comment">// 报错：Uncaught TypeError: Cannot read properties of null</span></span><br><span class="line"><span class="built_in">console</span>.log(a7.toString()); <span class="comment">// 报错：Uncaught TypeError: Cannot read properties of undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>一起来看看 toString() 的注意事项。</p>
+<ol>
+<li>null 和 undefined 这两个值没有 toString() 方法，所以它们不能用 toString() 。如果调用，会报错。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span>.toString());</span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">undefined</span>.toString());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img.smyhvae.com/20211116_1458.png" alt></p>
+<ol start="2">
+<li>Number 类型的变量，在调用 toString()时，可以在方法中传递一个整数作为参数。此时它会把数字转换为指定的进制，如果不指定则默认转换为 10 进制。例如：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">255</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//对于Number调用toString()时可以在方法中传递一个整数作为参数</span></span><br><span class="line"><span class="comment">//此时它将会把数字转换为指定的进制,如果不指定则默认转换为10进制</span></span><br><span class="line">a = a.toString(<span class="number">2</span>); <span class="comment">// 转换为二进制</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 11111111</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">// string</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用-String-函数"><a href="#3-使用-String-函数" class="headerlink" title="3. 使用 String()函数"></a>3. 使用 String()函数</h3><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>(变量);</span><br></pre></td></tr></table></figure>
+
+<p>使用 String()函数做强制类型转换时：</p>
+<ul>
+<li><p>对于 Number、Boolean、Object 而言，本质上就是调用 toString()方法。</p>
+</li>
+<li><p>但是对于 null 和 undefined，则不会调用 toString()方法。它会将 null 直接转换为 “null”。将 undefined 直接转换为 “undefined”。</p>
+</li>
+</ul>
+<h3 id="prompt-：用户的输入"><a href="#prompt-：用户的输入" class="headerlink" title="prompt()：用户的输入"></a>prompt()：用户的输入</h3><p>我们在前面的《JavaScript基础/02-JavaScript书写方式：hello world》就讲过，<code>prompt()</code>就是专门用来弹出能够让用户输入的对话框。重要的是：用户不管输入什么，都当字符串处理。</p>
+<h2 id="二、其他的数据类型-–-gt-Number-【重要】"><a href="#二、其他的数据类型-–-gt-Number-【重要】" class="headerlink" title="二、其他的数据类型 –&gt; Number 【重要】"></a>二、其他的数据类型 –&gt; Number 【重要】</h2><h3 id="1-使用-Number-函数"><a href="#1-使用-Number-函数" class="headerlink" title="1. 使用 Number() 函数"></a>1. 使用 Number() 函数</h3><p><strong>情况一：字符串 –&gt; 数字</strong></p>
+<p>（1）如果字符串中是纯数字，则直接将其转换为数字。</p>
+<p>（2）如果字符串是一个<strong>空串</strong>或者是一个<strong>全是空格</strong>的字符串，则转换为 0。</p>
+<p>（3）只要字符串中包含了其他非数字的内容（<code>小数点</code>按数字来算），则转换为 NaN。怎么理解这里的 <strong>NaN</strong> 呢？可以这样理解，使用 Number() 函数之后，<strong>如果无法转换为数字，就会转换为 NaN</strong>。</p>
+<p><strong>情况二：布尔 –&gt; 数字</strong></p>
+<p>（1）true 转成 1</p>
+<p>（2）false 转成 0</p>
+<p><strong>情况三：null –&gt; 数字</strong>，结果为：0</p>
+<p><strong>情况四：undefined –&gt; 数字</strong>，结果为：NaN</p>
+<h3 id="2-隐式类型转换：正负号-a、-a"><a href="#2-隐式类型转换：正负号-a、-a" class="headerlink" title="2. 隐式类型转换：正负号 +a、-a"></a>2. 隐式类型转换：正负号 <code>+a</code>、<code>-a</code></h3><blockquote>
+<p>注意，这里说的是正号/负号，不是加号/减号。</p>
+</blockquote>
+<p>任何值做<code>+a</code>、<code>-a</code>运算时， 内部调用的是 Number() 函数。不会改变原数值。</p>
+<h3 id="3-使用-parseInt-函数：字符串-gt-整数"><a href="#3-使用-parseInt-函数：字符串-gt-整数" class="headerlink" title="3. 使用 parseInt()函数：字符串 -&gt; 整数"></a>3. 使用 parseInt()函数：字符串 -&gt; 整数</h3><p><strong>parseInt()</strong>：将传入的数据当作<strong>字符串</strong>来处理，从左至右提取数值, 一旦遇到非数值就立即停止；停止时如何还没有提取到数值, 那么就返回NaN。</p>
+<p>parse 表示“转换”，Int 表示“整数”。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'5'</span>); <span class="comment">// 得到的结果是数字 5</span></span><br></pre></td></tr></table></figure>
+
+<p>按照上面的规律，parseInt()的转换情况如下。</p>
+<p><strong>情况一：字符串 –&gt; 数字</strong></p>
+<p>（1）<strong>只保留字符串最开头的数字</strong>，后面的中文自动消失。</p>
+<p>（2）如果字符串不是以数字开头，则转换为 NaN。</p>
+<p>（3）如果字符串是一个空串或者是一个全是空格的字符串，转换时会报错。</p>
+<p><strong>情况二：Boolean –&gt; 数字</strong>，结果为：NaN</p>
+<p><strong>情况三：Null –&gt; 数字</strong>，结果为：NaN</p>
+<p><strong>情况四：Undefined –&gt; 数字</strong>，结果为：NaN</p>
+<hr>
+<p>Number() 函数和 parseInt() 函数的区别：</p>
+<p>就拿<code>Number(true)</code> 和 <code>parseInt(true)/parseFloat(true)</code>来举例，二者在使用时，是有区别的：</p>
+<ul>
+<li><p>Number(true) ：千方百计地想转换为数字；如果转换不了则返回 NaN。</p>
+</li>
+<li><p>parseInt(true)/parseFloat(true) ：提取出最前面的数字部分；没提取出来，那就返回 NaN。</p>
+</li>
+</ul>
+<p><strong>parseInt()具有以下特性</strong>：</p>
+<p>（1）parseInt()、parseFloat()会将传入的数据当作<strong>字符串</strong>来处理。也就是说，如果对<strong>非 String</strong>使用 parseInt()、parseFloat()，它会<strong>先将其转换为 String</strong> 然后再操作。【重要】</p>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">168.23</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(a)); <span class="comment">//打印结果：168  （因为是先将 a 转为字符串"168.23"，然后然后再操作）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="literal">true</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(b)); <span class="comment">//打印结果：NaN （因为是先将 b 转为字符串"true"，然后然后再操作）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> c = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(c)); <span class="comment">//打印结果：NaN  （因为是先将 c 转为字符串"null"，然后然后再操作）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> d = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(d)); <span class="comment">//打印结果：NaN  （因为是先将 d 转为字符串"undefined"，然后然后再操作）</span></span><br></pre></td></tr></table></figure>
+
+
+<p>（2）<strong>只保留字符串最开头的数字</strong>，后面的中文自动消失。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'2017在公众号上写了6篇文章'</span>)); <span class="comment">//打印结果：2017</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'2017.01在公众号上写了6篇文章'</span>)); <span class="comment">//打印结果仍是：2017   （说明只会取整数）</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">'aaa2017.01在公众号上写了6篇文章'</span>)); <span class="comment">//打印结果：NaN （因为不是以数字开头）</span></span><br></pre></td></tr></table></figure>
+
+
+<p>（3）自动截断小数：<strong>取整，不四舍五入</strong>。</p>
+<p>例 1：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="built_in">parseInt</span>(<span class="number">5.8</span>) + <span class="built_in">parseInt</span>(<span class="number">4.7</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
+
+<p>例 2：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="built_in">parseInt</span>(<span class="number">5.8</span> + <span class="number">4.7</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>（4）带两个参数时，表示在转换时，包含了进制转换。</p>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'110'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="built_in">parseInt</span>(a, <span class="number">16</span>); <span class="comment">// 【重要】将 a 当成 十六进制 来看待，转换成 十进制 的 num</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(num);</span><br></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">272</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你对打印结果感到震惊，请仔细看上面的代码注释。就是说，无论 parseInt() 里面的进制参数是多少，最终的转换结果是十进制。</p>
+<p>我们来看下面的代码，打印结果继续震惊。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'5'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="built_in">parseInt</span>(a, <span class="number">2</span>); <span class="comment">// 将 a 当成 二进制 来看待，转换成 十进制 的 num</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(num); <span class="comment">// 打印结果：NaN。因为 二进制中没有 5 这个数，转换失败。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-parseFloat-函数：字符串-–-gt-浮点数（小数）"><a href="#4-parseFloat-函数：字符串-–-gt-浮点数（小数）" class="headerlink" title="4. parseFloat()函数：字符串 –&gt; 浮点数（小数）"></a>4. parseFloat()函数：字符串 –&gt; 浮点数（小数）</h3><p>parseFloat()的作用是：将字符串转换为<strong>浮点数</strong>。</p>
+<p>parseFloat()和 parseInt()的作用类似，不同的是，parseFloat()可以获得小数部分。</p>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'123.456.789px'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(a)); <span class="comment">// 打印结果：123.456</span></span><br></pre></td></tr></table></figure>
+
+<p>parseFloat() 的几个特性，可以参照 parseInt()。</p>
+<h2 id="三、转换为-Boolean"><a href="#三、转换为-Boolean" class="headerlink" title="三、转换为 Boolean"></a>三、转换为 Boolean</h2><h3 id="转换结果列举【重要】"><a href="#转换结果列举【重要】" class="headerlink" title="转换结果列举【重要】"></a>转换结果列举【重要】</h3><p>其他的数据类型都可以转换为 Boolean 类型。无论是隐式转换，还是显示转换，转换结果都是一样的。有下面几种情况：</p>
+<p>（1）情况一：数字 –&gt; 布尔。 0 和 NaN是 false，其余的都是 true。比如 <code>Boolean(NaN)</code>的结果是 false。</p>
+<p>（2）情况二：字符串 —&gt; 布尔。空串是false，其余的都是 true。全是空格的字符串，转换结果也是 true。字符串<code>&#39;0&#39;</code>的转换结果也是 true。</p>
+<p>（3）情况三：null 和 undefined 都会转换为 false。</p>
+<p>（4）情况四：引用数据类型会转换为 true。注意，空数组<code>[]</code>和空对象<code>{}</code>，<strong>转换结果也是 true</strong>，这一点，很多人都不知道。</p>
+<p><strong>重中之重来了：</strong></p>
+<p>转换为 Boolean 的上面这几种情况，<strong>很重要</strong>，开发中会经常用到。比如说，我们在项目开发中，经常需要对一些<strong>非布尔值</strong>做逻辑判断，符合条件后，才做选一步的事情。这个逻辑判断就是依据上面的四种情况。</p>
+<p>举例：（接口返回的内容不为空，前端才做进一步的事情）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result1 = <span class="string">''</span>;</span><br><span class="line"><span class="keyword">const</span> result2 = &#123; <span class="attr">a</span>: <span class="string">'data1'</span>, <span class="attr">b</span>: <span class="string">'data2'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (result1) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'因为 result1的内容为空，所以代码进不了这里'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (result2 &amp;&amp; result2.a) &#123;</span><br><span class="line">    <span class="comment">// 接口返回了 result2，且 result2.a 里面有值，前端才做进一步的事情</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'代码能进来，前端继续在这里干活儿'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里再次强调一下，空数组<code>[]</code>和空对象<code>{}</code>转换为 Boolean 值时，转换结果为 true。</p>
+<h3 id="1-隐式类型转换：逻辑运算"><a href="#1-隐式类型转换：逻辑运算" class="headerlink" title="1. 隐式类型转换：逻辑运算"></a>1. 隐式类型转换：逻辑运算</h3><p>当非 Boolean 类型的数值和 Boolean 类型的数值做比较时，会先把前者<strong>临时</strong>进行隐式转换为 Boolean 类型，然后再做比较；且不会改变前者的数据类型。举例如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a == <span class="literal">true</span>); <span class="comment">// 打印结果：true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">// 打印结果：number。可见，上面一行代码里，a 做了隐式类型转换，但是 a 的数据类型并没有发生变化，仍然是 Number 类型</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">0</span> == <span class="literal">true</span>); <span class="comment">// 打印结果：false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2. 使用 !!"></a>2. 使用 <code>!!</code></h3><p>使用 <code>!!</code>可以显式转换为 Boolean 类型。比如 <code>!!3</code>的结果是 true。</p>
+<h3 id="3-使用-Boolean-函数"><a href="#3-使用-Boolean-函数" class="headerlink" title="3. 使用  Boolean()函数"></a>3. 使用  Boolean()函数</h3><p>使用 Boolean()函数可以显式转换为 Boolean 类型。</p>
+<h2 id="知识补充：其他进制的数字"><a href="#知识补充：其他进制的数字" class="headerlink" title="知识补充：其他进制的数字"></a>知识补充：其他进制的数字</h2><ul>
+<li><p>16 进制的数字，以<code>0x</code>开头</p>
+</li>
+<li><p>8 进制的数字，以<code>0</code>开头</p>
+</li>
+<li><p>2 进制的数字，<code>0b</code>开头（不是所有的浏览器都支持：chrome 和火狐支持，IE 不支持）</p>
+</li>
+</ul>
+<p>比如<code>070</code>这个字符串，如果我调用 parseInt()转成数字时，有些浏览器会当成 8 进制解析，有些会当成 10 进制解析。</p>
+<p>所以，比较建议的做法是：可以在 parseInt()中传递第二个参数，来指定当前数字的进制。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'070'</span>;</span><br><span class="line"></span><br><span class="line">a = <span class="built_in">parseInt</span>(a, <span class="number">8</span>); <span class="comment">//将 070 当成八进制来看待，转换结果为十进制。</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 打印结果：56。这个地方要好好理解。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="隐式类型转换-1"><a href="#隐式类型转换-1" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h2><p>重点：<strong>隐式类型转换，内部调用的都是显式类型的方法</strong>。下面来详细介绍。</p>
+<h3 id="加号："><a href="#加号：" class="headerlink" title="加号：+"></a>加号：<code>+</code></h3><ol>
+<li><strong>字符串 + 数字 = 字符串</strong></li>
+</ol>
+<p>当加号的两边，只要有一个是字符串，就会调用 String() 函数将数字转为字符串，然后再计算。最终的运算结果是字符串。</p>
+<ol start="2">
+<li><strong>Boolean + 数字 = 数字</strong></li>
+</ol>
+<p>Boolean 型和数字型相加时， true 按 1 来算 ，false 按 0 来算。这里其实是先调 Number() 函数，将 Boolean 类型转为 Number 类型，然后再和 数字相加。</p>
+<ol start="3">
+<li><strong>null + 数字 = 数字</strong></li>
+</ol>
+<p>等价于：0 + 数字</p>
+<ol start="4">
+<li><strong>undefined + 数字 = NaN</strong></li>
+</ol>
+<p>计算结果：NaN</p>
+<h3 id="正号-负号：-a、-a"><a href="#正号-负号：-a、-a" class="headerlink" title="正号/负号：+a、-a"></a>正号/负号：<code>+a</code>、<code>-a</code></h3><blockquote>
+<p>注意，这里说的是正号/负号，不是加号/减号。</p>
+</blockquote>
+<p>任何值做<code>+a</code>、<code>-a</code>运算时， 内部调用的是 Number() 函数。不会改变原数值。</p>
+<p><strong>举例</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'666'</span>;</span><br><span class="line"><span class="keyword">var</span> b = +a;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">// 打印结果：string。说明 a 的数据类型保持不变。</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 打印结果：666</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> b); <span class="comment">// 打印结果：number。说明 b 的数据类型发生了变化。</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// 打印结果：666</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="自增-自减运算符：-、—"><a href="#自增-自减运算符：-、—" class="headerlink" title="自增/自减运算符：++、—-"></a>自增/自减运算符：<code>++</code>、<code>—-</code></h3><p><strong>举例 1</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'666'</span>;</span><br><span class="line">a++;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">// 打印结果： number</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 打印结果：667</span></span><br></pre></td></tr></table></figure>
+
+<p>执行过程：</p>
+<p>（1）先调用<code>Number(参数)</code>函数；</p>
+<p>（2）然后将<code>Number(参数)</code>的返回结果进行 加 1 操作。</p>
+<p><strong>举例 2</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'abc'</span>;</span><br><span class="line">a++;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">// 打印结果：number</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 打印结果：NaN。因为 Number('abc')的结果为 NaN，再自增后，结果依然是 NaN</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="isNaN-函数"><a href="#isNaN-函数" class="headerlink" title="isNaN() 函数"></a>isNaN() 函数</h3><p>语法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">isNaN</span>(参数);</span><br></pre></td></tr></table></figure>
+
+<p>解释：判断指定的参数是否为 NaN（非数字类型），返回结果为 Boolean 类型。也就是说：<strong>任何不能被转换为数值的参数，都会让这个函数返回 true</strong>。</p>
+<p><strong>执行过程</strong>：</p>
+<p>（1）先调用<code>Number(参数)</code>函数；</p>
+<p>（2）然后将<code>Number(参数)</code>的返回结果是否为数值。如果不为数值，则最终结果为 true；如果为数值，则最终结果为 false。</p>
+<p>代码举例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="string">'123'</span>)); <span class="comment">// 返回结果：false。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="literal">null</span>)); <span class="comment">// 返回结果：false</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="string">'abc'</span>)); <span class="comment">// 返回结果：true。因为 Number('abc') 的返回结果是 NaN</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="literal">undefined</span>)); <span class="comment">// 返回结果：true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(<span class="literal">NaN</span>)); <span class="comment">// 返回结果：true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="运算符：-、-、"><a href="#运算符：-、-、" class="headerlink" title="运算符：-、*、/"></a>运算符：<code>-</code>、<code>*</code>、<code>/</code></h3><p>1、任何非 Number 类型的值做<code>-</code>、<code>*</code>、<code>/</code>运算时，会将这些值转换为 Number 然后再运算(内部调用的是 Number() 函数），运算结果是 Number 类型。（注：<code>任何值 + 字符串</code>是特例，运算结果是字符串）</p>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">result1 = <span class="literal">true</span> + <span class="number">1</span>; <span class="comment">// 2 = 1+ 1</span></span><br><span class="line"></span><br><span class="line">result2 = <span class="literal">true</span> + <span class="literal">false</span>; <span class="comment">// 1 = 1+ 0</span></span><br><span class="line"></span><br><span class="line">result3 = <span class="number">1</span> + <span class="literal">null</span>; <span class="comment">// 1 = 1+ 0</span></span><br><span class="line"></span><br><span class="line">result4 = <span class="number">100</span> - <span class="string">'1'</span>; <span class="comment">// 99</span></span><br></pre></td></tr></table></figure>
+
+<p>2、任何的值和字符串做加法运算，都会先转换为字符串，然后再做拼串操作。</p>
+<p>比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">result1 = <span class="number">1</span> + <span class="number">2</span> + <span class="string">'3'</span>; <span class="comment">// 字符串：33</span></span><br><span class="line"></span><br><span class="line">result2 = <span class="string">'1'</span> + <span class="number">2</span> + <span class="number">3</span>; <span class="comment">// 字符串：123</span></span><br></pre></td></tr></table></figure>
+
+<p>3、任何值和 NaN 做运算的结果都是 NaN。</p>
+<h2 id="我的公众号"><a href="#我的公众号" class="headerlink" title="我的公众号"></a>我的公众号</h2><p>想学习<strong>更多技能</strong>？不妨关注我的微信公众号：<strong>千古壹号</strong>（id：<code>qianguyihao</code>）。</p>
+<p>扫一扫，你将发现另一个全新的世界，而这将是一场美丽的意外：</p>
+<p><img src="https://img.smyhvae.com/20200102.png" alt></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/09-typeof%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" title="09-typeof和数据类型转换">https://tongsiying.github.io/2021/11/25/web/04-JavaScript基础/09-typeof和数据类型转换/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/08-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9ANull%E5%92%8CUndefined/" rel="prev" title="08-基本数据类型：Null 和 Undefined">
+      <i class="fa fa-chevron-left"></i> 08-基本数据类型：Null 和 Undefined
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/04-JavaScript%E5%9F%BA%E7%A1%80/10-%E8%BF%90%E7%AE%97%E7%AC%A6/" rel="next" title="10-运算符">
+      10-运算符 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typeof-运算符"><span class="nav-text">typeof 运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量的类型转换的分类"><span class="nav-text">变量的类型转换的分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显式类型转换"><span class="nav-text">显式类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式类型转换"><span class="nav-text">隐式类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式类型转换（特殊）"><span class="nav-text">隐式类型转换（特殊）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、其他的简单类型-–-gt-String"><span class="nav-text">一、其他的简单类型 –&gt; String</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-隐式类型转换：字符串拼接"><span class="nav-text">1. 隐式类型转换：字符串拼接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-调用-toString-方法"><span class="nav-text">2. 调用 toString()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用-String-函数"><span class="nav-text">3. 使用 String()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prompt-：用户的输入"><span class="nav-text">prompt()：用户的输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、其他的数据类型-–-gt-Number-【重要】"><span class="nav-text">二、其他的数据类型 –&gt; Number 【重要】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-使用-Number-函数"><span class="nav-text">1. 使用 Number() 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-隐式类型转换：正负号-a、-a"><span class="nav-text">2. 隐式类型转换：正负号 +a、-a</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用-parseInt-函数：字符串-gt-整数"><span class="nav-text">3. 使用 parseInt()函数：字符串 -&gt; 整数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-parseFloat-函数：字符串-–-gt-浮点数（小数）"><span class="nav-text">4. parseFloat()函数：字符串 –&gt; 浮点数（小数）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、转换为-Boolean"><span class="nav-text">三、转换为 Boolean</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转换结果列举【重要】"><span class="nav-text">转换结果列举【重要】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-隐式类型转换：逻辑运算"><span class="nav-text">1. 隐式类型转换：逻辑运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-使用"><span class="nav-text">2. 使用 !!</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用-Boolean-函数"><span class="nav-text">3. 使用  Boolean()函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识补充：其他进制的数字"><span class="nav-text">知识补充：其他进制的数字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#隐式类型转换-1"><span class="nav-text">隐式类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加号："><span class="nav-text">加号：+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正号-负号：-a、-a"><span class="nav-text">正号&#x2F;负号：+a、-a</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自增-自减运算符：-、—"><span class="nav-text">自增&#x2F;自减运算符：++、—-</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isNaN-函数"><span class="nav-text">isNaN() 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算符：-、-、"><span class="nav-text">运算符：-、*、&#x2F;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的公众号"><span class="nav-text">我的公众号</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

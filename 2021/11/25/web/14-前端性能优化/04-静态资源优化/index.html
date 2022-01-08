@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="04-静态资源优化">
+<meta property="og:url" content="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-25T15:24:02.642Z">
+<meta property="article:modified_time" content="2021-11-25T15:24:02.644Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>04-静态资源优化 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          04-静态资源优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-25 23:24:02" itemprop="dateCreated datePublished" datetime="2021-11-25T23:24:02+08:00">2021-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+
+
+<h2 id="图片格式和应用场景"><a href="#图片格式和应用场景" class="headerlink" title="图片格式和应用场景"></a>图片格式和应用场景</h2><h3 id="JPEG-格式"><a href="#JPEG-格式" class="headerlink" title="JPEG 格式"></a>JPEG 格式</h3><p>JPEG（Joint Photographic Experts Group）是一种针对彩色照片而广泛使用的有损压缩图形格式，属于位图。</p>
+<p>常用文件扩展名为<code>.jpg</code>，也有 <code>.jpeg</code>和<code>.jpe</code>。JPEG 在互联网上常被应用于存储和传输照片。</p>
+<ul>
+<li><p>适合：颜色丰富的照片、彩色图大焦点图、通栏 banner 图；结构不规则的图形。</p>
+</li>
+<li><p>不适合：线条图形和文字、图标图形，因为它的压缩算法不太这些类型的图形；并且不支持透明度。</p>
+</li>
+</ul>
+<h3 id="PNG-格式"><a href="#PNG-格式" class="headerlink" title="PNG 格式"></a>PNG 格式</h3><p>PNG（Portable Network Graphics）是一种无损压缩的位图图形格式，支持索引、灰度、RGB 三种颜色方案以及 Alpha 通道等特性。</p>
+<p>PNG 最初是作为替代 GIF 来设计的，能够显示 256 色，文件比 JPEG 或者 GIF 大，但是 PNG 非常好的保留了图像质量。支持 Alpha 通道的半透明和透明特性。最高支持 24 位彩色图像（PNG-24）和 8 位灰度图像（PNG-8）。</p>
+<ul>
+<li><p>适合：纯色、<strong>透明</strong>、线条绘图，图标；边缘清晰、有大块相同颜色区域；需要带<strong>半透明</strong>的图片。</p>
+</li>
+<li><p>适合：由于是无损存储，所以不太适合体积太大的彩色图像</p>
+</li>
+</ul>
+<p>比如说，如果你需要带透明背景的图片，此时就可以用 png 格式的图。</p>
+<h3 id="GIF-格式"><a href="#GIF-格式" class="headerlink" title="GIF 格式"></a>GIF 格式</h3><p>GIF（Graphics Interchange Format）是一种位图图形格式，以 8 位色（即 256 种颜色）重现真彩色的图像，采用 LZW 压缩算法进行编码。</p>
+<p>支持 256 色；仅支持完全透明和完全不透明；如果需要带动画效果的图片，GIF 是比较通用的选择。</p>
+<ul>
+<li><p>适合：动画，图标。</p>
+</li>
+<li><p>不适合：每个像素只有 8 比特，不适合存储彩色图片。</p>
+</li>
+</ul>
+<h3 id="Webp-格式"><a href="#Webp-格式" class="headerlink" title="Webp 格式"></a>Webp 格式</h3><p>Webp 是一种现代图像格式，可为图像提供无损压缩和有损压缩，这使得它非常灵活。由 Google 在购买 On2 Technologies 后发展出来，以 BSD 授权条款发布。</p>
+<p>Webp的优秀算法能同时保证图像质量和较小体积；可以插入多帧，实现动画效果；可以设置透明度；采用 8 位压缩算法。</p>
+<p>无损的 Webp 比 PNG 小 26%，有损的 Webp 比 JPEG 小 25-34％，比 GIF 有更好的动画。</p>
+<ul>
+<li>适合：适用于图形和半透明图像。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>banner图、大图，可以用 jpg、webp格式。</p>
+</li>
+<li><p>图标、带透明背景的图，可以用 png 格式。</p>
+</li>
+<li><p>带动画效果的图，可以用 gif 格式。</p>
+</li>
+</ul>
+<h2 id="图片优化的常见方法"><a href="#图片优化的常见方法" class="headerlink" title="图片优化的常见方法"></a>图片优化的常见方法</h2><h3 id="1、用工具压缩图片"><a href="#1、用工具压缩图片" class="headerlink" title="1、用工具压缩图片"></a>1、用工具压缩图片</h3><p><strong>压缩 PNG 图片</strong>：</p>
+<ul>
+<li><p>工具：<a href="https://www.npmjs.com/package/node-pngquant-native" target="_blank" rel="noopener external nofollow noreferrer">node-pngquant-native</a></p>
+</li>
+<li><p>介绍：跨平台、压缩比特别高，压缩png24非常好。</p>
+</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="keyword">node</span><span class="title">-pngquant-native</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>压缩 JPEG 图片</strong>：</p>
+<ul>
+<li><p>工具：<a href="https://www.npmjs.com/package/jpegtran" target="_blank" rel="noopener external nofollow noreferrer">jpegtran</a></p>
+</li>
+<li><p>官网：<a href="https://www.npmjs.com/package/jpegtran" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/package/jpegtran</a></p>
+</li>
+<li><p>介绍：跨平台，但压缩的比率只有80-90%。</p>
+</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install –g jpegtran</span><br></pre></td></tr></table></figure>
+
+<p>使用方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jpegtran -copy none -optimize -outfile output_file.jpg input_file.jpg</span><br></pre></td></tr></table></figure>
+
+<p><strong>压缩 GIF 图</strong>：</p>
+<ul>
+<li><p>工具：Gifsicle</p>
+</li>
+<li><p>官网（含安装方法）：<a href="https://www.lcdf.org/gifsicle/" target="_blank" rel="noopener external nofollow noreferrer">https://www.lcdf.org/gifsicle/</a></p>
+</li>
+<li><p>介绍：Gifsicle 通过改变每帧比例，减小 gif文件大小，同时可以使用透明来达到更小的文件大小，是目前公认的最好的解决方案。</p>
+</li>
+</ul>
+<p>使用方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 压缩命令。注意，这里是将压缩级别设置为3。如果将压缩级别设置为1或者2，则基本不压缩。</span></span><br><span class="line">gifsicle --optimize=3 -o out_file.gif in_file.gif</span><br><span class="line"></span><br><span class="line"><span class="comment"># 裁掉透明部分</span></span><br><span class="line">gifsicle --optimize=3 --crop-transparency -o out_file.gif in_file.gif</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、将图片尺寸跟随网络环境进行变化"><a href="#2、将图片尺寸跟随网络环境进行变化" class="headerlink" title="2、将图片尺寸跟随网络环境进行变化"></a>2、将图片尺寸跟随网络环境进行变化</h3><p><strong>具体方案</strong>：不同网络环境（Wifi/4G/3G）下，加载不同尺寸和像素的图片，通过在图片 URL 中添加参数来改变。</p>
+<p>图片 url 举例1：（图片的原始url链接）</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//img</span>12.<span class="number">360</span>buyimg.com<span class="regexp">/img/</span>s3866x3866_jfs<span class="regexp">/t1/</span><span class="number">149913</span><span class="regexp">/14/</span><span class="number">18648</span><span class="regexp">/719436/</span><span class="number">5</span>fd8b9b5Eb697b825<span class="regexp">/7c23f3028aff8e2b.jpg</span></span><br></pre></td></tr></table></figure>
+
+<p>图片 url 举例2：（通过图片的url参数，将这张图的尺寸设置为200px）</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//img</span>12.<span class="number">360</span>buyimg.com<span class="regexp">/img/</span>s200x200_jfs<span class="regexp">/t1/</span><span class="number">149913</span><span class="regexp">/14/</span><span class="number">18648</span><span class="regexp">/719436/</span><span class="number">5</span>fd8b9b5Eb697b825<span class="regexp">/7c23f3028aff8e2b.jpg</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、响应式图片"><a href="#3、响应式图片" class="headerlink" title="3、响应式图片"></a>3、响应式图片</h3><p><strong>方法1</strong>：通过 JavaScript 绑定事件，检测窗口大小，以此设置图片大小。</p>
+<p><strong>方法2</strong>：CSS媒体查询。</p>
+<p>代码举例：（在 640px的窗口大小里，设置图片的尺寸为640px）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> screen <span class="keyword">and</span> (<span class="attribute">max-width:</span><span class="number">640px</span>) &#123;</span><br><span class="line">  <span class="selector-tag">my_image</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">640px</span>;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法3</strong>：img标签的 <code>srcset</code> 属性。这个是 H5的新特性。</p>
+<p>代码举例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">"img-320w.jpg, img-640w.jpg 2x, img-960w.jpg 3x"</span> <span class="attr">src</span>=<span class="string">“img-960w.jpg”</span></span></span><br><span class="line"><span class="tag"><span class="attr">alt</span>=<span class="string">“img”</span>&gt;</span> （x 描述符：表示图像的设备像素）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、逐步加载图像：lazyload、LQIP、LQIP"><a href="#4、逐步加载图像：lazyload、LQIP、LQIP" class="headerlink" title="4、逐步加载图像：lazyload、LQIP、LQIP"></a>4、逐步加载图像：lazyload、LQIP、LQIP</h3><p><strong>方法1</strong>、使用统一占位符。俗称图片的<code>懒加载（lazyload）</code>。</p>
+<p><strong>方法2</strong>、使用 <strong>LQIP</strong> 的图片加载方式。也就是说，在大图没有完全加载出来的情况下，先这张图对应的的低质量图片进行占位。</p>
+<p>LQIP（Low Quality Image Placeholders）：低质量图像占位符。这种技术背后的想法是，在网络环境较差的情况下，你可以尽快向用户展示完全可用的网页，为他们提供更好的体验。即使在更好的网络连接上，这仍然为用户提供了更快的可用页面，并且改善了体验。</p>
+<ul>
+<li><p>安装 LQIP 工具：<code>npm install lqip</code></p>
+</li>
+<li><p>GitHub源码：<a href="https://github.com/zouhir/lqip-loader" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/zouhir/lqip-loader</a></p>
+</li>
+</ul>
+<p>代码举例：（将目标图片转换为 LQIP 形式的图）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> lqip = <span class="built_in">require</span>(<span class="string">'lqip'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//文件路径</span></span><br><span class="line"><span class="keyword">const</span> file = <span class="string">'./in.png'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将输入的图片转为base64</span></span><br><span class="line">lqip.base64(file).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 色值</span></span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">lqip.palette(file).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//这里输出的是base64的图片地址</span></span><br><span class="line">    <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>另外，我们还可以使用 <strong>SQIP</strong> 的图片加载方式。</p>
+<p>SQIP（SVG Quality Image Placeholders）： SVG 格式的图像占位符。</p>
+<ul>
+<li><p>安装  SQIP 工具：<code>npm install sqip</code></p>
+</li>
+<li><p>GitHub 源码：<a href="https://github.com/axe312ger/sqip" target="_blank" rel="noopener external nofollow noreferrer">https://github.com/axe312ger/sqip</a></p>
+</li>
+</ul>
+<p>代码举例：（将目标图片转换为 SQIP 形式的图）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sqip = <span class="built_in">require</span>(<span class="string">'sqip'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result =  sqip(&#123;</span><br><span class="line">    filename: <span class="string">'./input_file.png'</span>,</span><br><span class="line">    numberOfPrimitives: <span class="number">10</span> <span class="comment">//可根据不同应用场景设置大小</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result.final_svg);</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、雪碧图（Image-spriting）"><a href="#5、雪碧图（Image-spriting）" class="headerlink" title="5、雪碧图（Image spriting）"></a>5、雪碧图（Image spriting）</h3><p>雪碧图是比较常见的图片优化方式，也就是把多张小图合并成一张大图。这样的话，就只需做一次网络请求，减少图片的 http 请求次数。</p>
+<p>读者们可以自行查阅。</p>
+<h3 id="6、有些场景下，并不需要图片文件"><a href="#6、有些场景下，并不需要图片文件" class="headerlink" title="6、有些场景下，并不需要图片文件"></a>6、有些场景下，并不需要图片文件</h3><p>有些场景下，并不需要图片，我们可以用其他的方式来代替图片。</p>
+<p>举例：</p>
+<ul>
+<li><p>Web Font 代替图片</p>
+</li>
+<li><p>使用 Data URI 代替图片。base64就是属于 Data URI的方式。</p>
+</li>
+</ul>
+<h3 id="7、在服务器端进行图片自动优化"><a href="#7、在服务器端进行图片自动优化" class="headerlink" title="7、在服务器端进行图片自动优化"></a>7、在服务器端进行图片自动优化</h3><p>图片服务器自动化优化是可以在图片 URL 链接上增加不同特殊参数，服务器自动化生成。通过这些参数，可以设置图片的不同格式、大小、质量。</p>
+<p><strong>常见处理方式</strong>：</p>
+<ul>
+<li><p>图片裁剪：按长边、短边、填充、拉伸等缩放。</p>
+</li>
+<li><p>图片格式转换：支持 JPG，GIF，PNG，WebP 等，支持不同的图片压缩率。</p>
+</li>
+<li><p>图片处理：添加图片水印、高斯模糊、重心处理、裁剪边框等。</p>
+</li>
+<li><p>AI 能力：鉴黄、涉政、智能抠图、智能排版、智能配色、智能合成等 AI 功能。</p>
+</li>
+</ul>
+<p><strong>图片举例</strong>：</p>
+<p>比如JD公司的图片链接，就会在服务器端做优化处理。通过修改图片链接中的参数，就能自动达到相应的优化效果。</p>
+<p>原始图片链接：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//img</span>12.<span class="number">360</span>buyimg.com<span class="regexp">/img/</span>s3866x3866_jfs<span class="regexp">/t1/</span><span class="number">149913</span><span class="regexp">/14/</span><span class="number">18648</span><span class="regexp">/719436/</span><span class="number">5</span>fd8b9b5Eb697b825<span class="regexp">/7c23f3028aff8e2b.jpg</span></span><br></pre></td></tr></table></figure>
+
+<p>将图片压缩为 200*150：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//img</span>12.<span class="number">360</span>buyimg.com<span class="regexp">/img/</span>s200x200_jfs<span class="regexp">/t1/</span><span class="number">149913</span><span class="regexp">/14/</span><span class="number">18648</span><span class="regexp">/719436/</span><span class="number">5</span>fd8b9b5Eb697b825<span class="regexp">/7c23f3028aff8e2b.jpg</span></span><br></pre></td></tr></table></figure>
+
+<p>将图片转换为 webp 格式：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//img</span>12.<span class="number">360</span>buyimg.com<span class="regexp">/img/</span>s200x200_jfs<span class="regexp">/t1/</span><span class="number">149913</span><span class="regexp">/14/</span><span class="number">18648</span><span class="regexp">/719436/</span><span class="number">5</span>fd8b9b5Eb697b825<span class="regexp">/7c23f3028aff8e2b.webp</span></span><br></pre></td></tr></table></figure>
+
+<p>将图片质量压缩至10%：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//img</span>12.<span class="number">360</span>buyimg.com<span class="regexp">/img/</span>s3866x3866_jfs<span class="regexp">/t1/</span><span class="number">149913</span><span class="regexp">/14/</span><span class="number">18648</span><span class="regexp">/719436/</span><span class="number">5</span>fd8b9b5Eb697b825<span class="regexp">/7c23f3028aff8e2b.jpg.q10</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="HTML优化"><a href="#HTML优化" class="headerlink" title="HTML优化"></a>HTML优化</h2><h3 id="1、精简-HTML-代码"><a href="#1、精简-HTML-代码" class="headerlink" title="1、精简 HTML 代码"></a>1、精简 HTML 代码</h3><ul>
+<li><p>减少 HTML 的嵌套。</p>
+</li>
+<li><p>减少 DOM 节点数。</p>
+</li>
+<li><p>减少无语义代码（比如: <div class="“clear”"></div> 消除浮动，其实可以用css来处理）。</p>
+</li>
+<li><p>删除 http 或者 https：如果URL的协议头和当前页面的协议头一致的，或者此 URL 在多个协议头都是可用的，则可以考虑删除协议头。</p>
+</li>
+<li><p>删除多余的空格、换行符、缩进和不必要的注释。</p>
+</li>
+<li><p>省略冗余标签和属性。</p>
+</li>
+<li><p>使用相对路径的 URL。</p>
+</li>
+</ul>
+<h3 id="2、文件放在合适位置"><a href="#2、文件放在合适位置" class="headerlink" title="2、文件放在合适位置"></a>2、文件放在合适位置</h3><ul>
+<li>CSS 样式文件链接尽量放在页面头部。</li>
+</ul>
+<p>CSS 加载不会阻塞 DOM tree 解析，但是会阻塞 DOM Tree 渲染，也会阻塞后面 JS 执行。</p>
+<p>任何 body 元素之前，可以确保在文档部分中解析了所有 CSS 样式（内联和外联），从而减少了浏览器必须重排文档的次数。</p>
+<p>如果放置页面底部，就要等待最后一个 CSS 文件下载完成，此时会出现”白屏”，影响用户体验。</p>
+<ul>
+<li>JS 引用放在 HTML 底部</li>
+</ul>
+<p>防止 JS 在加载、解析、执行时，阻塞了页面后续元素的正常渲染。</p>
+<h3 id="4、增强用户体验"><a href="#4、增强用户体验" class="headerlink" title="4、增强用户体验"></a>4、增强用户体验</h3><ul>
+<li>设置 favicon.ico</li>
+</ul>
+<p>网站如果不设置 favicon.ico，控制台会报错。另外页面加载过程中如果没有图标，则会出现 loading 过程，也不利于记忆网站品牌，建议统一添加。</p>
+<ul>
+<li>增加首屏必要的 CSS 和 JS</li>
+</ul>
+<p>页面如果需要等待所的依赖的 JS 和 CSS 加载完成才显示，则在渲染过程中页面会一直显示空白，影响用户体验，建议在首屏增加必要的 CSS 和 JS，比如页面框架背景图片或者loading 图标，内联在 HTML 页面中。这样做，首屏能快速显示出来，缓解用户焦虑。现在很多网页在初始化的时候，流行做<strong>骨架屏</strong>，小伙伴们也可以研究下。</p>
+<h2 id="CSS优化"><a href="#CSS优化" class="headerlink" title="CSS优化"></a>CSS优化</h2><h3 id="1、提升-CSS-渲染性能"><a href="#1、提升-CSS-渲染性能" class="headerlink" title="1、提升 CSS 渲染性能"></a>1、提升 CSS 渲染性能</h3><ul>
+<li><p>谨慎使用 expensive 属性，这类属性比较耗浏览器的性能。比如：<code>nth-child</code> 伪类；<code>position: fixed</code> 定位。</p>
+</li>
+<li><p>尽量减少样式的层级数。</p>
+</li>
+</ul>
+<p>比如：<code>div ul li span i {color: blue;}</code>这样的层级就太深了。建议给 i 标签设置 class属性，然后通过class直接设置样式属性，可以提升浏览器的查询效率。</p>
+<ul>
+<li><p>尽量避免使用占用过多 CPU 和内存的属性。比如：<code>text-indnt:-99999px</code>。</p>
+</li>
+<li><p>尽量少使用耗电量大的属性。比如：CSS3 3D transforms、CSS3 transitions、Opacity 这样的属性会消耗GPU。</p>
+</li>
+</ul>
+<h3 id="2、合适使用-CSS-选择器"><a href="#2、合适使用-CSS-选择器" class="headerlink" title="2、合适使用 CSS 选择器"></a>2、合适使用 CSS 选择器</h3><ul>
+<li>尽量避免使用 CSS 表达式。</li>
+</ul>
+<p>比如 <code>background-color: expression( (new Date()).getHours()%2 ? &quot;#FFF&quot; : &quot;#000&quot; );</code>这个属性的意思是，每间隔两小时，改变白景色。</p>
+<ul>
+<li>尽量避免使用通配选择器。</li>
+</ul>
+<p>比如 <code>body &gt; a {font-weight:blod;}</code>这样的属性，可能会把 body 里所有的标签遍历一遍，才找到 a 标签，比较耗时。</p>
+<ul>
+<li>尽量避免类正则的属性选择器：<code>*=， |=， ^=， $=</code></li>
+</ul>
+<h3 id="3、提升-CSS-文件加载性能"><a href="#3、提升-CSS-文件加载性能" class="headerlink" title="3、提升 CSS 文件加载性能"></a>3、提升 CSS 文件加载性能</h3><ul>
+<li>使用外链的 CSS。</li>
+</ul>
+<p>我们知道，内联的 css 是在html 内部写的。相比之下，外链的 CSS文件是放在CDN上的，可以缓存，既能减少 html 页面的体积大小，也能利用缓存减少资源的请求。</p>
+<ul>
+<li>尽量避免使用 @import 方法</li>
+</ul>
+<p>整个CSS加载完成后，浏览器会把 import 中所有依赖的文件全部加载完成后，浏览器才会接着往下渲染。这个过程会阻塞CSS文件的加载过程。</p>
+<h3 id="4、精简-CSS-代码"><a href="#4、精简-CSS-代码" class="headerlink" title="4、精简 CSS 代码"></a>4、精简 CSS 代码</h3><ul>
+<li><p>使用缩写语句</p>
+</li>
+<li><p>删除不必要的零。比如 0.2 可以写成 .2</p>
+</li>
+<li><p>删除不必要的单位，比如 0px 可以写成 0</p>
+</li>
+<li><p>删除过多的空格；注释言简意赅</p>
+</li>
+<li><p>尽量减少样式表的大小</p>
+</li>
+</ul>
+<p>当然，很多地方可以在编译时，通过压缩工具来处理；但是我们在写代码时，也应该有良好的编码习惯。</p>
+<h3 id="5、合理使用-Web-Fonts"><a href="#5、合理使用-Web-Fonts" class="headerlink" title="5、合理使用 Web Fonts"></a>5、合理使用 Web Fonts</h3><ul>
+<li><p>将字体文件部署在 CDN 上。</p>
+</li>
+<li><p>或者将字体以 base64 形式保存在 CSS 中并通过 localStorage 进行缓存</p>
+</li>
+<li><p>Google 字体库因为某些不可抗拒原因，应该使用国内托管服务</p>
+</li>
+</ul>
+<h3 id="6、CSS-动画优化"><a href="#6、CSS-动画优化" class="headerlink" title="6、CSS 动画优化"></a>6、CSS 动画优化</h3><ul>
+<li><p>尽量避免同时出现过多动画。</p>
+</li>
+<li><p>延迟动画初始化：让其他的重要的CSS样式优先渲染。</p>
+</li>
+<li><p>结合 SVG。</p>
+</li>
+</ul>
+<h2 id="JavaScript-总体优化"><a href="#JavaScript-总体优化" class="headerlink" title="JavaScript 总体优化"></a>JavaScript 总体优化</h2><h3 id="提升-JavaScript-文件加载性能"><a href="#提升-JavaScript-文件加载性能" class="headerlink" title="提升 JavaScript 文件加载性能"></a>提升 JavaScript 文件加载性能</h3><p>加载元素的顺序 CSS 文件放在 <head> 里， JavaScript 文件放在 </head><body> 里。<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body></p>
+<h3 id="JavaScript-变量和函数优化"><a href="#JavaScript-变量和函数优化" class="headerlink" title="JavaScript 变量和函数优化"></a>JavaScript 变量和函数优化</h3><ul>
+<li><p>尽量使用 id 选择器</p>
+</li>
+<li><p>尽量避免使用 eval</p>
+</li>
+<li><p>JavaScript 函数尽可能保持简洁</p>
+</li>
+<li><p>使用事件节流函数</p>
+</li>
+<li><p>使用事件委托</p>
+</li>
+</ul>
+<h3 id="JavaScript-动画优化"><a href="#JavaScript-动画优化" class="headerlink" title="JavaScript 动画优化"></a>JavaScript 动画优化</h3><ul>
+<li><p>避免添加大量 JavaScript 动画</p>
+</li>
+<li><p>尽量使用 CSS3 动画</p>
+</li>
+<li><p>尽量使用 Canvas 动画</p>
+</li>
+<li><p>合理使用 requestAnimationFrame 动画代替 setTimeout、setInterval</p>
+</li>
+<li><p>requestAnimationFrame可以在正确的时间进行渲染，setTimeout（callback）和setInterval（callback）无法保证 callback 回调函数的执行时机。</p>
+</li>
+</ul>
+<h3 id="合理使用缓存"><a href="#合理使用缓存" class="headerlink" title="合理使用缓存"></a>合理使用缓存</h3><ul>
+<li><p>合理缓存 DOM 对象</p>
+</li>
+<li><p>缓存列表长度</p>
+</li>
+<li><p>使用可缓存的 Ajax</p>
+</li>
+</ul>
+<h2 id="JavaScript-缓存优化"><a href="#JavaScript-缓存优化" class="headerlink" title="JavaScript 缓存优化"></a>JavaScript 缓存优化</h2><h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>通常由浏览器存储，然后将 Cookie 与每个后续请求一起发送到同一服务器。收到HTTP 请求时，服务器可以发送带有 Cookie 的 header 头。可以给 Cookie 设置有效时间。</p>
+<p>应用：</p>
+<ul>
+<li><p>会话管理：登录名，购物车商品，游戏得分或服务器应要记录的其他任何内容</p>
+</li>
+<li><p>个性化：用户首选项，主题或其他设置</p>
+</li>
+<li><p>跟踪：记录和分析用户行为，比如visitkey</p>
+</li>
+</ul>
+<h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a>sessionStorage</h3><p>创建一个本地存储的键/值对。</p>
+<p>应用：</p>
+<ul>
+<li><p>缓存。</p>
+</li>
+<li><p>页面应用页面之间传值。</p>
+</li>
+</ul>
+<h3 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage"></a>LocalStorage</h3><p>本地存储。</p>
+<p>应用于：</p>
+<ul>
+<li><p>缓存静态文件内容 JavaScript /CSS（比如百度M站首页）</p>
+</li>
+<li><p>缓存不常变更的 API 接口数据</p>
+</li>
+<li><p>储存地理位置信息</p>
+</li>
+<li><p>浏览在页面的具体位置</p>
+</li>
+</ul>
+<h3 id="IndexedDB"><a href="#IndexedDB" class="headerlink" title="IndexedDB"></a>IndexedDB</h3><p>索引数据库。</p>
+<p>应用：</p>
+<ul>
+<li><p>客户端存储大量结构化数据</p>
+</li>
+<li><p>没有网络连接的情况下使用（比如 Google Doc、石墨文档）</p>
+</li>
+<li><p>将冗余、很少修改、但经常访问的数据，以避免随时从服务器获取数据</p>
+</li>
+</ul>
+<h2 id="JavaScript-模块化加载方案和选型"><a href="#JavaScript-模块化加载方案和选型" class="headerlink" title="JavaScript 模块化加载方案和选型"></a>JavaScript 模块化加载方案和选型</h2><ul>
+<li>CommonJS</li>
+</ul>
+<p>旨在 Web 浏览器之外为 JavaScript 建立模块生态系统。Node.js 模块化方案受 CommonJS。</p>
+<ul>
+<li>AMD (Asynchronous Module Definition)（异步模块定义）规范。</li>
+</ul>
+<p>RequireJS 模块化加载器：基于 AMD API 实现。</p>
+<ul>
+<li>CMD（ Common Module Definition）（通用模块定义）规范。</li>
+</ul>
+<p>SeaJS 模块化加载器：遵循 CMD API 编写。</p>
+<ul>
+<li>ES6 import。</li>
+</ul>
+<h2 id="减少回流和重绘重要举措"><a href="#减少回流和重绘重要举措" class="headerlink" title="减少回流和重绘重要举措"></a>减少回流和重绘重要举措</h2><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><ul>
+<li><p>避免过多样式嵌套</p>
+</li>
+<li><p>避免使用 CSS 表达式</p>
+</li>
+<li><p>使用绝对定位，可以让动画元素脱离文档流</p>
+</li>
+<li><p>避免使用 table 布局</p>
+</li>
+<li><p>尽量不使用 float 布局</p>
+</li>
+<li><p>图片最好设置好 width 和 height</p>
+</li>
+<li><p>尽量简化浏览器不必要的任务，减少页面重新布局</p>
+</li>
+<li><p>使用 Viewport 设置屏幕缩放级别</p>
+</li>
+<li><p>避免频繁设置样式，最好把新 style 属性设置完成后，进行一次性更改</p>
+</li>
+<li><p>避免使用引起回流/重绘的属性，最好把相应变量缓存起来</p>
+</li>
+</ul>
+<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><ul>
+<li><p>最小化回流和重排：为了减少回流发生次数，避免频繁或操作 DOM，可以合并多次对 DOM 修改，然后一次性批量处理。</p>
+</li>
+<li><p>控制绘制过程和绘制区域：绘制过程开销比较大的属性设置应该尽量避免减少使用；同时，减少绘制区域范围。</p>
+</li>
+</ul>
+<h2 id="DOM-编程优化的⽅式方法"><a href="#DOM-编程优化的⽅式方法" class="headerlink" title="DOM 编程优化的⽅式方法"></a>DOM 编程优化的⽅式方法</h2><h3 id="控制-DOM-大小"><a href="#控制-DOM-大小" class="headerlink" title="控制 DOM 大小"></a>控制 DOM 大小</h3><p>众所周知，页面交互卡顿和流畅度很大一部分原因就是页面有大量 DOM 元素。想象一下，从一个上万节点的 DOM 树上，使用 querySelectorAll 或 getElementByTagName 方法查找某一个节点，是非常耗时的。另外元素绑定事件，事件冒泡和事件捕获的执行也会相对耗时。</p>
+<p>通常控制 DOM 大小的技巧包括：</p>
+<ul>
+<li><p>合理的业务逻辑</p>
+</li>
+<li><p>延迟加载即将呈现的内容</p>
+</li>
+</ul>
+<h3 id="简化-DOM-操作"><a href="#简化-DOM-操作" class="headerlink" title="简化 DOM 操作"></a>简化 DOM 操作</h3><p>对DOM节点的操作统一处理后，再统一插入到 DOM Tree中。</p>
+<p>可以使用 fragment，尽量不在页面 DOM Tree 里直接操作。</p>
+<p>现在流行的框架 Angular、React、Vue 都在使用虚拟 DOM 技术，通过 diff 算法简化和减少 DOM 操作。</p>
+<h2 id="静态文件压缩工具介绍"><a href="#静态文件压缩工具介绍" class="headerlink" title="静态文件压缩工具介绍"></a>静态文件压缩工具介绍</h2><p>HTML 压缩工具：</p>
+<ul>
+<li>html-minifier：<a href="https://www.npmjs.com/package/html-minifier" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/package/html-minifier</a></li>
+</ul>
+<p>CSS 压缩工具：</p>
+<ul>
+<li>clean-css：<a href="https://www.npmjs.com/package/clean-css" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/package/clean-css</a></li>
+</ul>
+<p>JavaScript 压缩工具：</p>
+<ul>
+<li><p>uglify-js：<a href="https://www.npmjs.com/package/uglify-js" target="_blank" rel="noopener external nofollow noreferrer">https://www.npmjs.com/package/uglify-js</a></p>
+</li>
+<li><p>使用方法：uglifyjs in.js -o out.js</p>
+</li>
+</ul>
+<h2 id="静态⽂文件打包⽅方案"><a href="#静态⽂文件打包⽅方案" class="headerlink" title="静态⽂文件打包⽅方案"></a>静态⽂文件打包⽅方案</h2><ul>
+<li><p>公共组件拆分</p>
+</li>
+<li><p>压缩： JavaScript /CSS/图片</p>
+</li>
+<li><p>合并： JavaScript /CSS 文件合并，CSS Sprite</p>
+</li>
+<li><p>Combo： JavaScript /CSS 文件</p>
+</li>
+</ul>
+<h2 id="静态⽂文件版本号更新策略"><a href="#静态⽂文件版本号更新策略" class="headerlink" title="静态⽂文件版本号更新策略"></a>静态⽂文件版本号更新策略</h2><p>缓存更新：CDN 或 ng 后台刷新文件路径，更新文件header头。</p>
+<p>文件 name.v1-v100.js：</p>
+<ul>
+<li><p>大功能迭代每次新增一个大版本，比如由 v1 到 v2</p>
+</li>
+<li><p>小功能迭代新增加 0.0.1 或者 0.1.0，比如从 v1.0.0 至 v1.0.1</p>
+</li>
+<li><p>年末 ng 统一配置所有版本 302 至最新版</p>
+</li>
+</ul>
+<p>时间戳.文件 name.js：以每次上线时间点做差异。</p>
+<p>hash.文件。以文件内容 hash 值做 key。</p>
+<h2 id="前端构建工具介绍和选型建议"><a href="#前端构建工具介绍和选型建议" class="headerlink" title="前端构建工具介绍和选型建议"></a>前端构建工具介绍和选型建议</h2><h3 id="常用构建工具"><a href="#常用构建工具" class="headerlink" title="常用构建工具"></a>常用构建工具</h3><ul>
+<li><p>Gulp：通过流（Stream）来简化多个任务间的配置和输出，配置代码相对较少。</p>
+</li>
+<li><p>Webpack：预编译，中间文件在内存中处理，支持多种模块化，配置相对很简单。</p>
+</li>
+<li><p>FIS</p>
+</li>
+</ul>
+<h3 id="webpack-打包优化"><a href="#webpack-打包优化" class="headerlink" title="webpack 打包优化"></a>webpack 打包优化</h3><ul>
+<li><p>定位体积大的模块</p>
+</li>
+<li><p>删除没有使用的依赖</p>
+</li>
+<li><p>生产模式进行公共依赖包抽离</p>
+</li>
+<li><p>开发模式进行 DLL &amp; DllReference 方式优化</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\02-Git的使用\" rel="bookmark">02-Git的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\03-网络抓包和代理工具：Whistle\" rel="bookmark">03-网络抓包和代理工具：Whistle</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\web\00-前端工具\EmmetinVSCode\" rel="bookmark">Emmet in VS Code</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\Atom在前端的使用\" rel="bookmark">Atom在前端的使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\26\web\00-前端工具\GitHub的使用\" rel="bookmark">GitHub的使用</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96/" title="04-静态资源优化">https://tongsiying.github.io/2021/11/25/web/14-前端性能优化/04-静态资源优化/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/web/" rel="tag"># web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/03-%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96/" rel="prev" title="03-渲染优化">
+      <i class="fa fa-chevron-left"></i> 03-渲染优化
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/11/25/web/14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/05-%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="next" title="05-页面渲染性能优化">
+      05-页面渲染性能优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图片格式和应用场景"><span class="nav-text">图片格式和应用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JPEG-格式"><span class="nav-text">JPEG 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PNG-格式"><span class="nav-text">PNG 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GIF-格式"><span class="nav-text">GIF 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webp-格式"><span class="nav-text">Webp 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片优化的常见方法"><span class="nav-text">图片优化的常见方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、用工具压缩图片"><span class="nav-text">1、用工具压缩图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、将图片尺寸跟随网络环境进行变化"><span class="nav-text">2、将图片尺寸跟随网络环境进行变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、响应式图片"><span class="nav-text">3、响应式图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、逐步加载图像：lazyload、LQIP、LQIP"><span class="nav-text">4、逐步加载图像：lazyload、LQIP、LQIP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、雪碧图（Image-spriting）"><span class="nav-text">5、雪碧图（Image spriting）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、有些场景下，并不需要图片文件"><span class="nav-text">6、有些场景下，并不需要图片文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、在服务器端进行图片自动优化"><span class="nav-text">7、在服务器端进行图片自动优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML优化"><span class="nav-text">HTML优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、精简-HTML-代码"><span class="nav-text">1、精简 HTML 代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、文件放在合适位置"><span class="nav-text">2、文件放在合适位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、增强用户体验"><span class="nav-text">4、增强用户体验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS优化"><span class="nav-text">CSS优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、提升-CSS-渲染性能"><span class="nav-text">1、提升 CSS 渲染性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、合适使用-CSS-选择器"><span class="nav-text">2、合适使用 CSS 选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、提升-CSS-文件加载性能"><span class="nav-text">3、提升 CSS 文件加载性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、精简-CSS-代码"><span class="nav-text">4、精简 CSS 代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、合理使用-Web-Fonts"><span class="nav-text">5、合理使用 Web Fonts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、CSS-动画优化"><span class="nav-text">6、CSS 动画优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-总体优化"><span class="nav-text">JavaScript 总体优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提升-JavaScript-文件加载性能"><span class="nav-text">提升 JavaScript 文件加载性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-变量和函数优化"><span class="nav-text">JavaScript 变量和函数优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-动画优化"><span class="nav-text">JavaScript 动画优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合理使用缓存"><span class="nav-text">合理使用缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-缓存优化"><span class="nav-text">JavaScript 缓存优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie"><span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionStorage"><span class="nav-text">sessionStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalStorage"><span class="nav-text">LocalStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IndexedDB"><span class="nav-text">IndexedDB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-模块化加载方案和选型"><span class="nav-text">JavaScript 模块化加载方案和选型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#减少回流和重绘重要举措"><span class="nav-text">减少回流和重绘重要举措</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS"><span class="nav-text">CSS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript"><span class="nav-text">JavaScript</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-编程优化的⽅式方法"><span class="nav-text">DOM 编程优化的⽅式方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#控制-DOM-大小"><span class="nav-text">控制 DOM 大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简化-DOM-操作"><span class="nav-text">简化 DOM 操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态文件压缩工具介绍"><span class="nav-text">静态文件压缩工具介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态⽂文件打包⽅方案"><span class="nav-text">静态⽂文件打包⽅方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态⽂文件版本号更新策略"><span class="nav-text">静态⽂文件版本号更新策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端构建工具介绍和选型建议"><span class="nav-text">前端构建工具介绍和选型建议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用构建工具"><span class="nav-text">常用构建工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-打包优化"><span class="nav-text">webpack 打包优化</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">416</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">90:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
