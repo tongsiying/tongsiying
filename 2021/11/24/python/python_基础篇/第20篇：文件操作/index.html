@@ -25,13 +25,13 @@
 <meta property="og:url" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC20%E7%AF%87%EF%BC%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="tongsiying">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/assets/file-open-mode.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC20%E7%AF%87%EF%BC%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/file-open-mode.png">
 <meta property="article:published_time" content="2021-11-24T11:37:35.507Z">
-<meta property="article:modified_time" content="2021-11-24T11:35:11.888Z">
+<meta property="article:modified_time" content="2022-01-15T14:44:33.713Z">
 <meta property="article:author" content="tongsiying">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/assets/file-open-mode.png">
+<meta name="twitter:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC20%E7%AF%87%EF%BC%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/file-open-mode.png">
 
 <link rel="canonical" href="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC20%E7%AF%87%EF%BC%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
 
@@ -226,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:35:11" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+              <time title="创建时间：2021-11-24 19:37:35" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-15 22:44:33" itemprop="dateModified" datetime="2022-01-15T22:44:33+08:00">2022-01-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -267,8 +273,8 @@
       
         <p class="description"></p>
 <a id="more"></a>
-**学习目标**：掌握Python中文件打开、关闭、读取和写入的具体操作方法
 
+<h1 id="学习目标："><a href="#学习目标：" class="headerlink" title="学习目标："></a><strong>学习目标</strong>：</h1><p><strong>掌握Python中文件打开、关闭、读取和写入的具体操作方法</strong></p>
 <p>实际开发中常常会遇到对数据进行持久化的场景，所谓持久化是指将数据从无法长久保存数据的存储介质（通常是内存）转移到可以长久保存数据的存储介质（通常是硬盘）中。实现数据持久化最直接简单的方式就是通过<strong>文件系统</strong>将数据保存到<strong>文件</strong>中。</p>
 <p>计算机的<strong>文件系统</strong>是一种存储和组织计算机数据的方法，它使得对数据的访问和查找变得容易，文件系统使用<strong>文件</strong>和<strong>树形目录</strong>的抽象逻辑概念代替了硬盘、光盘、闪存等物理设备的数据块概念，用户使用文件系统来保存数据时，不必关心数据实际保存在硬盘的哪个数据块上，只需要记住这个文件的路径和文件名。在写入新数据之前，用户不必关心硬盘上的哪个数据块没有被使用，硬盘上的存储空间管理（分配和释放）功能由文件系统自动完成，用户只需要记住数据被写入到了哪个文件中。</p>
 <p>在学习文件操作之前，先来回顾一下编码的相关以及先关数据类型的知识。</p>
@@ -343,7 +349,7 @@
 <td align="left"><code>file.writelines(sequence)</code>向文件写入一个序列字符串列表，如果需要换行则要自己加入每行的换行符。</td>
 </tr>
 </tbody></table>
-<h3 id="一、打开文件"><a href="#一、打开文件" class="headerlink" title="一、打开文件"></a>一、打开文件</h3><p>了解了文件系统，我们可以非常方便的通过文件来读写数据；我们在使用文件之前要先将文件打开，在Python中要实现文件操作是非常简单的。我们可以使用Python内置的<code>open</code>函数来打开文件，open函数语法如下：</p>
+<h1 id="一、打开文件"><a href="#一、打开文件" class="headerlink" title="一、打开文件"></a>一、打开文件</h1><p>了解了文件系统，我们可以非常方便的通过文件来读写数据；我们在使用文件之前要先将文件打开，在Python中要实现文件操作是非常简单的。我们可以使用Python内置的<code>open</code>函数来打开文件，open函数语法如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open(file, mode=<span class="string">'r'</span>, buffering=<span class="literal">None</span>, encoding=<span class="literal">None</span>, errors=<span class="literal">None</span>, newline=<span class="literal">None</span>, closefd=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 
 <p>open函数中的参数有很多，这里介绍5个常用参数：</p>
@@ -429,7 +435,7 @@
 </tr>
 </tbody></table>
 <p>下图展示了如何根据程序的需要来设置<code>open</code>函数的操作模式。</p>
-<p><img src="https://zhangyafei-1258643511.cos.ap-nanjing.myqcloud.com/Python%E6%96%87%E6%A1%A3/assets/file-open-mode.png" alt="文件操作模式"></p>
+<p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC20%E7%AF%87%EF%BC%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/file-open-mode.png" alt="文件操作模式"></p>
 <table>
 <thead>
 <tr>
@@ -562,9 +568,11 @@
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断路径是否存在？</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">file_path = <span class="string">"G:\学习\Python学习\Python基础\code\chapter20\info.txt"</span></span><br><span class="line">exists = os.path.exists(file_path)</span><br><span class="line"><span class="keyword">if</span> exists:</span><br><span class="line">    <span class="comment"># 1.打开文件</span></span><br><span class="line">    file_object = open(<span class="string">'info.txt'</span>, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">    <span class="comment"># 2.读取文件内容，并赋值给data</span></span><br><span class="line">    data = file_object.read()</span><br><span class="line">    <span class="comment"># 3.关闭文件</span></span><br><span class="line">    file_object.close()</span><br><span class="line">    print(data)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"文件不存在"</span>)</span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ul>
-<h3 id="二、关闭文件"><a href="#二、关闭文件" class="headerlink" title="二、关闭文件"></a>二、关闭文件</h3><p>在打开文件后， 如果不再使用该文件， 则应该将其关闭， 会用到close（） 方法。  </p>
+<h1 id="二、关闭文件"><a href="#二、关闭文件" class="headerlink" title="二、关闭文件"></a>二、关闭文件</h1><p>在打开文件后， 如果不再使用该文件， 则应该将其关闭， 会用到close（） 方法。  </p>
 <ul>
 <li><p>在finally代码块中关闭文件<br>对文件的操作往往会抛出异常， 为了保证对文件的操作无论是正常结束还异常结束， 都能够关闭文件， 我们应该将对close（） 方法的调用放在异常处理的finally代码块中。  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    f = open(<span class="string">'data.txt'</span>, mode=<span class="string">'r'</span>)</span><br><span class="line">    print(<span class="string">'文件打开成功'</span>)</span><br><span class="line">    print(file.read())</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    print(<span class="string">'文件不存在'</span>)</span><br><span class="line"><span class="keyword">except</span> OSError:</span><br><span class="line">    print(<span class="string">'处理OS异常'</span>)</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    <span class="keyword">if</span> f <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        f.close()</span><br><span class="line">        print(<span class="string">'文件关闭成功'</span>)</span><br></pre></td></tr></table></figure>
@@ -577,9 +585,11 @@
 <p>在Python 2.7 后，with又支持同时对多个文件的上下文进行管理，即：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"xxxx.txt"</span>, mode=<span class="string">'rb'</span>) <span class="keyword">as</span> f1, open(<span class="string">"xxxx.txt"</span>, mode=<span class="string">'rb'</span>) <span class="keyword">as</span> f2:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ul>
-<h3 id="三、读写文本文件"><a href="#三、读写文本文件" class="headerlink" title="三、读写文本文件"></a>三、读写文本文件</h3><ul>
+<h1 id="三、读写文本文件"><a href="#三、读写文本文件" class="headerlink" title="三、读写文本文件"></a>三、读写文本文件</h1><ul>
 <li><code>read(size)</code>：从文件中读取字符串， size限制读取的字符数， 默认size=-1，指对读取所有内容。  </li>
 <li><code>readline(size)</code>：在读取到换行符或文件尾时返回单行字符串。 如果已经到文件尾， 则返回一个空字符串。 size是限制读取的字符数， size=-1表示没有限制。  </li>
 <li><code>readlines()</code>: 读取文件数据到一个字符串列表中， 每一行数据都是列表的一个元素。  </li>
@@ -604,9 +614,14 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'rb'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读1个字节</span></span><br><span class="line">data = f.read(<span class="number">3</span>)</span><br><span class="line">f.close()</span><br><span class="line"></span><br><span class="line">print(data, type(data))  <span class="comment"># b'\xe5\xba\x8a' &lt;class 'bytes'&gt;</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'rb'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读1个字节</span></span><br><span class="line">chunk1 = f.read(<span class="number">3</span>)</span><br><span class="line">chunk2 = f.read(<span class="number">3</span>)</span><br><span class="line">chunk3 = f.read(<span class="number">1</span>)</span><br><span class="line">print(chunk1,chunk2,chunk3) <span class="comment"># b'\xe5\xba\x8a' b'\xe5\x89\x8d' b'\xe6'</span></span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
 </ul>
 </li>
+</ul>
+<ul>
 <li><p><code>readline()</code>方法</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line">v1 = f.readline()</span><br><span class="line">print(v1)  <span class="comment"># 床前明月光\n</span></span><br><span class="line"></span><br><span class="line">v2 = f.readline()</span><br><span class="line">print(v2)  <span class="comment"># 疑是地上霜\n</span></span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 
@@ -619,9 +634,16 @@
 <ul>
 <li><p><code>readlines()</code>，读所有行，每行作为列表的一个元素</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">data_list = f.readlines()</span><br><span class="line">f.close()</span><br><span class="line">print(data_list) <span class="comment"># ['床前明月光\n', '疑是地上霜']</span></span><br></pre></td></tr></table></figure>
+
+
+
 </li>
+</ul>
+<ul>
 <li><p>for in循环，读大文件（readline加强版）【常见】</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">    print(line.strip())</span><br><span class="line">f.close()</span><br><span class="line"><span class="comment"># 床前明月光</span></span><br><span class="line"><span class="comment"># 疑是地上霜</span></span><br></pre></td></tr></table></figure>
+
+
 
 
 </li>
@@ -631,22 +653,36 @@
 <p>如果要向文件中写入内容，可以在打开文件时使用<code>w</code>或者<code>a</code>作为操作模式，前者会截断之前的文本内容写入新的内容，后者是在原来内容的尾部追加新的内容。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">f.write(<span class="string">"张亚飞"</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'ab'</span>)</span><br><span class="line">  f.write( <span class="string">"张亚飞"</span>.encode(<span class="string">"utf-8"</span>) )</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'ab'</span>)</span><br><span class="line">f.write( <span class="string">"张亚飞"</span>.encode(<span class="string">"utf-8"</span>) )</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
+</ul>
+<ul>
 <li><p>flush，刷到硬盘</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 不是写到了硬盘，而是写在缓冲区，系统会将缓冲区的内容刷到硬盘。</span></span><br><span class="line">	f.write(<span class="string">"张亚飞"</span>)</span><br><span class="line">    f.flush()</span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">file_object = open(<span class="string">'files/account.txt'</span>, mode=<span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    user = input(<span class="string">"用户名："</span>)</span><br><span class="line">    <span class="keyword">if</span> user.upper() == <span class="string">"Q"</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    pwd = input(<span class="string">"密码："</span>)</span><br><span class="line">    data = <span class="string">"&#123;&#125;-&#123;&#125;\n"</span>.format(user, pwd)</span><br><span class="line">    file_object.write(data)</span><br><span class="line">    file_object.flush()</span><br><span class="line"></span><br><span class="line">file_object.close()</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
+</ul>
+<ul>
 <li><p>移动光标位置（字节）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'r+'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动到指定字节的位置</span></span><br><span class="line">f.seek(<span class="number">3</span>)</span><br><span class="line">f.write(<span class="string">"张亚飞"</span>)</span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 
 <p>注意：在a模式下，调用write在文件中写入内容时，永远只能将内容写入到尾部，不会写到光标的位置。</p>
 </li>
+</ul>
+<ul>
 <li><p>获取当前光标位置</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'r'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line">p1 = f.tell()</span><br><span class="line">print(p1)  <span class="comment"># 0</span></span><br><span class="line"></span><br><span class="line">f.read(<span class="number">3</span>)  <span class="comment"># 读3个字符 3*3=9字节</span></span><br><span class="line"></span><br><span class="line">p2 = f.tell()</span><br><span class="line">print(p2)  <span class="comment"># 9</span></span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">f = open(<span class="string">'info.txt'</span>, mode=<span class="string">'rb'</span>)</span><br><span class="line"></span><br><span class="line">p1 = f.tell()</span><br><span class="line">print(p1)  <span class="comment"># 0</span></span><br><span class="line"></span><br><span class="line">f.read(<span class="number">3</span>)  <span class="comment"># 读3个字节</span></span><br><span class="line"></span><br><span class="line">p2 = f.tell()</span><br><span class="line">print(p2)  <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+
 
 </li>
 </ul>
@@ -658,20 +694,34 @@
 
 <p>示例代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">'src_file.ttx'</span>, mode=<span class="string">'r'</span>, encoding=<span class="string">'gbk'</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    content = f1.read()</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'dest_file.txt'</span>, mode=<span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>) <span class="keyword">as</span> f2:</span><br><span class="line">        f2.write(content)</span><br><span class="line">    print(<span class="string">'文件复制成功'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例2：用户注册，获取用户输入用户名和密码，将其写入到文件中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user = input(<span class="string">"请输入用户名："</span>)</span><br><span class="line">pwd = input(<span class="string">"请输入密码："</span>)</span><br><span class="line">data = <span class="string">"&#123;&#125;-&#123;&#125;"</span>.format(user, pwd)</span><br><span class="line">file_object = open(<span class="string">"files/info.txt"</span>, mode=<span class="string">'wt'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">file_object.write(data)</span><br><span class="line">file_object.close()</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>案例3：多用户注册</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># w写入文件，先清空文件；再在文件中写入内容。</span></span><br><span class="line">file_object = open(<span class="string">"files/info.txt"</span>, mode=<span class="string">'wt'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    user = input(<span class="string">"请输入用户名："</span>)</span><br><span class="line">    <span class="keyword">if</span> user.upper() == <span class="string">"Q"</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    pwd = input(<span class="string">"请输入密码："</span>)</span><br><span class="line">    data = <span class="string">"&#123;&#125;-&#123;&#125;\n"</span>.format(user, pwd)</span><br><span class="line"></span><br><span class="line">    file_object.write(data)</span><br><span class="line">file_object.close()</span><br></pre></td></tr></table></figure>
+
+
 
 </li>
 </ul>
-<h3 id="四、读写二进制文件"><a href="#四、读写二进制文件" class="headerlink" title="四、读写二进制文件"></a>四、读写二进制文件</h3><p>读写二进制文件跟读写文本文件的操作类似，但是需要注意，在使用<code>open</code>函数打开文件时，如果要进行读操作，操作模式是<code>&#39;rb&#39;</code>，如果要进行写操作，操作模式是<code>&#39;wb&#39;</code>。还有一点，读写文本文件时，<code>read</code>方法的返回值以及<code>write</code>方法的参数是<code>str</code>对象（字符串），而读写二进制文件时，<code>read</code>方法的返回值以及<code>write</code>方法的参数是<code>bytes-like</code>对象（字节串）。下面的代码实现了将当前路径下名为<code>guido.jpg</code>的图片文件复制到<code>吉多.jpg</code>文件中的操作。</p>
+<ul>
+<li><p>案例2：用户注册，获取用户输入用户名和密码，将其写入到文件中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">user = input(<span class="string">"请输入用户名："</span>)</span><br><span class="line">pwd = input(<span class="string">"请输入密码："</span>)</span><br><span class="line">data = <span class="string">"&#123;&#125;-&#123;&#125;"</span>.format(user, pwd)</span><br><span class="line">file_object = open(<span class="string">"files/info.txt"</span>, mode=<span class="string">'wt'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">file_object.write(data)</span><br><span class="line">file_object.close()</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>案例3：多用户注册</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># w写入文件，先清空文件；再在文件中写入内容。</span></span><br><span class="line">file_object = open(<span class="string">"files/info.txt"</span>, mode=<span class="string">'wt'</span>, encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    user = input(<span class="string">"请输入用户名："</span>)</span><br><span class="line">    <span class="keyword">if</span> user.upper() == <span class="string">"Q"</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    pwd = input(<span class="string">"请输入密码："</span>)</span><br><span class="line">    data = <span class="string">"&#123;&#125;-&#123;&#125;\n"</span>.format(user, pwd)</span><br><span class="line"></span><br><span class="line">    file_object.write(data)</span><br><span class="line">file_object.close()</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h1 id="四、读写二进制文件"><a href="#四、读写二进制文件" class="headerlink" title="四、读写二进制文件"></a>四、读写二进制文件</h1><p>读写二进制文件跟读写文本文件的操作类似，但是需要注意，在使用<code>open</code>函数打开文件时，如果要进行读操作，操作模式是<code>&#39;rb&#39;</code>，如果要进行写操作，操作模式是<code>&#39;wb&#39;</code>。还有一点，读写文本文件时，<code>read</code>方法的返回值以及<code>write</code>方法的参数是<code>str</code>对象（字符串），而读写二进制文件时，<code>read</code>方法的返回值以及<code>write</code>方法的参数是<code>bytes-like</code>对象（字节串）。下面的代码实现了将当前路径下名为<code>guido.jpg</code>的图片文件复制到<code>吉多.jpg</code>文件中的操作。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'1.jpg'</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> file1:</span><br><span class="line">        data = file1.read()</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'2.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> file2:</span><br><span class="line">        file2.write(data)</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    print(<span class="string">'指定的文件无法打开.'</span>)</span><br><span class="line"><span class="keyword">except</span> IOError:</span><br><span class="line">    print(<span class="string">'读写文件时出现错误.'</span>)</span><br><span class="line">print(<span class="string">'程序执行结束.'</span>)</span><br></pre></td></tr></table></figure>
 
 <p>如果要复制的图片文件很大，一次将文件内容直接读入内存中可能会造成非常大的内存开销，为了减少对内存的占用，可以为<code>read</code>方法传入<code>size</code>参数来指定每次读取的字节数，通过循环读取和写入的方式来完成上面的操作，代码如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'1.jpg'</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> file1, \</span><br><span class="line">        open(<span class="string">'2.jpg'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> file2:</span><br><span class="line">        data = file1.read(<span class="number">512</span>)</span><br><span class="line">        <span class="keyword">while</span> data:</span><br><span class="line">            file2.write(data)</span><br><span class="line">            data = file1.read(<span class="number">512</span>)</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    print(<span class="string">'指定的文件无法打开.'</span>)</span><br><span class="line"><span class="keyword">except</span> IOError:</span><br><span class="line">    print(<span class="string">'读写文件时出现错误.'</span>)</span><br><span class="line">print(<span class="string">'程序执行结束.'</span>)</span><br></pre></td></tr></table></figure>
+
+
 
 <p><strong>小高级案例</strong>：超前</p>
 <p>利用Python想某个网址发送请求并获取结果（利用第三方的模块）</p>
@@ -699,20 +749,24 @@
 </li>
 <li>文件不存在时，w模式会新建然后再写入内容；文件存在时，w模式会清空文件再写入内容。</li>
 </ul>
-<h3 id="五、文件和文件夹操作"><a href="#五、文件和文件夹操作" class="headerlink" title="五、文件和文件夹操作"></a>五、文件和文件夹操作</h3><p>除了文件读写之外，关于文件的其他操纵可以通过<code>os</code>模块。</p>
-<h4 id="1-文件删除"><a href="#1-文件删除" class="headerlink" title="1. 文件删除"></a>1. 文件删除</h4><p>语法：你可以用<code>remove()</code>方法删除文件，需要提供要删除的文件名作为参数。</p>
+<h1 id="五、文件和文件夹操作"><a href="#五、文件和文件夹操作" class="headerlink" title="五、文件和文件夹操作"></a>五、文件和文件夹操作</h1><p>除了文件读写之外，关于文件的其他操纵可以通过<code>os</code>模块。</p>
+<h2 id="1-文件删除"><a href="#1-文件删除" class="headerlink" title="1. 文件删除"></a>1. 文件删除</h2><p>语法：你可以用<code>remove()</code>方法删除文件，需要提供要删除的文件名作为参数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.remove(file_name)</span><br></pre></td></tr></table></figure>
 
 <p>示例：下例将删除一个已经存在的文件test2.txt。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 删除一个已经存在的文件test2.txt</span></span><br><span class="line">os.remove(<span class="string">"test2.txt"</span>)</span><br></pre></td></tr></table></figure>
 
-<h4 id="2-文件重命名"><a href="#2-文件重命名" class="headerlink" title="2. 文件重命名"></a>2. 文件重命名</h4><p>语法：rename()方法需要两个参数，当前的文件名和新文件名。</p>
+
+
+<h2 id="2-文件重命名"><a href="#2-文件重命名" class="headerlink" title="2. 文件重命名"></a>2. 文件重命名</h2><p>语法：rename()方法需要两个参数，当前的文件名和新文件名。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.rename(current_file_name, new_file_name)</span><br></pre></td></tr></table></figure>
 
 <p>例子：下例将重命名一个已经存在的文件test1.txt。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 重命名文件test1.txt到test2.txt。</span></span><br><span class="line">os.rename( <span class="string">"test1.txt"</span>, <span class="string">"test2.txt"</span> )</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-创建和删除文件夹"><a href="#3-创建和删除文件夹" class="headerlink" title="3. 创建和删除文件夹"></a>3. 创建和删除文件夹</h4><ul>
+
+
+<h2 id="3-创建和删除文件夹"><a href="#3-创建和删除文件夹" class="headerlink" title="3. 创建和删除文件夹"></a>3. 创建和删除文件夹</h2><ul>
 <li><p>创建文件夹</p>
 <p>语法：可以使用os模块的mkdir()方法在当前目录下创建新的目录们。你需要提供一个包含了要创建的目录名称的参数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.mkdir(newdir)</span><br></pre></td></tr></table></figure>
@@ -727,26 +781,34 @@
 <p>示例：以下是删除” /tmp/test”目录的例子。目录的完全合规的名称必须被给出，否则会在当前目录下搜索该目录。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 删除”/tmp/test”目录</span></span><br><span class="line">os.rmdir( <span class="string">"/tmp/test"</span>  )</span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ul>
-<h4 id="4-获取和切换目录"><a href="#4-获取和切换目录" class="headerlink" title="4. 获取和切换目录"></a>4. 获取和切换目录</h4><ul>
+<h2 id="4-获取和切换目录"><a href="#4-获取和切换目录" class="headerlink" title="4. 获取和切换目录"></a>4. 获取和切换目录</h2><ul>
 <li>获取当前目录</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.getcwd()</span><br></pre></td></tr></table></figure>
 <ul>
 <li>切换指定目录<br>语法：可以用chdir()方法来改变当前的目录。chdir()方法需要的一个参数是你想设成当前目录的目录名称。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.chdir(<span class="string">"newdir"</span>)</span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ul>
-<h4 id="5-获取当前目录下所有文件列表"><a href="#5-获取当前目录下所有文件列表" class="headerlink" title="5. 获取当前目录下所有文件列表"></a>5. 获取当前目录下所有文件列表</h4><p>  语法：获取当前目录下所有文件列表有两种实现方法。</p>
+<h2 id="5-获取当前目录下所有文件列表"><a href="#5-获取当前目录下所有文件列表" class="headerlink" title="5. 获取当前目录下所有文件列表"></a>5. 获取当前目录下所有文件列表</h2><p>  语法：获取当前目录下所有文件列表有两种实现方法。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">os.listdir(dir)</span><br><span class="line">os.walk(top, topdown=True, onerror=None, followlinks=False) -&gt; Directory tree generator</span><br></pre></td></tr></table></figure>
 
-<h4 id="6-文件备份"><a href="#6-文件备份" class="headerlink" title="6. 文件备份"></a>6. 文件备份</h4><p><strong>要求</strong>：用户输入需要备份的文件名，对文件进行备份，备份文件名为原文件名后加[复件],后缀不变。如test.txt的备份文件为test[复件].txt。</p>
+
+
+<h2 id="6-文件备份"><a href="#6-文件备份" class="headerlink" title="6. 文件备份"></a>6. 文件备份</h2><p><strong>要求</strong>：用户输入需要备份的文件名，对文件进行备份，备份文件名为原文件名后加[复件],后缀不变。如test.txt的备份文件为test[复件].txt。</p>
 <p><strong>代码实现</strong>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.获取文件名</span></span><br><span class="line">old_file_name = input(<span class="string">"请输入要备份的文件名(需要后缀):"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#2。打开这个文件（"r")</span></span><br><span class="line">f_read = open(old_file_name,<span class="string">"r"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#new_file_name = old_file_name+"[复件]"</span></span><br><span class="line">position = old_file_name.rfind(<span class="string">"."</span>)</span><br><span class="line">new_file_name = old_file_name[<span class="number">0</span>:position]+<span class="string">"[复件]"</span>+old_file_name[position:]</span><br><span class="line"></span><br><span class="line"><span class="comment">#3.创建一个文件，xxx[复件].txt</span></span><br><span class="line">f_write = open(new_file_name,<span class="string">"w"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.往源文件中读取内容,写入备份的文件中</span></span><br><span class="line"><span class="comment">#content = f_read.read()</span></span><br><span class="line"><span class="comment">#f_write.write(content)</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    content = f_read.read(<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> len(content)==<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    f_write.write(content)</span><br><span class="line"></span><br><span class="line"><span class="comment">#5.关闭两个文件</span></span><br><span class="line">f_read.close()</span><br><span class="line">f_write.close()</span><br></pre></td></tr></table></figure>
 
-<h4 id="练习：批量文件重命名"><a href="#练习：批量文件重命名" class="headerlink" title="练习：批量文件重命名"></a>练习：批量文件重命名</h4><p>要求：提示用户输入重命名的文件夹名称，对文件夹中所有文件进行重命名，并写入到新文件夹，新文件夹的名称为原始文件夹名后加<code>[备份]</code>，。命名规则为在原名之前加<code>[飞凡空间]-</code>，如原始文件名为<code>图片.png</code>，新名为<code>[飞凡空间]-图片.png</code>。</p>
-<h3 id="六、巩固提升"><a href="#六、巩固提升" class="headerlink" title="六、巩固提升"></a>六、巩固提升</h3><ol>
+
+
+<h2 id="7-练习：批量文件重命名"><a href="#7-练习：批量文件重命名" class="headerlink" title="7.练习：批量文件重命名"></a>7.练习：批量文件重命名</h2><p>要求：提示用户输入重命名的文件夹名称，对文件夹中所有文件进行重命名，并写入到新文件夹，新文件夹的名称为原始文件夹名后加<code>[备份]</code>，。命名规则为在原名之前加<code>[飞凡空间]-</code>，如原始文件名为<code>图片.png</code>，新名为<code>[飞凡空间]-图片.png</code>。</p>
+<h1 id="六、巩固提升"><a href="#六、巩固提升" class="headerlink" title="六、巩固提升"></a>六、巩固提升</h1><ol>
 <li><p>日志分析，计算某用户<code>223.73.89.192</code>访问次数。日志文件如下：<code>access.log</code></p>
 <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">49.89.167.91</span> - - <span class="string">[17/Dec/2020:03:43:50 +0800]</span> <span class="string">"<span class="keyword">GET</span> /wiki/detail/3/40 HTTP/1.1"</span> <span class="number">301</span> <span class="number">0</span> <span class="string">"-"</span> <span class="string">"Mozilla/5.0(Linux;Android 5.1.1;OPPO A33 Build/LMY47V;wv) AppleWebKit/537.36(KHTML,link Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36 LieBaoFast/4.51.3"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">49.89.167.91</span> - - <span class="string">[17/Dec/2020:03:44:11 +0800]</span> <span class="string">"<span class="keyword">GET</span> /wiki/detail/3/40/ HTTP/1.1"</span> <span class="number">200</span> <span class="number">8033</span> <span class="string">"-"</span> <span class="string">"Mozilla/5.0(Linux;Android 5.1.1;OPPO A33 Build/LMY47V;wv) AppleWebKit/537.36(KHTML,link Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36 LieBaoFast/4.51.3"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">203.208.60.66</span> - - <span class="string">[17/Dec/2020:03:47:58 +0800]</span> <span class="string">"<span class="keyword">GET</span> /media/uploads/2019/11/17/pic/s1.png HTTP/1.1"</span> <span class="number">200</span> <span class="number">710728</span> <span class="string">"-"</span> <span class="string">"Googlebot-Image/1.0"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /wiki/detail/3/40/ HTTP/1.1"</span> <span class="number">200</span> <span class="number">8033</span> <span class="string">"-"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/stark/plugins/font-awesome/css/font-awesome.css HTTP/1.1"</span> <span class="number">200</span> <span class="number">37414</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/stark/plugins/bootstrap/css/bootstrap.css HTTP/1.1"</span> <span class="number">200</span> <span class="number">146010</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/web/css/commons.css HTTP/1.1"</span> <span class="number">200</span> <span class="number">3674</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/mdeditor/editormd/css/editormd.preview.css HTTP/1.1"</span> <span class="number">200</span> <span class="number">60230</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/stark/js/jquery-3.3.1.min.js HTTP/1.1"</span> <span class="number">200</span> <span class="number">86927</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/stark/plugins/bootstrap/js/bootstrap.min.js HTTP/1.1"</span> <span class="number">200</span> <span class="number">37045</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:26 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/mdeditor/editormd/lib/marked.min.js HTTP/1.1"</span> <span class="number">200</span> <span class="number">19608</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:27 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/mdeditor/editormd/lib/prettify.min.js HTTP/1.1"</span> <span class="number">200</span> <span class="number">17973</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:27 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/mdeditor/editormd/fonts/fontawesome-webfont.woff2?v=4.3.0 HTTP/1.1"</span> <span class="number">200</span> <span class="number">56780</span> <span class="string">"https://pythonav.com/static/mdeditor/editormd/css/editormd.preview.css"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:27 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/mdeditor/editormd/editormd.js HTTP/1.1"</span> <span class="number">200</span> <span class="number">163262</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:28 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/mdeditor/mdeditor-preview-init.js HTTP/1.1"</span> <span class="number">200</span> <span class="number">261</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:29 +0800]</span> <span class="string">"<span class="keyword">GET</span> /static/stark/plugins/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0 HTTP/1.1"</span> <span class="number">200</span> <span class="number">77160</span> <span class="string">"https://pythonav.com/static/stark/plugins/font-awesome/css/font-awesome.css"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br><span class="line"><span class="number">223.73.89.192</span> - - <span class="string">[17/Dec/2020:03:48:29 +0800]</span> <span class="string">"<span class="keyword">GET</span> /media/uploads/2019/02/22/Gobook/_book/ssl2.png HTTP/1.1"</span> <span class="number">200</span> <span class="number">203535</span> <span class="string">"https://pythonav.com/wiki/detail/3/40/"</span> <span class="string">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"</span> <span class="string">"-"</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -759,7 +821,7 @@
 <p><strong>要求</strong>：功能包含添加、删除、修改、查询一个名片，查询所有名片，保存信息、退出系统功能。每次运行系统从文件中加载名片数据，用户选择保存信息将信息写入文件。</p>
 </li>
 </ol>
-<h3 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h3><p>通过读写文件的操作，我们可以实现数据持久化。在Python中可以通过<code>open</code>函数来获得文件对象，可以通过文件对象的<code>read</code>和<code>write</code>方法实现文件读写操作。如果要对文件或文件夹进行创建、删除等操作，可以通过<code>os</code>模块来实现，当然，<code>os</code>模块的功能还有很多，之后我们还会再介绍。学了文件相关操作之后，我们的技能库又丰富了一些。</p>
+<h1 id="七、简单的总结"><a href="#七、简单的总结" class="headerlink" title="七、简单的总结"></a>七、简单的总结</h1><p>通过读写文件的操作，我们可以实现数据持久化。在Python中可以通过<code>open</code>函数来获得文件对象，可以通过文件对象的<code>read</code>和<code>write</code>方法实现文件读写操作。如果要对文件或文件夹进行创建、删除等操作，可以通过<code>os</code>模块来实现，当然，<code>os</code>模块的功能还有很多，之后我们还会再介绍。学了文件相关操作之后，我们的技能库又丰富了一些。</p>
 
     </div>
 
@@ -770,10 +832,10 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
@@ -895,7 +957,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、打开文件"><span class="nav-text">一、打开文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、关闭文件"><span class="nav-text">二、关闭文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、读写文本文件"><span class="nav-text">三、读写文本文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、读写二进制文件"><span class="nav-text">四、读写二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、文件和文件夹操作"><span class="nav-text">五、文件和文件夹操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-文件删除"><span class="nav-text">1. 文件删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-文件重命名"><span class="nav-text">2. 文件重命名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建和删除文件夹"><span class="nav-text">3. 创建和删除文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-获取和切换目录"><span class="nav-text">4. 获取和切换目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-获取当前目录下所有文件列表"><span class="nav-text">5. 获取当前目录下所有文件列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-文件备份"><span class="nav-text">6. 文件备份</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#练习：批量文件重命名"><span class="nav-text">练习：批量文件重命名</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、巩固提升"><span class="nav-text">六、巩固提升</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的总结"><span class="nav-text">简单的总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#学习目标："><span class="nav-text">学习目标：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、打开文件"><span class="nav-text">一、打开文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、关闭文件"><span class="nav-text">二、关闭文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、读写文本文件"><span class="nav-text">三、读写文本文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、读写二进制文件"><span class="nav-text">四、读写二进制文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、文件和文件夹操作"><span class="nav-text">五、文件和文件夹操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-文件删除"><span class="nav-text">1. 文件删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-文件重命名"><span class="nav-text">2. 文件重命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-创建和删除文件夹"><span class="nav-text">3. 创建和删除文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-获取和切换目录"><span class="nav-text">4. 获取和切换目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-获取当前目录下所有文件列表"><span class="nav-text">5. 获取当前目录下所有文件列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-文件备份"><span class="nav-text">6. 文件备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-练习：批量文件重命名"><span class="nav-text">7.练习：批量文件重命名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、巩固提升"><span class="nav-text">六、巩固提升</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、简单的总结"><span class="nav-text">七、简单的总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

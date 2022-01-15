@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="tongsiying">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-11-24T11:37:35.475Z">
-<meta property="article:modified_time" content="2021-11-24T11:34:56.925Z">
+<meta property="article:modified_time" content="2022-01-15T13:59:40.793Z">
 <meta property="article:author" content="tongsiying">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -224,10 +224,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-11-24 19:37:35 / 修改时间：19:34:56" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
+              <time title="创建时间：2021-11-24 19:37:35" itemprop="dateCreated datePublished" datetime="2021-11-24T19:37:35+08:00">2021-11-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-15 21:59:40" itemprop="dateModified" datetime="2022-01-15T21:59:40+08:00">2022-01-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -265,25 +271,27 @@
       
         <p class="description"></p>
 <a id="more"></a>
-## 字典集合最佳练习
+# 一、字典集合最佳练习
 
-<h3 id="练习：统计句子词频"><a href="#练习：统计句子词频" class="headerlink" title="练习：统计句子词频"></a>练习：统计句子词频</h3><blockquote>
+<h2 id="1-练习：统计句子词频"><a href="#1-练习：统计句子词频" class="headerlink" title="1. 练习：统计句子词频"></a>1. 练习：统计句子词频</h2><blockquote>
 <p>给出一个字符串，在程序中赋初值为一个句子，例如“To improve is to change;to be perfect is to change often.”,</p>
 <p>需要：计算句子中各字符出现的频数（通过字典存储）</p>
 </blockquote>
-<h3 id="练习：世界杯小组赛"><a href="#练习：世界杯小组赛" class="headerlink" title="练习：世界杯小组赛"></a>练习：世界杯小组赛</h3><blockquote>
+<h2 id="2-练习：世界杯小组赛"><a href="#2-练习：世界杯小组赛" class="headerlink" title="2. 练习：世界杯小组赛"></a>2. 练习：世界杯小组赛</h2><blockquote>
 <p>世界杯足球赛共有32支球队，分为8个小组，每组4支球队。小组赛采取循环赛，一场比赛后，获胜方得3分，失败方得0分，<br>若为平局，双方各得1分。试编写一个程序输出小组赛比赛所有可能的结果，要求如下：<br>    1）按小组总得分从高到低排序输出；<br>    2）每个小组输出成绩的格式为：<br>总得分=第一名得分+第二名得分+第三名得分+第四名得分</p>
 </blockquote>
-<h3 id="练习：三级菜单"><a href="#练习：三级菜单" class="headerlink" title="练习：三级菜单"></a>练习：三级菜单</h3><blockquote>
+<h2 id="3-练习：三级菜单"><a href="#3-练习：三级菜单" class="headerlink" title="3. 练习：三级菜单"></a>3. 练习：三级菜单</h2><blockquote>
 <p>假设有市、区/县、地名等三级菜单，打印城市列表信息，要求实现让用户选择前往城市，然后打印当前城市指定下一级地名列表，再提示用户输入指定地名，打印该地名下对应的下一级地名，提示用户输入前往地点，最后根据用户输入地点打印目的地以及上一级及上上级的三级地点信息。</p>
 </blockquote>
 <ul>
 <li><p>假设数据如下</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">City = &#123;</span><br><span class="line">    <span class="string">'北京市'</span>:&#123;</span><br><span class="line">        <span class="string">'大兴区'</span>:[</span><br><span class="line">            <span class="string">'亦庄'</span>,<span class="string">'黄村'</span>,<span class="string">'中信新城'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'丰台区'</span>:[</span><br><span class="line">            <span class="string">'岳各庄'</span>,<span class="string">'五棵松'</span>,<span class="string">'丰台路口'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'朝阳区'</span>:[</span><br><span class="line">            <span class="string">'劲松'</span>,<span class="string">'双井'</span>,<span class="string">'国贸'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'返回'</span>:<span class="string">'返回'</span>,</span><br><span class="line">        <span class="string">'退出'</span>:<span class="string">'退出'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'上海市'</span>:&#123;</span><br><span class="line">        <span class="string">'浦东区'</span>:[</span><br><span class="line">            <span class="string">'世纪大道'</span>,<span class="string">'陆家嘴'</span>,<span class="string">'盛世年华'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'普陀区'</span>:[</span><br><span class="line">            <span class="string">'东方汽配城'</span>,<span class="string">'金沙社区'</span>,<span class="string">'东锦国际大厦'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'徐汇区'</span>:[</span><br><span class="line">            <span class="string">'上海应用技术大学'</span>,<span class="string">'上海长途客运南站'</span>,<span class="string">'上海东方体育中心'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'返回'</span>: <span class="string">'返回'</span>,</span><br><span class="line">        <span class="string">'退出'</span>: <span class="string">'退出'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'广州市'</span>:&#123;</span><br><span class="line">        <span class="string">'天河区'</span>:[</span><br><span class="line">            <span class="string">'珠江公园'</span>,<span class="string">'天河体育场'</span>,<span class="string">'广东师范大学'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'白云区'</span>:[</span><br><span class="line">            <span class="string">'广州体育馆'</span>,<span class="string">'白云文化广场'</span>,<span class="string">'广州百信广场'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'海珠区'</span>:[</span><br><span class="line">            <span class="string">'中山大学'</span>,<span class="string">'城市职业学院'</span>,<span class="string">'南方医科大学'</span>,<span class="string">'返回'</span>,<span class="string">'退出'</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="string">'返回'</span>: <span class="string">'返回'</span>,</span><br><span class="line">        <span class="string">'退出'</span>: <span class="string">'退出'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ul>
-<h3 id="练习：名片管理系统"><a href="#练习：名片管理系统" class="headerlink" title="练习：名片管理系统"></a>练习：名片管理系统</h3><blockquote>
+<h2 id="4-练习：名片管理系统"><a href="#4-练习：名片管理系统" class="headerlink" title="4. 练习：名片管理系统"></a>4. 练习：名片管理系统</h2><blockquote>
 <p>要求实现一个名片管理系统，功能包含添加、删除、修改、查询（根据姓名）一个名片、查询所有名片、退出系统6大功能。名片内容包含姓名、QQ、手机号、家庭地址。</p>
 </blockquote>
 
@@ -296,10 +304,10 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
@@ -421,7 +429,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#练习：统计句子词频"><span class="nav-text">练习：统计句子词频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习：世界杯小组赛"><span class="nav-text">练习：世界杯小组赛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习：三级菜单"><span class="nav-text">练习：三级菜单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#练习：名片管理系统"><span class="nav-text">练习：名片管理系统</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-练习：统计句子词频"><span class="nav-text">1. 练习：统计句子词频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-练习：世界杯小组赛"><span class="nav-text">2. 练习：世界杯小组赛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-练习：三级菜单"><span class="nav-text">3. 练习：三级菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-练习：名片管理系统"><span class="nav-text">4. 练习：名片管理系统</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

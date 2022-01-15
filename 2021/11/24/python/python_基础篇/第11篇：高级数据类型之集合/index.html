@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/%E9%9B%86%E5%90%88.jpg">
 <meta property="og:image" content="https://tongsiying.github.io/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/image-20201126114556403.png">
 <meta property="article:published_time" content="2021-11-24T11:37:35.467Z">
-<meta property="article:modified_time" content="2021-11-30T13:04:15.169Z">
+<meta property="article:modified_time" content="2022-01-15T13:54:18.715Z">
 <meta property="article:author" content="tongsiying">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-11-30 21:04:15" itemprop="dateModified" datetime="2021-11-30T21:04:15+08:00">2021-11-30</time>
+                <time title="修改时间：2022-01-15 21:54:18" itemprop="dateModified" datetime="2022-01-15T21:54:18+08:00">2022-01-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,28 +278,42 @@
 基础数据类型：
 
 <ul>
-<li><span style="color:gray">int，整数类型（整形）</span></li>
-<li><span style="color:gray">float，浮点类型（浮点型）</span></li>
-<li><span style="color:gray">complex,复数类型</span></li>
-<li><span style="color:gray">bool，布尔类型</span></li>
-<li><span style="color:gray">str，字符串类型</span></li>
+<li><p><span style="color:gray">int，整数类型（整形）</span></p>
+</li>
+<li><p><span style="color:gray">float，浮点类型（浮点型）</span></p>
+</li>
+<li><p><span style="color:gray">complex,复数类型</span></p>
+</li>
+<li><p><span style="color:gray">bool，布尔类型</span></p>
+</li>
+<li><p><span style="color:gray">str，字符串类型</span></p>
+</li>
 </ul>
 <p>高级数据类型</p>
 <ul>
-<li><span style="color:gray">list，列表类型</span></li>
-<li><span style="color:gray">tuple，元组类型</span></li>
-<li><strong>set，集合类型</strong></li>
-<li><span style="color:gray">dict，字典类型</span></li>
+<li><p><span style="color:gray">list，列表类型</span></p>
+</li>
+<li><p><span style="color:gray">tuple，元组类型</span></p>
+</li>
+<li><p><strong>set，集合类型</strong></p>
+</li>
+<li><p><span style="color:gray">dict，字典类型</span></p>
+</li>
 </ul>
-<p><strong>学习目标：掌握集合相关知识。</strong></p>
-<p>在学习了列表和元组之后，我们再来学习一种容器型的数据类型，它的名字叫集合（set）。说到集合这个词大家一定不会陌生，在数学课本上就有这个概念。通常我们对集合的定义是“<strong>把一定范围的、确定的、可以区别的事物当作一个整体来看待</strong>”，集合中的各个事物通常称为集合的元素。集合应该满足以下特性：</p>
+<h1 id="学习目标："><a href="#学习目标：" class="headerlink" title="学习目标："></a><strong>学习目标：</strong></h1><p><strong>掌握集合相关知识。</strong></p>
+<p>在学习了列表和元组之后，我们再来学习一种容器型的数据类型，它的名字叫集合（set）。说到集合这个词大家一定不会陌生，在数学课本上就有这个概念。通常我们对集合的定义是“<strong>把一定范围的、确定的、可以区别的事物当作一个整体来看待</strong>”，</p>
+<p>集合中的各个事物通常称为集合的元素。集合应该满足以下特性：</p>
 <ol>
 <li><strong>无序性</strong>：一个集合中，每个元素的地位都是相同的，元素之间是无序的。</li>
 <li><strong>互异性</strong>：一个集合中，任何两个元素都认为是不相同的，即每个元素只能出现一次。</li>
 <li><strong>确定性</strong>：给定一个集合，任给一个元素，该元素或者属于或者不属于该集合，二者必居其一，不允许有模棱两可的情况出现。</li>
 </ol>
-<p>Python程序中的集合跟数学上的集合是完全一致的，需要强调的是上面所说的无序性和互异性。无序性说明集合中的元素并不像列中的元素那样一个挨着一个，可以通过索引的方式实现随机访问（随机访问指的是给定一个有效的范围，随机抽取出一个数字，然后通过这个数字获取到对应的元素），所以Python中的<strong>集合肯定不能够支持索引运算</strong>。另外，集合的互异性决定了<strong>集合中不能有重复元素</strong>，这一点也是集合区别于列表的关键，说得更直白一些就是，Python中的集合类型具有去重特性。当然，Python中的集合一定是支持<code>in</code>和<code>not in</code>成员运算的，这样就可以确定一个元素是否属于集合，也就是上面所说的集合的确定性。<strong>集合的成员运算在性能上要优于列表的成员运算</strong>，这是集合的底层存储特性决定的，此处我们暂时不做讨论，先记下这个结论即可。</p>
-<h2 id="集合的定义"><a href="#集合的定义" class="headerlink" title="集合的定义"></a>集合的定义</h2><p>通过对比列表和元组，我们来看一下集合的定义：</p>
+<p>Python程序中的集合跟数学上的集合是完全一致的，需要强调的是上面所说的无序性和互异性。</p>
+<p>无序性说明集合中的元素并不像列中的元素那样一个挨着一个，可以通过索引的方式实现随机访问（随机访问指的是给定一个有效的范围，随机抽取出一个数字，然后通过这个数字获取到对应的元素），所以Python中的<strong>集合肯定不能够支持索引运算</strong>。</p>
+<p>另外，集合的互异性决定了<strong>集合中不能有重复元素</strong>，这一点也是集合区别于列表的关键，说得更直白一些就是，Python中的集合类型具有去重特性。</p>
+<p>当然，Python中的集合一定是支持<code>in</code>和<code>not in</code>成员运算的，这样就可以确定一个元素是否属于集合，也就是上面所说的集合的确定性。</p>
+<p><strong>集合的成员运算在性能上要优于列表的成员运算</strong>，这是集合的底层存储特性决定的，此处我们暂时不做讨论，先记下这个结论即可。</p>
+<h1 id="一、集合的定义"><a href="#一、集合的定义" class="headerlink" title="一、集合的定义"></a>一、集合的定义</h1><p>通过对比列表和元组，我们来看一下集合的定义：</p>
 <ul>
 <li><p>列表（list），是一个<strong>有序</strong>且<strong>可变</strong>的容器，在里面可以存放<strong>多个不同类型</strong>、<strong>数据元素可重复</strong>的元素。</p>
 </li>
@@ -322,14 +336,14 @@
 <blockquote>
 <p>就是想要维护一大堆不重复的数据时，就可以用它。比如：做爬虫去网上找图片的链接，为了避免链接重复，可以选择用集合去存储链接地址。</p>
 </blockquote>
-<h2 id="集合的创建"><a href="#集合的创建" class="headerlink" title="集合的创建"></a>集合的创建</h2><p>在Python中，创建集合可以使用<code>{}</code>字面量语法，<code>{}</code>中需要至少有一个元素，因为没有元素的<code>{}</code>并不是空集合而是一个空字典，我们下一节就会大家介绍字典的知识。当然，也可以使用内置函数<code>set</code>来创建一个集合，准确的说<code>set</code>并不是一个函数，而是创建集合对象的构造器，这个知识点我们很快也会讲到，现在不理解跳过它就可以了。要创建空集合可以使用<code>set()</code>；也可以将其他序列转换成集合，例如：<code>set(&#39;hello&#39;)</code>会得到一个包含了4个字符的集合（重复的<code>l</code>会被去掉）。除了这两种方式，我们还可以使用生成式语法来创建集合，就像我们之前用生成式创建列表那样。要知道集合中有多少个元素，还是使用内置函数<code>len</code>；使用<code>for</code>循环可以实现对集合元素的遍历。</p>
+<h1 id="二、集合的创建"><a href="#二、集合的创建" class="headerlink" title="二、集合的创建"></a>二、集合的创建</h1><p>在Python中，创建集合可以使用<code>{}</code>字面量语法，<code>{}</code>中需要至少有一个元素，因为没有元素的<code>{}</code>并不是空集合而是一个空字典，我们下一节就会大家介绍字典的知识。当然，也可以使用内置函数<code>set</code>来创建一个集合，准确的说<code>set</code>并不是一个函数，而是创建集合对象的构造器，这个知识点我们很快也会讲到，现在不理解跳过它就可以了。要创建空集合可以使用<code>set()</code>；也可以将其他序列转换成集合，例如：<code>set(&#39;hello&#39;)</code>会得到一个包含了4个字符的集合（重复的<code>l</code>会被去掉）。除了这两种方式，我们还可以使用生成式语法来创建集合，就像我们之前用生成式创建列表那样。要知道集合中有多少个元素，还是使用内置函数<code>len</code>；使用<code>for</code>循环可以实现对集合元素的遍历。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建集合的字面量语法(重复元素不会出现在集合中)</span></span><br><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>&#125;</span><br><span class="line">print(set1)         <span class="comment"># &#123;1, 2, 3&#125;</span></span><br><span class="line">print(len(set1))    <span class="comment"># 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建集合的构造器语法(后面会讲到什么是构造器)</span></span><br><span class="line">set2 = set(<span class="string">'hello'</span>)</span><br><span class="line">print(set2)         <span class="comment"># &#123;'h', 'l', 'o', 'e'&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将列表转换成集合(可以去掉列表中的重复元素)</span></span><br><span class="line">set3 = set([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">print(set3)         <span class="comment"># &#123;1, 2, 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建集合的生成式语法(将列表生成式的[]换成&#123;&#125;)</span></span><br><span class="line">set4 = &#123;num <span class="keyword">for</span> num <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">20</span>) <span class="keyword">if</span> num % <span class="number">3</span> == <span class="number">0</span> <span class="keyword">or</span> num % <span class="number">5</span> == <span class="number">0</span>&#125;</span><br><span class="line">print(set4)         <span class="comment"># &#123;3, 5, 6, 9, 10, 12, 15, 18&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 集合元素的循环遍历</span></span><br><span class="line"><span class="keyword">for</span> elem <span class="keyword">in</span> set4:</span><br><span class="line">    print(elem)</span><br></pre></td></tr></table></figure>
 
 <p><strong>注意</strong>：定义空集合时，只能使用<code>v = set()</code>，不能使用 <code>v={}</code>（这样是定义一个空字典）。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">v1 = []</span><br><span class="line">v11 = list()</span><br><span class="line"></span><br><span class="line">v2 = ()</span><br><span class="line">v22 = tuple()</span><br><span class="line"></span><br><span class="line">v3 = set()</span><br><span class="line"></span><br><span class="line">v4 = &#123;&#125; <span class="comment"># 空字典</span></span><br><span class="line">v44 = dict()</span><br></pre></td></tr></table></figure>
 
 <p>需要提醒大家，集合中的元素必须是<code>hashable</code>类型。所谓<code>hashable</code>类型指的是能够计算出哈希码的数据类型，你可以暂时将哈希码理解为和变量对应的唯一的ID值。通常不可变类型都是<code>hashable</code>类型，如整数、浮点、字符串、元组等，而可变类型都不是<code>hashable</code>类型，因为可变类型无法确定唯一的ID值，所以也就不能放到集合中。集合本身也是可变类型，所以集合不能够作为集合中的元素，这一点请大家一定要注意。</p>
-<h2 id="集合的方法"><a href="#集合的方法" class="headerlink" title="集合的方法"></a>集合的方法</h2><p>集合常用的方法如下：</p>
+<h1 id="三、集合的方法"><a href="#三、集合的方法" class="headerlink" title="三、集合的方法"></a>三、集合的方法</h1><p>集合常用的方法如下：</p>
 <ul>
 <li>添加<ul>
 <li>add(value)，在集合中添加一个元素</li>
@@ -374,7 +388,9 @@
 <p>如果要判断两个集合有没有相同的元素可以使用<code>isdisjoint</code>方法，没有相同元素返回<code>True</code>，否则返回<code>False</code>，代码如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="string">'Java'</span>, <span class="string">'Python'</span>, <span class="string">'Go'</span>, <span class="string">'Kotlin'</span>&#125;</span><br><span class="line">set2 = &#123;<span class="string">'Kotlin'</span>, <span class="string">'Swift'</span>, <span class="string">'Java'</span>, <span class="string">'Objective-C'</span>, <span class="string">'Dart'</span>&#125;</span><br><span class="line">set3 = &#123;<span class="string">'HTML'</span>, <span class="string">'CSS'</span>, <span class="string">'JavaScript'</span>&#125;</span><br><span class="line">print(set1.isdisjoint(set2))    <span class="comment"># False</span></span><br><span class="line">print(set1.isdisjoint(set3))    <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="集合的运算"><a href="#集合的运算" class="headerlink" title="集合的运算"></a>集合的运算</h2><p>Python为集合类型提供了非常丰富的运算符，主要包括：成员运算、交集运算、并集运算、差集运算、比较运算（相等性、子集、超集）等。常见运算总结如下：</p>
+
+
+<h1 id="四、集合的运算"><a href="#四、集合的运算" class="headerlink" title="四、集合的运算"></a>四、集合的运算</h1><p>Python为集合类型提供了非常丰富的运算符，主要包括：成员运算、交集运算、并集运算、差集运算、比较运算（相等性、子集、超集）等。常见运算总结如下：</p>
 <ul>
 <li>成员运算<ul>
 <li><code>int</code>/<code>not in</code>：检查元素是否在集合中</li>
@@ -396,10 +412,12 @@
 </ul>
 </li>
 </ul>
-<h3 id="成员运算"><a href="#成员运算" class="headerlink" title="成员运算"></a>成员运算</h3><p>可以通过成员运算<code>in</code>和<code>not in</code>检查元素是否在集合中，代码如下所示。</p>
+<h2 id="1-成员运算"><a href="#1-成员运算" class="headerlink" title="1.成员运算"></a>1.成员运算</h2><p>可以通过成员运算<code>in</code>和<code>not in</code>检查元素是否在集合中，代码如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>&#125;</span><br><span class="line">print(<span class="number">10</span> <span class="keyword">in</span> set1)        <span class="comment"># False </span></span><br><span class="line">print(<span class="number">15</span> <span class="keyword">in</span> set1)        <span class="comment"># True</span></span><br><span class="line">set2 = &#123;<span class="string">'Python'</span>, <span class="string">'Java'</span>, <span class="string">'Go'</span>, <span class="string">'Swift'</span>&#125;</span><br><span class="line">print(<span class="string">'Ruby'</span> <span class="keyword">in</span> set2)    <span class="comment"># False</span></span><br><span class="line">print(<span class="string">'Java'</span> <span class="keyword">in</span> set2)    <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="交并差运算"><a href="#交并差运算" class="headerlink" title="交并差运算"></a>交并差运算</h3><p>Python中的集合跟数学上的集合一样，可以进行交集、并集、差集等运算，而且可以通过运算符和方法调用两种方式来进行操作，代码如下所示。</p>
+
+
+<h2 id="2-交并差运算"><a href="#2-交并差运算" class="headerlink" title="2. 交并差运算"></a>2. 交并差运算</h2><p>Python中的集合跟数学上的集合一样，可以进行交集、并集、差集等运算，而且可以通过运算符和方法调用两种方式来进行操作，代码如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交集</span></span><br><span class="line"><span class="comment"># 方法一: 使用 &amp; 运算符</span></span><br><span class="line">print(set1 &amp; set2)                <span class="comment"># &#123;2, 4, 6&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用intersection方法</span></span><br><span class="line">print(set1.intersection(set2))    <span class="comment"># &#123;2, 4, 6&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并集</span></span><br><span class="line"><span class="comment"># 方法一: 使用 | 运算符</span></span><br><span class="line">print(set1 | set2)         <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7, 8, 10&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用union方法</span></span><br><span class="line">print(set1.union(set2))    <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7, 8, 10&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 差集</span></span><br><span class="line"><span class="comment"># 方法一: 使用 - 运算符</span></span><br><span class="line">print(set1 - set2)              <span class="comment"># &#123;1, 3, 5, 7&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用difference方法</span></span><br><span class="line">print(set1.difference(set2))    <span class="comment"># &#123;1, 3, 5, 7&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对称差</span></span><br><span class="line"><span class="comment"># 方法一: 使用 ^ 运算符</span></span><br><span class="line">print(set1 ^ set2)                        <span class="comment"># &#123;1, 3, 5, 7, 8, 10&#125;</span></span><br><span class="line"><span class="comment"># 方法二: 使用symmetric_difference方法</span></span><br><span class="line">print(set1.symmetric_difference(set2))    <span class="comment"># &#123;1, 3, 5, 7, 8, 10&#125;</span></span><br><span class="line"><span class="comment"># 方法三: 对称差相当于两个集合的并集减去交集</span></span><br><span class="line">print((set1 | set2) - (set1 &amp; set2))      <span class="comment"># &#123;1, 3, 5, 7, 8, 10&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>通过上面的代码可以看出，对两个集合求交集，<code>&amp;</code>运算符和<code>intersection</code>方法的作用是完全相同的，使用运算符的方式更直观而且代码也比较简短。相信大家对交集、并集、差集、对称差这几个概念是比较清楚的，如果没什么印象了可以看看下面的图。</p>
@@ -407,13 +425,19 @@
 <p>集合的交集、并集、差集运算还可以跟赋值运算一起构成复合运算，如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;</span><br><span class="line"><span class="comment"># 将set1和set2求并集再赋值给set1</span></span><br><span class="line"><span class="comment"># 也可以通过set1.update(set2)来实现</span></span><br><span class="line">set1 |= set2</span><br><span class="line">print(set1)    <span class="comment"># &#123;1, 2, 3, 4, 5, 6, 7&#125;</span></span><br><span class="line">set3 = &#123;<span class="number">3</span>, <span class="number">6</span>, <span class="number">9</span>&#125;</span><br><span class="line"><span class="comment"># 将set1和set3求交集再赋值给set1</span></span><br><span class="line"><span class="comment"># 也可以通过set1.intersection_update(set3)来实现</span></span><br><span class="line">set1 &amp;= set3</span><br><span class="line">print(set1)    <span class="comment"># &#123;3, 6&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="比较运算"><a href="#比较运算" class="headerlink" title="比较运算"></a>比较运算</h3><p>两个集合可以用<code>==</code>和<code>!=</code>进行相等性判断，如果两个集合中的元素完全相同，那么<code>==</code>比较的结果就是<code>True</code>，否则就是<code>False</code>。如果集合A的任意一个元素都是集合B的元素，那么集合A称为集合B的子集，即对于∀a∈A，均有a∈B，则A⊆B。A是B的子集，反过来也可以称B是A的超集。如果A是B的子集且A不等于B，那么A就是B的真子集。Python为集合类型提供了判断子集和超集的运算符，其实就是我们非常熟悉的<code>&lt;</code>和<code>&gt;</code>运算符，代码如下所示。</p>
+
+
+<h2 id="3-比较运算"><a href="#3-比较运算" class="headerlink" title="3. 比较运算"></a>3. 比较运算</h2><p>两个集合可以用<code>==</code>和<code>!=</code>进行相等性判断，如果两个集合中的元素完全相同，那么<code>==</code>比较的结果就是<code>True</code>，否则就是<code>False</code>。如果集合A的任意一个元素都是集合B的元素，那么集合A称为集合B的子集，即对于∀a∈A，均有a∈B，则A⊆B。A是B的子集，反过来也可以称B是A的超集。如果A是B的子集且A不等于B，那么A就是B的真子集。Python为集合类型提供了判断子集和超集的运算符，其实就是我们非常熟悉的<code>&lt;</code>和<code>&gt;</code>运算符，代码如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">set1 = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&#125;</span><br><span class="line">set2 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">set3 = set2</span><br><span class="line"><span class="comment"># &lt;运算符表示真子集，&lt;=运算符表示子集</span></span><br><span class="line">print(set1 &lt; set2, set1 &lt;= set2)    <span class="comment"># True True</span></span><br><span class="line">print(set2 &lt; set3, set2 &lt;= set3)    <span class="comment"># False True</span></span><br><span class="line"><span class="comment"># 通过issubset方法也能进行子集判断</span></span><br><span class="line">print(set1.issubset(set2))      <span class="comment"># True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 反过来可以用issuperset或&gt;运算符进行超集判断</span></span><br><span class="line">print(set2.issuperset(set1))    <span class="comment"># True</span></span><br><span class="line">print(set2 &gt; set1)              <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="不可变集合"><a href="#不可变集合" class="headerlink" title="不可变集合"></a>不可变集合</h2><p>Python中还有一种不可变类型的集合，名字叫<code>frozenset</code>。<code>set</code>跟<code>frozenset</code>的区别就如同<code>list</code>跟<code>tuple</code>的区别，<code>frozenset</code>由于是不可变类型，能够计算出哈希码，因此它可以作为<code>set</code>中的元素。除了不能添加和删除元素，<code>frozenset</code>在其他方面跟<code>set</code>基本是一样的，下面的代码简单的展示了<code>frozenset</code>的用法。</p>
+
+
+<h1 id="五、不可变集合"><a href="#五、不可变集合" class="headerlink" title="五、不可变集合"></a>五、不可变集合</h1><p>Python中还有一种不可变类型的集合，名字叫<code>frozenset</code>。<code>set</code>跟<code>frozenset</code>的区别就如同<code>list</code>跟<code>tuple</code>的区别，<code>frozenset</code>由于是不可变类型，能够计算出哈希码，因此它可以作为<code>set</code>中的元素。除了不能添加和删除元素，<code>frozenset</code>在其他方面跟<code>set</code>基本是一样的，下面的代码简单的展示了<code>frozenset</code>的用法。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set1 = frozenset(&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>&#125;)</span><br><span class="line">set2 = frozenset(range(<span class="number">1</span>, <span class="number">6</span>))</span><br><span class="line">print(set1 &amp; set2)    <span class="comment"># frozenset(&#123;1, 3, 5&#125;)</span></span><br><span class="line">print(set1 | set2)    <span class="comment"># frozenset(&#123;1, 2, 3, 4, 5, 7&#125;)</span></span><br><span class="line">print(set1 - set2)    <span class="comment"># frozenset(&#123;7&#125;)</span></span><br><span class="line">print(set1 &lt; set2)    <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="集合类型转换"><a href="#集合类型转换" class="headerlink" title="集合类型转换"></a>集合类型转换</h2><p>其他类型如果想要转换为集合类型，可以通过set进行转换，并且如果数据有重复自动剔除。</p>
+
+
+<h1 id="六、集合类型转换"><a href="#六、集合类型转换" class="headerlink" title="六、集合类型转换"></a>六、集合类型转换</h1><p>其他类型如果想要转换为集合类型，可以通过set进行转换，并且如果数据有重复自动剔除。</p>
 <p>提示：int/list/tuple/dict都可以转换为集合。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="string">"张亚飞"</span></span><br><span class="line">v2 = set(v1)</span><br><span class="line">print(v2) <span class="comment"># &#123;"张","亚","飞"&#125;</span></span><br></pre></td></tr></table></figure>
 
@@ -424,7 +448,9 @@
 <p>提示：这其实也是去重的一个手段。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">3</span>,<span class="number">99</span>&#125;</span><br><span class="line">v1 = list(data) <span class="comment"># [11,22,33,3,99]</span></span><br><span class="line">v2 = tuple(data) <span class="comment"># (11,22,33,3,99)</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="集合生成式"><a href="#集合生成式" class="headerlink" title="集合生成式"></a>集合生成式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = &#123;v <span class="keyword">for</span> v <span class="keyword">in</span> iterable&#125; 其中iterable是一个可迭代的对象，比如list。</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="七、集合生成式"><a href="#七、集合生成式" class="headerlink" title="七、集合生成式"></a>七、集合生成式</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = &#123;v <span class="keyword">for</span> v <span class="keyword">in</span> iterable&#125; 其中iterable是一个可迭代的对象，比如list。</span><br></pre></td></tr></table></figure>
 
 <p>示例1：求余数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for in 循环实现</span></span><br><span class="line">l1 = [<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">20</span>]</span><br><span class="line">s = set()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> li:</span><br><span class="line">    s.add(l1 % <span class="number">3</span>)</span><br><span class="line">print(s) <span class="comment"># &#123;0, 1, 2&#125;</span></span><br><span class="line"><span class="comment"># 集合生成式</span></span><br><span class="line">s = &#123; i % <span class="number">3</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>)&#125;</span><br><span class="line">print(s) <span class="comment">#  &#123;0, 1， 2&#125;</span></span><br></pre></td></tr></table></figure>
@@ -435,8 +461,10 @@
 <p>示例3：嵌套循环</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># for in 循环</span></span><br><span class="line">S = set()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>):</span><br><span class="line">        S.add(( i * j))</span><br><span class="line">print(S)  <span class="comment"># &#123;1, 2, 3, 4, 6, 9&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 集合生成式</span></span><br><span class="line">S = &#123; i*j <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>) <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">4</span>)&#125;</span><br><span class="line">print(s)  <span class="comment"># &#123;1, 2, 3, 4, 6, 9&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="集合的存储原理"><a href="#集合的存储原理" class="headerlink" title="集合的存储原理"></a>集合的存储原理</h2><p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/%E9%9B%86%E5%90%88.jpg" alt></p>
-<h3 id="元素必须可哈希"><a href="#元素必须可哈希" class="headerlink" title="元素必须可哈希"></a>元素必须可哈希</h3><p>因存储原理，集合的元素必须是可哈希的值，即：内部通过通过哈希函数把值转换成一个数字。</p>
+
+
+<h1 id="八、集合的存储原理"><a href="#八、集合的存储原理" class="headerlink" title="八、集合的存储原理"></a>八、集合的存储原理</h1><p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/%E9%9B%86%E5%90%88.jpg" alt></p>
+<h2 id="1-元素必须可哈希"><a href="#1-元素必须可哈希" class="headerlink" title="1. 元素必须可哈希"></a>1. 元素必须可哈希</h2><p>因存储原理，集合的元素必须是可哈希的值，即：内部通过通过哈希函数把值转换成一个数字。</p>
 <p><img src="/2021/11/24/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC11%E7%AF%87%EF%BC%9A%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%9B%86%E5%90%88/image-20201126114556403.png" alt></p>
 <p>目前可哈希的数据类型：int、bool、str、tuple，而list、set是不可哈希的。</p>
 <p>总结：集合的元素只能是 int、bool、str、tuple 。</p>
@@ -447,9 +475,11 @@
 <li><p>转换失败</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,[<span class="string">"Michael"</span>,<span class="string">"eric"</span>],<span class="number">33</span>]</span><br><span class="line">v2 = set(v1) <span class="comment"># 报错 </span></span><br><span class="line">print(v2)</span><br></pre></td></tr></table></figure>
 
+
+
 </li>
 </ul>
-<h3 id="查找速度特别快"><a href="#查找速度特别快" class="headerlink" title="查找速度特别快"></a>查找速度特别快</h3><p>因存储原理特殊，集合的查找效率非常高（数据量大了才明显）。</p>
+<h2 id="2-查找速度特别快"><a href="#2-查找速度特别快" class="headerlink" title="2. 查找速度特别快"></a>2. 查找速度特别快</h2><p>因存储原理特殊，集合的查找效率非常高（数据量大了才明显）。</p>
 <ul>
 <li><p>低</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列表存储</span></span><br><span class="line">user_list = [<span class="string">"张亚飞"</span>,<span class="string">"Michael"</span>,<span class="string">"刘翔"</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="string">"Michael"</span> <span class="keyword">in</span> user_list:</span><br><span class="line">    print(<span class="string">"在"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不在"</span>)</span><br><span class="line"><span class="comment"># 元组存储</span></span><br><span class="line">user_tuple = (<span class="string">"张亚飞"</span>,<span class="string">"Michael"</span>,<span class="string">"刘翔"</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="string">"Michael"</span> <span class="keyword">in</span> user_tuple:</span><br><span class="line">    print(<span class="string">"在"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不在"</span>)</span><br></pre></td></tr></table></figure>
@@ -458,9 +488,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">user_set = &#123;<span class="string">"张亚飞"</span>,<span class="string">"Michael"</span>,<span class="string">"刘翔"</span>&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="string">"Michael"</span> <span class="keyword">in</span> user_set:</span><br><span class="line">    print(<span class="string">"在"</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">"不在"</span>)</span><br></pre></td></tr></table></figure>
 
 
+
 </li>
 </ul>
-<h3 id="对比和嵌套"><a href="#对比和嵌套" class="headerlink" title="对比和嵌套"></a>对比和嵌套</h3><table>
+<h2 id="3-对比和嵌套"><a href="#3-对比和嵌套" class="headerlink" title="3. 对比和嵌套"></a>3. 对比和嵌套</h2><table>
 <thead>
 <tr>
 <th>类型</th>
@@ -505,7 +536,9 @@
 <p>注意：由于True和False本质上存储的是 1 和 0 ，而集合又不允许重复，所以在整数 0、1和False、True出现在集合中会有如下现象：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">v1 = &#123;<span class="literal">True</span>, <span class="number">1</span>&#125;</span><br><span class="line">print(v1)  <span class="comment"># &#123;True&#125;</span></span><br><span class="line"></span><br><span class="line">v2 = &#123;<span class="number">1</span>, <span class="literal">True</span>&#125;</span><br><span class="line">print(v2)  <span class="comment"># &#123;1&#125;</span></span><br><span class="line"></span><br><span class="line">v3 = &#123;<span class="number">0</span>, <span class="literal">False</span>&#125;</span><br><span class="line">print(v3)  <span class="comment"># &#123;0&#125;</span></span><br><span class="line"></span><br><span class="line">v4 = &#123;<span class="literal">False</span>, <span class="number">0</span>&#125;</span><br><span class="line">print(v4)  <span class="comment"># &#123;False&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="简单的总结"><a href="#简单的总结" class="headerlink" title="简单的总结"></a>简单的总结</h2><p>Python中的集合底层使用了<strong>哈希存储</strong>的方式，使得其具有查找速度快的优势，且其数据元素不可重复，经常应用在需要大量查找和去重的场景下。现阶段大家只需要知道以下几个知识点：</p>
+
+
+<h1 id="九、简单的总结"><a href="#九、简单的总结" class="headerlink" title="九、简单的总结"></a>九、简单的总结</h1><p>Python中的集合底层使用了<strong>哈希存储</strong>的方式，使得其具有查找速度快的优势，且其数据元素不可重复，经常应用在需要大量查找和去重的场景下。现阶段大家只需要知道以下几个知识点：</p>
 <ol>
 <li>集合，是 无序、不重复、元素必须可哈希、可变的一个容器（子孙元素都必须是可哈希）。</li>
 <li>集合的查找速度比较快（底层是基于哈希进行存储）</li>
@@ -523,10 +556,10 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
@@ -648,7 +681,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的定义"><span class="nav-text">集合的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的创建"><span class="nav-text">集合的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的方法"><span class="nav-text">集合的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的运算"><span class="nav-text">集合的运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#成员运算"><span class="nav-text">成员运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交并差运算"><span class="nav-text">交并差运算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#比较运算"><span class="nav-text">比较运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可变集合"><span class="nav-text">不可变集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合类型转换"><span class="nav-text">集合类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合生成式"><span class="nav-text">集合生成式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合的存储原理"><span class="nav-text">集合的存储原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#元素必须可哈希"><span class="nav-text">元素必须可哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找速度特别快"><span class="nav-text">查找速度特别快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对比和嵌套"><span class="nav-text">对比和嵌套</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的总结"><span class="nav-text">简单的总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#学习目标："><span class="nav-text">学习目标：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、集合的定义"><span class="nav-text">一、集合的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、集合的创建"><span class="nav-text">二、集合的创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、集合的方法"><span class="nav-text">三、集合的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、集合的运算"><span class="nav-text">四、集合的运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-成员运算"><span class="nav-text">1.成员运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-交并差运算"><span class="nav-text">2. 交并差运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-比较运算"><span class="nav-text">3. 比较运算</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、不可变集合"><span class="nav-text">五、不可变集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、集合类型转换"><span class="nav-text">六、集合类型转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、集合生成式"><span class="nav-text">七、集合生成式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、集合的存储原理"><span class="nav-text">八、集合的存储原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-元素必须可哈希"><span class="nav-text">1. 元素必须可哈希</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-查找速度特别快"><span class="nav-text">2. 查找速度特别快</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-对比和嵌套"><span class="nav-text">3. 对比和嵌套</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#九、简单的总结"><span class="nav-text">九、简单的总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
