@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="第41篇：异步请求之Ajax">
+<meta property="og:url" content="https://tongsiying.github.io/2022/01/20/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC41%E7%AF%87%EF%BC%9A%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E4%B9%8BAjax/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-20T13:26:36.000Z">
+<meta property="article:modified_time" content="2022-01-20T13:26:46.412Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/01/20/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC41%E7%AF%87%EF%BC%9A%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E4%B9%8BAjax/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>第41篇：异步请求之Ajax | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/01/20/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC41%E7%AF%87%EF%BC%9A%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E4%B9%8BAjax/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第41篇：异步请求之Ajax
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-01-20 21:26:36 / 修改时间：21:26:46" itemprop="dateCreated datePublished" datetime="2022-01-20T21:26:36+08:00">2022-01-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a> 
+
+<h1 id="一、初识ajax"><a href="#一、初识ajax" class="headerlink" title="一、初识ajax"></a>一、初识ajax</h1><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>下载引入jQuery&lt;br&gt;　　&lt;script src=<span class="string">"https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"</span>&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>$.ajax(&#123;</span><br><span class="line">        url:<span class="string">'/../'</span>,</span><br><span class="line">        <span class="built_in">type</span>:<span class="string">'GET'</span>,</span><br><span class="line">        data:</span><br><span class="line">            <span class="number">1.</span>value不能字典 &#123;<span class="string">'k1'</span>:<span class="string">'v1'</span>,<span class="string">'k2'</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,],<span class="string">'k3'</span>:JOSN.stringify(&#123;&#125;)&#125;</span><br><span class="line">            <span class="number">2.</span>$(<span class="string">''</span>).serialize()</span><br><span class="line">        dataType:<span class="string">'JSON'</span>,#text,html,xml</span><br><span class="line">        traditional:<span class="literal">true</span>,</span><br><span class="line">        success:<span class="function"><span class="keyword">function</span><span class="params">(arg)</span></span>&#123;</span><br><span class="line">            //<span class="built_in">arg</span>是对象</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="built_in">error</span>:<span class="function"><span class="keyword">function</span><span class="params">(result)</span></span>&#123;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>jquery中的ajax方法参数的用法和他的含义：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>url: </span><br><span class="line">　　要求为<span class="built_in">String</span>类型的参数，（默认为当前页地址）发送请求的地址。</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span><span class="keyword">type</span>: </span><br><span class="line">　　要求为<span class="built_in">String</span>类型的参数，请求方式（post或<span class="keyword">get</span>）默认为<span class="keyword">get</span>。注意其他http请求方法，例如put和<span class="keyword">delete</span>也可以使用，但仅部分浏览器支持。</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>timeout: </span><br><span class="line">　　要求为<span class="built_in">Number</span>类型的参数，设置请求超时时间（毫秒）。此设置将覆盖$.ajaxSetup()方法的全局设置。</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span><span class="keyword">async</span>: </span><br><span class="line">　　要求为<span class="built_in">Boolean</span>类型的参数，默认设置为<span class="literal">true</span>，所有请求均为异步请求。如果需要发送同步请求，请将此选项设置为<span class="literal">false</span>。注意，同步请求将锁住浏览器，用户其他操作必须等待请求完成才可以执行。</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span>cache: </span><br><span class="line">　　要求为<span class="built_in">Boolean</span>类型的参数，默认为<span class="literal">true</span>（当dataType为script时，默认为<span class="literal">false</span>），设置为<span class="literal">false</span>将不会从浏览器缓存中加载请求信息。</span><br><span class="line"></span><br><span class="line"><span class="number">6.</span>data: </span><br><span class="line">　　要求为<span class="built_in">Object</span>或<span class="built_in">String</span>类型的参数，发送到服务器的数据。如果已经不是字符串，将自动转换为字符串格式。<span class="keyword">get</span>请求中将附加在url后。防止这种自动转换，可以查看　　processData（防止自动转换）选项。对象必须为key/value格式，例如&#123;foo1:<span class="string">"bar1"</span>,foo2:<span class="string">"bar2"</span>&#125;转换为&amp;foo1=bar1&amp;foo2=bar2。如果是数组，JQuery将自动为不同值对应同一个名称。例如&#123;foo:[<span class="string">"bar1"</span>,<span class="string">"bar2"</span>]&#125;转换为&amp;foo=bar1&amp;foo=bar2。</span><br><span class="line"></span><br><span class="line"><span class="number">7.</span>dataType: </span><br><span class="line">　　要求为<span class="built_in">String</span>类型的参数，预期服务器返回的数据类型。如果不指定，JQuery将自动根据http包mime信息返回responseXML或responseText，并作为回调函数参数传递。可用的类型如下：</span><br><span class="line">　　xml：返回XML文档，可用JQuery处理。</span><br><span class="line">　　html：返回纯文本HTML信息；包含的script标签会在插入DOM时执行。</span><br><span class="line">　　script：返回纯文本JavaScript代码。不会自动缓存结果。除非设置了cache参数。注意在远程请求时（不在同一个域下），所有post请求都将转为<span class="keyword">get</span>请求。</span><br><span class="line">　　json：返回<span class="built_in">JSON</span>数据。</span><br><span class="line">　　jsonp：JSONP格式。使用SONP形式调用函数时，例如myurl?callback=?，JQuery将自动替换后一个“?”为正确的函数名，以执行回调函数。</span><br><span class="line">　　text：返回纯文本字符串。</span><br><span class="line"></span><br><span class="line"><span class="number">8.</span>beforeSend：</span><br><span class="line">　　这个参数主要是为了在向服务器发送请求前，执行一些操作。要求为<span class="built_in">Function</span>类型的参数，发送请求前可以修改XMLHttpRequest对象的函数，例如添加自定义HTTP头。在beforeSend中如果返回<span class="literal">false</span>可以取消本次ajax请求。XMLHttpRequest对象是惟一的参数。</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">XMLHttpRequest</span>)</span>&#123;</span><br><span class="line">               <span class="keyword">this</span>;   <span class="comment">//调用本次ajax请求时传递的options参数</span></span><br><span class="line">            &#125;</span><br><span class="line"><span class="number">9.</span>complete：</span><br><span class="line">　　要求为<span class="built_in">Function</span>类型的参数，请求完成后调用的回调函数（请求成功或失败时均调用）。参数：XMLHttpRequest对象和一个描述成功请求类型的字符串。</span><br><span class="line">          <span class="function"><span class="keyword">function</span>(<span class="params">XMLHttpRequest, textStatus</span>)</span>&#123;</span><br><span class="line">             <span class="keyword">this</span>;    <span class="comment">//调用本次ajax请求时传递的options参数</span></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">10.</span>success：</span><br><span class="line">　　要求为<span class="built_in">Function</span>类型的参数，请求成功后调用的回调函数，有两个参数。</span><br><span class="line">         (<span class="number">1</span>)由服务器返回，并根据dataType参数进行处理后的数据。</span><br><span class="line">         (<span class="number">2</span>)描述状态的字符串。</span><br><span class="line">         <span class="function"><span class="keyword">function</span>(<span class="params">data, textStatus</span>)</span>&#123;</span><br><span class="line">            <span class="comment">//data可能是xmlDoc、jsonObj、html、text等等</span></span><br><span class="line">            <span class="keyword">this</span>;  <span class="comment">//调用本次ajax请求时传递的options参数</span></span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">11.</span>error:</span><br><span class="line">要求为<span class="built_in">Function</span>类型的参数，请求失败时被调用的函数。该函数有<span class="number">3</span>个参数，即XMLHttpRequest对象、错误信息、捕获的错误对象(可选)。ajax事件函数如下：</span><br><span class="line">       <span class="function"><span class="keyword">function</span>(<span class="params">XMLHttpRequest, textStatus, errorThrown</span>)</span>&#123;</span><br><span class="line">          <span class="comment">//通常情况下textStatus和errorThrown只有其中一个包含信息</span></span><br><span class="line">          <span class="keyword">this</span>;   <span class="comment">//调用本次ajax请求时传递的options参数</span></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">12.</span>contentType：</span><br><span class="line">要求为<span class="built_in">String</span>类型的参数，当发送信息至服务器时，内容编码类型默认为<span class="string">"application/x-www-form-urlencoded"</span>。该默认值适合大多数应用场合。</span><br><span class="line"></span><br><span class="line"><span class="number">13.</span>dataFilter：</span><br><span class="line">要求为<span class="built_in">Function</span>类型的参数，给Ajax返回的原始数据进行预处理的函数。提供data和<span class="keyword">type</span>两个参数。data是Ajax返回的原始数据，<span class="keyword">type</span>是调用jQuery.ajax时提供的dataType参数。函数返回的值将由jQuery进一步处理。</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">data, <span class="keyword">type</span></span>)</span>&#123;</span><br><span class="line">                <span class="comment">//返回处理后的数据</span></span><br><span class="line">                <span class="keyword">return</span> data;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">14.</span>dataFilter：</span><br><span class="line">要求为<span class="built_in">Function</span>类型的参数，给Ajax返回的原始数据进行预处理的函数。提供data和<span class="keyword">type</span>两个参数。data是Ajax返回的原始数据，<span class="keyword">type</span>是调用jQuery.ajax时提供的dataType参数。函数返回的值将由jQuery进一步处理。</span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">data, <span class="keyword">type</span></span>)</span>&#123;</span><br><span class="line">                <span class="comment">//返回处理后的数据</span></span><br><span class="line">                <span class="keyword">return</span> data;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">15.</span>global：</span><br><span class="line">要求为<span class="built_in">Boolean</span>类型的参数，默认为<span class="literal">true</span>。表示是否触发全局ajax事件。设置为<span class="literal">false</span>将不会触发全局ajax事件，ajaxStart或ajaxStop可用于控制各种ajax事件。</span><br><span class="line"></span><br><span class="line"><span class="number">16.</span>ifModified：</span><br><span class="line">要求为<span class="built_in">Boolean</span>类型的参数，默认为<span class="literal">false</span>。仅在服务器数据改变时获取新数据。服务器数据改变判断的依据是Last-Modified头信息。默认值是<span class="literal">false</span>，即忽略头信息。</span><br><span class="line"></span><br><span class="line"><span class="number">17.</span>jsonp：</span><br><span class="line">要求为<span class="built_in">String</span>类型的参数，在一个jsonp请求中重写回调函数的名字。该值用来替代在<span class="string">"callback=?"</span>这种GET或POST请求中URL参数里的<span class="string">"callback"</span>部分，例如&#123;jsonp:<span class="string">'onJsonPLoad'</span>&#125;会导致将<span class="string">"onJsonPLoad=?"</span>传给服务器。</span><br><span class="line"></span><br><span class="line"><span class="number">18.</span>username：</span><br><span class="line">要求为<span class="built_in">String</span>类型的参数，用于响应HTTP访问认证请求的用户名。</span><br><span class="line"></span><br><span class="line"><span class="number">19.</span>password：</span><br><span class="line">要求为<span class="built_in">String</span>类型的参数，用于响应HTTP访问认证请求的密码。</span><br><span class="line"></span><br><span class="line"><span class="number">20.</span>processData：</span><br><span class="line">要求为<span class="built_in">Boolean</span>类型的参数，默认为<span class="literal">true</span>。默认情况下，发送的数据将被转换为对象（从技术角度来讲并非字符串）以配合默认内容类型<span class="string">"application/x-www-form-urlencoded"</span>。如果要发送DOM树信息或者其他不希望转换的信息，请设置为<span class="literal">false</span>。</span><br><span class="line"></span><br><span class="line"><span class="number">21.</span>scriptCharset：</span><br><span class="line">要求为<span class="built_in">String</span>类型的参数，只有当请求时dataType为<span class="string">"jsonp"</span>或者<span class="string">"script"</span>，并且<span class="keyword">type</span>是GET时才会用于强制修改字符集(charset)。通常在本地和远程的内容编码不同时使用。</span><br><span class="line"></span><br><span class="line">jquery中的ajax方法参数的用法和他的含义：</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="二、ajax结构"><a href="#二、ajax结构" class="headerlink" title="二、ajax结构"></a>二、ajax结构</h1><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    url:<span class="string">'/../'</span>,</span><br><span class="line">    type:<span class="string">'GET'</span>,</span><br><span class="line">    data:&#123;&#125;,</span><br><span class="line">    dataType:<span class="string">'JSON'</span>,</span><br><span class="line">    success:<span class="function"><span class="keyword">function</span>(<span class="params">arg</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//arg是对象</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>　ajax中的data</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">a.只是字符串或数字</span><br><span class="line">    $.ajax(<span class="comment">&#123;</span></span><br><span class="line"><span class="comment">        url:'/../',</span></span><br><span class="line"><span class="comment">        type:'GET',</span></span><br><span class="line"><span class="comment">        data:&#123;‘k1':'v1'&#125;</span>,</span><br><span class="line">        dataType:<span class="string">'JSON'</span>,</span><br><span class="line">        success:<span class="function"><span class="keyword">function</span><span class="params">(arg)</span><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">            //arg是对象</span></span></span><br><span class="line"><span class="function"><span class="comment">            &#125;</span></span></span><br><span class="line"><span class="function">    &#125;)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">b</span>.包含数组</span></span><br><span class="line"><span class="function">    $.<span class="title">ajax</span><span class="params">(&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">        url:<span class="string">'/../'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">type</span>:<span class="string">'GET'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        data:&#123;<span class="string">'k1'</span>:JSON.stringify([1,2,3,4&#125;)</span>,</span></span><br><span class="line"><span class="function">        <span class="title">dataType</span>:</span><span class="string">'JSON'</span>,</span><br><span class="line">        traditional:<span class="keyword">true</span>,</span><br><span class="line">        success:<span class="function"><span class="keyword">function</span><span class="params">(arg)</span><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">            //arg是对象</span></span></span><br><span class="line"><span class="function"><span class="comment">            &#125;</span></span></span><br><span class="line"><span class="function">       &#125;)</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">c</span>.传字典</span></span><br><span class="line"><span class="function">    $.<span class="title">ajax</span><span class="params">(&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">        url:<span class="string">'/../'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">type</span>:<span class="string">'GET'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        data:&#123;<span class="string">'k1'</span>:JSON.stringify(&#123;&#125;)</span>&#125;,</span></span><br><span class="line"><span class="function">        <span class="title">dataType</span>:</span><span class="string">'JSON'</span>,</span><br><span class="line">        success:<span class="function"><span class="keyword">function</span><span class="params">(arg)</span><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">            //arg是对象</span></span></span><br><span class="line"><span class="function"><span class="comment">            &#125;</span></span></span><br><span class="line"><span class="function">        &#125;)</span></span><br></pre></td></tr></table></figure>
+
+<p>补充：获取表单数据</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">注：获取表单内容：-var <span class="class"><span class="keyword">data</span> = $('#<span class="title">form</span>表单的<span class="type">ID</span>').serialize();</span></span><br><span class="line">    $,ajax(&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="class"><span class="keyword">data</span>:$('#<span class="title">form</span>表单的<span class="type">ID</span>').serialize(),</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、序列化"><a href="#三、序列化" class="headerlink" title="三、序列化"></a>三、序列化</h1><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">python序列化</span><br><span class="line">    字符串 = <span class="function"><span class="title">json</span>.dumps(对象)  --对象   -&gt;</span>字符串</span><br><span class="line">    对象 = <span class="function"><span class="title">json</span>.loads(字符串)  --字符串 -&gt;</span>对象</span><br><span class="line"></span><br><span class="line">javascript:</span><br><span class="line">    字符串 = JSON.<span class="function"><span class="title">stringify</span>(对象) 对象 -&gt;</span>字符串</span><br><span class="line">    对象   = JSON.<span class="function"><span class="title">parse</span>(字符串)   字符串-&gt;</span>对象</span><br><span class="line"></span><br><span class="line">应用场景</span><br><span class="line">    数据传输时</span><br><span class="line">       发送：字符串</span><br><span class="line">       接收：字符串 -&gt; 对象</span><br></pre></td></tr></table></figure>
+
+<p><strong>练习</strong></p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">JSON.stringify(字典) </span>== <span class="keyword">json.dumps</span></span><br><span class="line"><span class="keyword">JSON.parse(字符串) </span>  == <span class="keyword">json.loads</span></span><br><span class="line"><span class="keyword">a </span>= &#123;<span class="string">'k'</span>:<span class="string">'v'</span>,<span class="string">'k1'</span>:<span class="string">'v1'</span>&#125;</span><br><span class="line">&#123;k: <span class="string">"v"</span>, <span class="built_in">k1</span>: <span class="string">"v1"</span>&#125;</span><br><span class="line">str = <span class="keyword">JSON.stringify(a)</span></span><br><span class="line"><span class="keyword">"&#123;"k":"v","k1":"v1"&#125;"</span></span><br><span class="line"><span class="keyword">json_str </span>= <span class="keyword">JSON.parse(str)</span></span><br><span class="line"><span class="keyword">&#123;k: </span><span class="string">"v"</span>, <span class="built_in">k1</span>: <span class="string">"v1"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="四、url请求和ajax请求对比"><a href="#四、url请求和ajax请求对比" class="headerlink" title="四、url请求和ajax请求对比"></a>四、url请求和ajax请求对比</h1><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">新URL方式：</span><br><span class="line">    -<span class="ruby">独立的页面</span></span><br><span class="line"><span class="ruby">    -数据量大，条目多</span></span><br><span class="line"><span class="ruby">    问题：提交时，保留之前的内容？？？</span></span><br><span class="line"><span class="ruby"> </span></span><br><span class="line"><span class="ruby">对话框方式：</span></span><br><span class="line"><span class="ruby">    -数据量小或条目少</span></span><br><span class="line"><span class="ruby">        -增加，编辑</span></span><br><span class="line"><span class="ruby">            -<span class="symbol">Ajax:</span>考虑，当前页：td中自定义属性</span></span><br><span class="line"><span class="ruby">            -页面（***）</span></span><br><span class="line"><span class="ruby">        删除：</span></span><br><span class="line"><span class="ruby">            对话框</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="五、Ajax本质"><a href="#五、Ajax本质" class="headerlink" title="五、Ajax本质"></a>五、Ajax本质</h1><p>原生Ajax：XMLHttpRequest对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line"> </span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(xhr.readyState == <span class="number">4</span>)&#123;</span><br><span class="line">        <span class="comment">// 已经接收到全部响应数据，执行以下操作</span></span><br><span class="line">        <span class="keyword">var</span> data = xhr.responseText;</span><br><span class="line">        <span class="built_in">console</span>.log(data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">xhr.open(<span class="string">'POST'</span>, <span class="string">"/test/"</span>, <span class="literal">true</span>);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 设置请求头</span></span><br><span class="line">xhr.setRequestHeader(<span class="string">'Content-Type'</span>, <span class="string">'application/x-www-form-urlencoded; charset-UTF-8'</span>);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 发送请求</span></span><br><span class="line">xhr.send(<span class="string">'n1=1;n2=2;'</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="六、django中应用Ajax流程"><a href="#六、django中应用Ajax流程" class="headerlink" title="六、django中应用Ajax流程"></a>六、django中应用Ajax流程</h1><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>创建project <span class="comment">--django_ajax</span></span><br><span class="line"> </span><br><span class="line"><span class="number">2.</span>创建APP     <span class="comment">--app01</span></span><br><span class="line"> </span><br><span class="line"><span class="number">3.</span>配置  </span><br><span class="line">   <span class="comment">--静态文件</span></span><br><span class="line">   <span class="comment">--模板路径</span></span><br><span class="line"> </span><br><span class="line"><span class="number">4.</span>students  <span class="comment">--&gt;students.html</span></span><br><span class="line"> </span><br><span class="line"><span class="number">5.</span>Bootstrap:提供现成的样式 + 效果</span><br><span class="line"> </span><br><span class="line"><span class="number">6.</span>FontAwesome:提供图标</span><br><span class="line"> </span><br><span class="line"><span class="number">7.</span>/students/  <span class="comment">--&gt;students函数（班级和学生列表）  --&gt;students.html</span></span><br><span class="line"> </span><br><span class="line"><span class="number">8.</span>$.ajxa(&#123;</span><br><span class="line">   url:<span class="string">'/../'</span>,</span><br><span class="line">   <span class="built_in">type</span>:<span class="string">'POST'</span>,</span><br><span class="line">   data:&#123;..&#125;,</span><br><span class="line">   seccess:<span class="function"><span class="keyword">function</span><span class="params">(arg)</span></span>&#123;</span><br><span class="line">       //<span class="built_in">arg</span>字符串</span><br><span class="line">       // var obj = JSON.parse(<span class="built_in">arg</span>)</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="七、Ajax上传文件"><a href="#七、Ajax上传文件" class="headerlink" title="七、Ajax上传文件"></a>七、Ajax上传文件</h1><p>-django_ajax,django_form,django_file</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-原生</span></span><br><span class="line"><span class="deletion">-jQuery</span></span><br><span class="line">以上两种方式可利用formData对象，来封装用户提交的数据</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-iframe+form：兼容性好</span></span><br><span class="line"> </span><br><span class="line">*****iframe+form****8</span><br></pre></td></tr></table></figure>
+
+<p>  <strong>猛击下载</strong></p>
+<ul>
+<li><a href="https://files.cnblogs.com/files/zhangyafei/django_form.zip" target="_blank" rel="noopener external nofollow noreferrer">django_ajax示例</a></li>
+<li><a href="https://files.cnblogs.com/files/zhangyafei/django_form.zip" target="_blank" rel="noopener external nofollow noreferrer">django_form示例</a></li>
+<li><a href="https://files.cnblogs.com/files/zhangyafei/django_form.zip" target="_blank" rel="noopener external nofollow noreferrer">django_file示例</a></li>
+</ul>
+<h1 id="八、jsonp实现跨域"><a href="#八、jsonp实现跨域" class="headerlink" title="八、jsonp实现跨域"></a>八、jsonp实现跨域</h1><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- 为什么会有跨域？</span><br><span class="line">    浏览器的同源策略: XMLHttpRequest</span><br><span class="line">- 绕过浏览器同源策略就可以跨域。</span><br><span class="line">    巧妙的机制：JSONP</span><br><span class="line">        同源策略会阻止ajax请求；不阻止具有src属性的标签</span><br><span class="line">        JSONP:利用创建<span class="keyword">script</span>块，在期中执行src属性为：远程url</span><br><span class="line">        函数（返回值）</span><br><span class="line">        动态创建<span class="keyword">script</span>标签</span><br><span class="line">        &lt;<span class="keyword">script</span> src='xxxx'&gt;&lt;/<span class="keyword">script</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>jsonp</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">submitJsonp1</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> tag = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</span><br><span class="line">        tag.src = <span class="string">'http://www.jxntv.cn/data/jmd-jxtv2.html?callback=list&amp;_=1454376870403'</span>;</span><br><span class="line">        $(<span class="built_in">document</span>.head).append(tag);</span><br><span class="line">        <span class="built_in">document</span>.head.removeChild(tag);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">list</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(arg);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">submitJsonp2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url:<span class="string">'http://www.jxntv.cn/data/jmd-jxtv2.html?_=1454376870403'</span>,</span><br><span class="line">            type:<span class="string">'GET'</span>,</span><br><span class="line">            dataType:<span class="string">'jsonp'</span>,</span><br><span class="line">            jsonp:<span class="string">'callback'</span>,</span><br><span class="line">            jsonpCallback:<span class="string">'函数'</span>,</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>缺点：只能处理get请求</p>
+<h1 id="九、CORS实现跨域"><a href="#九、CORS实现跨域" class="headerlink" title="九、CORS实现跨域"></a>九、CORS实现跨域</h1><p>跨域错误信息</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed <span class="keyword">to</span> <span class="keyword">load</span> http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">8000</span>/api/v1/course/: <span class="keyword">No</span> <span class="string">'Access-Control-Allow-Origin'</span> <span class="keyword">header</span> <span class="keyword">is</span> present <span class="keyword">on</span> the requested resource. Origin <span class="string">'http://localhost:8080'</span> <span class="keyword">is</span> therefore <span class="keyword">not</span> allowed <span class="keyword">access</span>.</span><br></pre></td></tr></table></figure>
+
+<p>原理：返回信息的时候加上一个特殊的响应头</p>
+<p>django实现：在中间件中加一个响应头</p>
+<h2 id="中间件配置：api-cors"><a href="#中间件配置：api-cors" class="headerlink" title="中间件配置：api.cors"></a>中间件配置：api.cors</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.utils.deprecation <span class="keyword">import</span> MiddlewareMixin</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CORSMiddleware</span><span class="params">(MiddlewareMixin)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    cors跨域实现简答请求</span></span><br><span class="line"><span class="string">    跨域：向不同域名或端口不同的地址发送请求）</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_response</span><span class="params">(self, request, response)</span>:</span></span><br><span class="line">        <span class="comment"># 添加响应头</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 允许你的域名来获取我的数据</span></span><br><span class="line">        response[<span class="string">'Access-Control-Allow-Origin'</span>] = <span class="string">"*"</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 允许你携带Content-Type请求头</span></span><br><span class="line">        response[<span class="string">'Access-Control-Allow-Headers'</span>] = <span class="string">"Content-Type"</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 允许你发送DELETE,PUT</span></span><br><span class="line">        response[<span class="string">'Access-Control-Allow-Methods'</span>] = <span class="string">"DELETE,PUT"</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="settings添加配置"><a href="#settings添加配置" class="headerlink" title="settings添加配置"></a>settings添加配置</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">MIDDLEWARE</span> = [</span><br><span class="line">    <span class="string">'django.middleware.security.SecurityMiddleware'</span>,</span><br><span class="line">    <span class="string">'django.contrib.sessions.middleware.SessionMiddleware'</span>,</span><br><span class="line">    <span class="string">'django.middleware.common.CommonMiddleware'</span>,</span><br><span class="line">    <span class="string">'django.middleware.csrf.CsrfViewMiddleware'</span>,</span><br><span class="line">    <span class="string">'django.contrib.auth.middleware.AuthenticationMiddleware'</span>,</span><br><span class="line">    <span class="string">'django.contrib.messages.middleware.MessageMiddleware'</span>,</span><br><span class="line">    <span class="string">'django.middleware.clickjacking.XFrameOptionsMiddleware'</span>,</span><br><span class="line">    <span class="string">'api.cors.CORSMiddleware'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>　　</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\04\python\2008-01-04-python-draft\" rel="bookmark">python-draft</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2008\01\05\python\2008-01-04-python-ruan\" rel="bookmark">python-ruan</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\25\python\python_基础篇\基础篇-目录\" rel="bookmark">基础篇</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第10篇：列表和元组的应用\" rel="bookmark">第10篇：列表和元组的应用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\11\24\python\python_基础篇\第11篇：高级数据类型之集合\" rel="bookmark">第11篇：高级数据类型之集合</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/01/20/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC41%E7%AF%87%EF%BC%9A%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E4%B9%8BAjax/" title="第41篇：异步请求之Ajax">https://tongsiying.github.io/2022/01/20/python/python_基础篇/第41篇：异步请求之Ajax/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/20/python/python_%E5%9F%BA%E7%A1%80%E7%AF%87/%E7%AC%AC40%E7%AF%87%EF%BC%9Ajquery/" rel="prev" title="第40篇：jquery">
+      <i class="fa fa-chevron-left"></i> 第40篇：jquery
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/2022-05-17-Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF%EF%BC%88%E5%8D%81%EF%BC%89%E4%B9%8BLinux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" rel="next" title="Linux上天之路（十）之Linux磁盘管理">
+      Linux上天之路（十）之Linux磁盘管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、初识ajax"><span class="nav-text">一、初识ajax</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、ajax结构"><span class="nav-text">二、ajax结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、序列化"><span class="nav-text">三、序列化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、url请求和ajax请求对比"><span class="nav-text">四、url请求和ajax请求对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、Ajax本质"><span class="nav-text">五、Ajax本质</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、django中应用Ajax流程"><span class="nav-text">六、django中应用Ajax流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、Ajax上传文件"><span class="nav-text">七、Ajax上传文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、jsonp实现跨域"><span class="nav-text">八、jsonp实现跨域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#九、CORS实现跨域"><span class="nav-text">九、CORS实现跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#中间件配置：api-cors"><span class="nav-text">中间件配置：api.cors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#settings添加配置"><span class="nav-text">settings添加配置</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">426</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6.2m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">94:30</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
