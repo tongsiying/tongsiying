@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="接口">
+<meta property="og:url" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623222820234.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623223017868.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623223153619.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623223329920.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623224110616.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623224157005.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623224942795.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623225202628.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623225227545.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624072535483.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623230048834.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623230552160.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624072648902.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624074021107.png">
+<meta property="og:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624074146183.png">
+<meta property="article:published_time" content="2021-06-29T10:37:19.000Z">
+<meta property="article:modified_time" content="2022-01-26T12:17:42.023Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="STE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623222820234.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>接口 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/catalog/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-目录">
+
+    <a href="/catalog/" rel="section"><i class="fa fa fa-th fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-读书清单">
+
+    <a href="/read" rel="section"><i class="fa fa-book fa-fw"></i>读书清单</a>
+
+  </li>
+        <li class="menu-item menu-item-读书笔记">
+
+    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="section"><i class="fa fa-book fa-fw"></i>读书笔记</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          接口
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-29 18:37:19" itemprop="dateCreated datePublished" datetime="2021-06-29T18:37:19+08:00">2021-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-26 20:17:42" itemprop="dateModified" datetime="2022-01-26T20:17:42+08:00">2022-01-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/STE/" itemprop="url" rel="index"><span itemprop="name">STE</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h1><p>课程内容</p>
+<blockquote>
+<p>Web工作原理介绍<br>Http协议基础<br>Http协议Request讲解<br>Http协议Response讲解<br>Http状态码<br>Http消息报头<br>Cookie<br>Session</p>
+</blockquote>
+<h2 id="报头"><a href="#报头" class="headerlink" title="报头"></a>报头</h2><p>web工作原理（1）<br><a href="http://127.0.0.1：8081/ecshop/" rel="external nofollow noreferrer">http://127.0.0.1：8081/ecshop/</a><br>user.php<br>http-协议类型<br>127.0.0.1-主机名：域名和IP等价<br>8081-端口号：端口管理由TCP协议完成，而不是HTTP协议<br>ecshop/user-页面文件<br>附件部分：<br>URL地址参数（也是最容易出问题的地方）</p>
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623222820234.png" alt="image-20210623222820234"></p>
+<p>web工作原理（2）</p>
+<p>浏览器与服务器之间的交互就是由请求（Request）和响应（Response）组成，使用标准的HTTP协议（Hyper Text Transfer Protocol-<br>超文本传输协议）来进行请求的发送和响应</p>
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623223017868.png" alt="image-20210623223017868"></p>
+<p>http协议</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>HTTP是Hyper Text Transfer Protocol（超文本传输协议）的缩写，基于TCP/IP协议的应用层协议。它不涉及数据包（packet）传输，主要规定了客户端和服务器之间的通信格式，默认使用<span class="number">80</span>端口。</span><br><span class="line"><span class="number">2.</span>HTTP协议永远都是客户端发起请求，服务器回送响应</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623223153619.png" alt="image-20210623223153619"></p>
+<p>http在TCP/IP协议栈中的位置</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>HTTP协议通常承载于TCP协议之上，有时也承载于TLS或SSL协议层之上，这个时候，就成了我们常说的HTTPS </span><br><span class="line"><span class="number">2.</span>HTTPS是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623223329920.png" alt="image-20210623223329920"></p>
+<p>Http协议主要特点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">支持客户/服务器模式</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">简单快速：客户向服务器请求服务时，只需传递请求方法和路径</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">灵活：HTTP允许传输任意类型的数据对象。传输类型由Content-Type加以标记</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">无连接：无连接的含义是限制每次连接只处理一个请求，服务器处理完客户的请求，并收到客户的应答后，即断开连接</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">无状态：HTTP协议是无状态协议，协议对于事务处理无记忆能力</span></span><br></pre></td></tr></table></figure>
+
+<p>Http之URL详解</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP <span class="built_in">URL</span>（包含了用于查找某个资源的足够的信息）格式子下：</span><br><span class="line"><span class="keyword">http</span>:/host[<span class="string">"："</span>portllabs pathl </span><br><span class="line"><span class="keyword">http</span>：表示要通过HTTP协议来定位网络资源host：表示合法的Internet主机域名或者P地址port：指定一个端口号，为空则使用缺省端口<span class="number">80</span></span><br><span class="line"><span class="built_in">abs</span> path：指定请求资源的URI，必须以/的形式给出</span><br></pre></td></tr></table></figure>
+
+<p>URL举例</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//mp.weixin.qq.com/s?_biz=MjM5MzIzODE5Nw==&amp;mid=401472582&amp;idx=1&amp;sn=56e8f0106e43a85663353cf9a3a96f1d#wechat_redirect</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>协议类型：http</span><br><span class="line"><span class="number">2.</span>Host:mp.weixin.qq.com</span><br><span class="line"><span class="number">3.</span>Port：默认端口是<span class="number">80</span>，这种情况下端口号可以省略</span><br><span class="line"><span class="number">4.</span>path:/s</span><br><span class="line"><span class="number">5.</span>分隔符：？</span><br><span class="line"><span class="number">6.</span>参数：biz=MjM5MzIzODE5Nw==</span><br><span class="line"><span class="number">7.</span>参数分隔符：&amp;</span><br></pre></td></tr></table></figure>
+
+<p>Http协议请求（Request）</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">http</span>请求由三部分组成，分别是请求行、消息报头、请求|</span><br><span class="line">正文</span><br><span class="line">请求行：</span><br><span class="line">	一个方法符合开头，以空格分开，后面跟着请求的URI和协议的版本。</span><br><span class="line">例如：POST/index.php HTTP/<span class="number">1.1</span>（<span class="literal">CRLF</span>）</span><br><span class="line">其中POST表示请求方法；/index.php是请求的<span class="built_in">URL</span>；HTTP/<span class="number">1.1</span>表示请求的HTTP协议版本；<span class="literal">CRLF</span>表示回车或者换行</span><br></pre></td></tr></table></figure>
+
+<p>Http请求方法</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请求方法（所有方法全文大写），各个解释如下：</span><br><span class="line">&gt;<span class="keyword">GET</span>请求获取<span class="built_in">Request</span>-URI所标识的资源</span><br><span class="line">&gt;POST在<span class="built_in">Request</span>-URI所标识的资源后附加新的数据</span><br><span class="line">&gt;HEAD请求获取由<span class="built_in">Request</span>-URI所标识的资源的响应消息报头</span><br><span class="line">&gt;PUT请求服务器存储一个资源，并用<span class="built_in">Request</span>-URI作为其标识</span><br><span class="line">&gt;DELETE 请求服务器删除<span class="built_in">Request</span>-URI所标识的资源</span><br></pre></td></tr></table></figure>
+
+<p>Get的请求</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">Get</span>是用来从服务器上获得数据，<span class="keyword">Get</span>传输的数据量小，这主要是因为|</span><br><span class="line">受<span class="keyword">URL</span>长度限制。</span><br><span class="line">&gt;<span class="keyword">Get</span>将表单中数据的按照variable=value的形式，添加到action所指向的<span class="keyword">URL</span>后面，并且两者使用“？”连接，而各个变量之间使用“&amp;”连接Post是将表单中的数据放在form的数据体中，按照变量和值相对应的方式，传递到action所指向<span class="keyword">URL</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623224110616.png" alt="image-20210623224110616"></p>
+<p>Post请求</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">Post</span>是用来向服务器上传递数据，<span class="keyword">Post</span>可以传输大量的数据，所以在上传文件只能使用<span class="keyword">Post</span>，<span class="keyword">Post</span>的所有操作对用户来说都是不可见的</span><br><span class="line">&gt;<span class="keyword">Post</span>是将表单中的数据放在<span class="keyword">form</span>的数据体中，按照变量和值相对应的方式，传递到action所指向URL</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623224157005.png" alt="image-20210623224157005"></p>
+<p>Http消息报头</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP消息由客户端到服务器的请求和服务器到客户端的响应组成。请求消息和响应消息都是由开始行（对于请求消息，开始行就是请求行，对于响应消息，开始行就是状态行），消息报头（可选），空行（只有CRLF的行），消息正文（可选）组成。</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">Http消息报头包括：</span></span><br><span class="line">普通报头、</span><br><span class="line">请求报头、</span><br><span class="line">响应报头、</span><br><span class="line">实体报头。</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">每一个报头域都是由名字<span class="string">":"</span>+空格+值 组成，消息报头域的名字是大小写无关的。</span></span><br></pre></td></tr></table></figure>
+
+<p>Http普通报头</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">有少数报头域用于所有的请求和响应消息，用于传输的消息</span><br><span class="line">&gt;Cache-Control用于指定缓存指令，缓存指令是单向的，且是独立的请求时的缓存指令包括：<span class="keyword">no</span>-cache、<span class="keyword">no</span>-store、<span class="built_in">max</span>-age、<span class="built_in">max</span>-stale、mint fresh、<span class="keyword">only</span>-<span class="keyword">if</span>-cached</span><br><span class="line">&gt;响应时的缓存指令包括：public、private、<span class="keyword">no</span>-cache、<span class="keyword">no</span>-</span><br><span class="line">storetransform、must-revalidate、proxy-revalidate、<span class="built_in">max</span>-age、s-</span><br><span class="line">maxage.</span><br><span class="line">&gt;Date普通报头域表示消息产生的日期和时间</span><br><span class="line">&gt;Connection普通报头域允许发送指定连接的选项。例如指定连接是连续，或者指定“<span class="keyword">close</span>”选项，通知服务器，在响应完成后，关闭连接</span><br></pre></td></tr></table></figure>
+
+<p>http请求报头</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">请求报头允许客户端向服务器端传递请求的附加信息以及容户端自身的信息</span><br><span class="line">&gt;<span class="keyword">Accept</span> 请求报头域用于指定客户端接受哪些类型的信息。</span><br><span class="line">eg:<span class="keyword">Accept</span>:image/gif，表明客户端希望接受GIF图象格式的资源；<span class="keyword">Accept</span>:text/html，表明客户端希望接受html文本</span><br><span class="line">&gt;<span class="keyword">Accept</span>-Charset 请求报头域用于指定客户端接受的字符集。</span><br><span class="line">eg:<span class="keyword">Accept</span>-Charset:iso-<span class="number">8859</span>-<span class="number">1</span>，gb2312.如果在请求消息中没有设置这个域，缺省是任何字符集都可以接受</span><br></pre></td></tr></table></figure>
+
+<p>http请求报头</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">Accept</span>-Encoding 请求报头域类似于<span class="keyword">Accept</span>，但是它是用于指定可接受的内容编码。</span><br><span class="line">eg:<span class="keyword">Accept</span>-Encoding:gzip.deflate.如果请求消息中没有设置这个域服务器假定客户端对各种内容编码都可以接受。</span><br><span class="line"></span><br><span class="line">&gt;<span class="keyword">Accept</span>-Language请求报头域类似于<span class="keyword">Accept</span>，但是它是用于指定一种自然语言。</span><br><span class="line">eg:<span class="keyword">Accept</span>-Language:zh-cn.如果请求消息中没有设置这个报头域，服务器假定客户端对各种语言都可以接受</span><br></pre></td></tr></table></figure>
+
+<p>Http请求报头</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;Authorization 请求报头域主要用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为<span class="number">401</span>（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验迹</span><br><span class="line">&gt;Host（发送请求时，该报头域是必需的）<span class="keyword">e</span><span class="variable">g:http</span>://www.guet.edu.<span class="keyword">cn</span>/<span class="built_in">index</span>.html该URL中包含Host 请求报头域，如下：Hos<span class="variable">t:www</span>.guet.edu.<span class="keyword">cn</span>此处使用缺省端口号<span class="number">80</span>，若指定了端口号，则变成：</span><br><span class="line">Hos<span class="variable">t:www</span>.guet.edu.<span class="keyword">cn</span>：指定端口号</span><br></pre></td></tr></table></figure>
+
+<p>http请求报头</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt;User-Agent请求报头域允许客户端将它的操作系统、浏览器和其它属|</span><br><span class="line">性告诉服务器。</span><br><span class="line">&gt;Host请求报头域主要用于指定被请求资源的Internet主机和端口号，它|</span><br><span class="line">通常从HTTPURL中提取出来的</span><br><span class="line">&gt;Connection：表示是否需要持久连接。Keep-Alive持久连接</span><br><span class="line">&gt;Cookie：最重要的请求头之一，将cookie的值发送给HTTP服务器。</span><br><span class="line"></span><br><span class="line">Request Headers</span><br><span class="line">CONNECT mm. taobao. com:443 HTTP/1.1</span><br><span class="line">Client </span><br><span class="line">	Uera-Agent: MoZilla/50(Winows NT 6.1;WOW64) Applewebi/57.536(HTIL, like Geko) Chrome/51.7074. </span><br><span class="line">Transport </span><br><span class="line">	Connection: kepaive </span><br><span class="line">	Host: www. tabao. com:443</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623224942795.png" alt="image-20210623224942795"></p>
+<h2 id="接口测试"><a href="#接口测试" class="headerlink" title="接口测试"></a>接口测试</h2><p>接口的概述</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">接口泛指实体把自己提供给外界的一种抽象方法（可以为一实体），用以由内部操作分离出外部沟通方法，使其在储改内部时不影响外界其他实体与其交互的方式。</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623225202628.png" alt="image-20210623225202628"></p>
+<p>电脑等信息机器软件组件间的接口叫软件接口。</p>
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623225227545.png" alt="image-20210623225227545"></p>
+<p>电脑等信息机器硬件组件间的接口叫硬件接口。</p>
+<p>接口的定义</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">接口是指系统模块与模块或系统与系统间进行交互，一般现在我们用的多的是基于HITTP协议为基础的接口（包括WebService协议），除此之外还有RPC的接口，但不管是哪种揍口，其本质就是发送一个<span class="built_in">Request</span>报文给服务器，然后服务器响应返回一个<span class="built_in">Response</span>报文。</span><br><span class="line"></span><br><span class="line">注：这里接口特指软件接口</span><br></pre></td></tr></table></figure>
+
+<p>接口的分类</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; HTTP接口、Web Service接口</span><br><span class="line"><span class="deletion">-基于某种网络服务提供的接口</span></span><br><span class="line"></span><br><span class="line">&gt; API接口</span><br><span class="line"><span class="deletion">-应用程序编程接口</span></span><br><span class="line"><span class="deletion">-不一定通过网络提供编程服务接口</span></span><br></pre></td></tr></table></figure>
+
+<p>容易产生的误区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">我们通常讨论的接口，一般是指基于TCP/P传输的http协议</span></span><br><span class="line"></span><br><span class="line">误区：</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">接口测试并不仅限于HTTP接口</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">API接口测试不等同于HTTP接口测试</span></span><br></pre></td></tr></table></figure>
+
+<p>接口测试</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">接口测试是集成测试实现的一种方式，其实在集成测试中分为消息接口测试和代码接口测试两类。</span><br><span class="line"></span><br><span class="line">我们对<span class="built_in">Response</span>的报文进行分析，判断是否和我们发给服务器的<span class="built_in">Request</span>对应的返回相同，从而验证业务是否正确实现，这即是接口测试。</span><br></pre></td></tr></table></figure>
+
+<p>接口测试分类</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">同层之间接口的调用，一个接口调用了其他接口比如service层会调用DAO层的接口，而应用层又会调用服务层提供的接口，一般会通过服务之间的调用，比如注册用）时，会先调用用户查询的服务，查看该用户是否已经注册。</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">外部系统与系统间的交互（调用第三方的接口）</span></span><br><span class="line">比如银行会提供接口供电子商务网站调用，支付宝会提供接口给第三方网站调用</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">各个子系统之间的交互</span></span><br><span class="line">比如订单系统需要调用商品系统、财务系统才能完成一次订单的购买</span><br></pre></td></tr></table></figure>
+
+<p>其他测试技术的关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">自动化测试可以分为：UI层自动化和接口层自动化</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624072535483.png" alt="image-20210624072535483"></p>
+<p>其他测试技术的关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">性能测试可以分为：系统级性能测试和接口层性能测试</span><br><span class="line">安全测试：对于接口层和UI层都需要进行测试</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623230048834.png" alt="image-20210623230048834"></p>
+<p>为什么做接口测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">为了保证系统的独立性，也为了使业务更加的独立，系统间的交互越来越多的使用接口（高内聚低耦合）。这时候对于传统测试人员需要等到系统集成后才能进行测试，不但很难确保测试的覆盖率（接口覆盖率），效率也非常低下，为了解决这两个问题，接口测试也应运而生了。</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">UI的错误相对来说是比较容易修正的，但是数据的错误</span></span><br><span class="line">（业务的错误）所带来的危害就大得多了，所以为了持续性的检查接口数据的准确性，通过在早期进行接口自动化测试，可以很好的发现定位问题。</span><br><span class="line">ОEo</span><br></pre></td></tr></table></figure>
+
+<p>接口测试的适用范围及覆盖率</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;接口是系统与系统间或者模块与模块间的交互，任何数据都是有其意义的，如果在传输过程中丢失了或者发送了错误的数据，就会导致意外或者业务逻辑处理机制，进一<span class="number">4</span>发现存在的问题，并且为此付出很大的代价。</span><br><span class="line"></span><br><span class="line">&gt;所以任何接口都是应该经过测试，即有交互的地方，我们就要进行接口测试。首先要达到<span class="number">100</span>%的接口覆盖率，在有条件的情况下做到进一步的<span class="number">100</span>%需求对接口的映射及<span class="number">100</span>%的接口对代码的逻辑覆盖率</span><br></pre></td></tr></table></figure>
+
+<p>接口测试目的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">核心：保证系统接口的功能正常</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">方式：持续集成</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">目的：提高测试效率，保证数据的准确性</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">文档：接口测试对接口定义文档要求很高，所有的接口数据类型及业务分支导致的报文返回结构是需要事先定义好的，所以要形成文档的习惯，以方便查阅，尽量减少团队与团队间的沟通成本</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">接口测试方法</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">可以通过编写脚本代码进行测试</span></span><br><span class="line">自己开发脚本</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">可以通过工具进行测试</span></span><br><span class="line">第三方工具：SoapUI、Jmeter可以</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">手工在浏览器进行测试</span></span><br><span class="line">辅助工具：Fiddler，PostMan，HttpWatch</span><br></pre></td></tr></table></figure>
+
+<p>接口测试流程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">类似于功能测试，</span><br><span class="line">→需求讨论</span><br><span class="line">→评审需求</span><br><span class="line">→确定需求</span><br><span class="line">→产出接口定义</span><br><span class="line">→根据需求文档及接口定义设计测试用例（测试用例主要从业务场景，功能以及异常测试几个方面考虑）</span><br><span class="line">→评审用例</span><br><span class="line">→执行测试</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210623230552160.png" alt="image-20210623230552160"></p>
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624072648902.png" alt="image-20210624072648902"></p>
+<p>接口文档的分析</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">手机号码归属地</span><br><span class="line">接口地址：http://apis.juhe.cn/mobile/<span class="keyword">get</span></span><br><span class="line">支持格式：<span class="type">json</span>/<span class="type">xml</span></span><br><span class="line">请求方式：<span class="keyword">get</span></span><br><span class="line">请求示例：http://apis.juhe.cn/mobile/<span class="keyword">get</span>?phone=<span class="number">13429667914</span>&amp;key=您申请的KEY</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span>请求参数说明：</span><br><span class="line">名称		类型		必填		说明</span><br><span class="line">phone	<span class="type">int</span>			是		需要查询的手机号码或手机号码前<span class="number">7</span>位</span><br><span class="line">key		string		是		应用APPKEY（应用详细页查询）</span><br><span class="line">dtype 	string		否		返回数据的格式，<span class="type">xml</span>或<span class="type">json</span>，默认<span class="type">json</span></span><br></pre></td></tr></table></figure>
+
+<p>接口测试用例设计（1）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">功能测试：接口是否满足了所提供的功能，相当于是正常情况测试，如果一个接口功能复杂时推荐对接口用例进行结构划分，这样子用例真有更好的可读性和维护性。</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">逻辑测试：逻辑测试严格讲应为单元测试，单元测试应保持内部逻辑的正确性，可单元测试和接口测试界限并不是那么清楚，所以我们也可以从给出的设计文档中考虑内部逻辑错误的分支情况和异常</span></span><br></pre></td></tr></table></figure>
+
+<p>接口测试的用例设计（2）</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;输入参数测试：针对输入的参数进行测试接口有翻页时，页码与页数的异常值测试数据库的增删改查，比如一个<span class="built_in">post</span>按口操作完成后，通过列表页接口看下新的数据是否和刚才的<span class="built_in">post</span>一致每个接口入参的默认值、异常类型、非空校验接口返回的图片地址能否打开，图片尺寸是否符合需求</span><br><span class="line">当输出参数有联动性时，需要校验两参数的实际结束是否都符合实际需求</span><br></pre></td></tr></table></figure>
+
+<p>接口测试用例设计（3）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">异常情况测试：接口实现是否对异常情况都进行了处理</span></span><br><span class="line">所有功能都要考虑兼容旧版本入参支持传多个值时，要考虑传的值的个数多的情况下，接口是否报错</span><br><span class="line">输出参数类型</span><br><span class="line">请求参数的边界值</span><br><span class="line">请求参数的必填项和可选项</span><br><span class="line">所有列表页接口必须考虑排序值</span><br></pre></td></tr></table></figure>
+
+<p>接口测试用例编写</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash">接口测试用例和单元或者系统的用例其实区别也不大，要说明调用的接口传递的数据以及应该对应返回的内容目可（其他属性根据具体情况添加）</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">通过接口测试文档了解以下信息。</span></span><br><span class="line">请求的URI</span><br><span class="line">请求的方式</span><br><span class="line">返回值内容</span><br><span class="line">状态码，接口测试用例要覆盖到每一种情况</span><br></pre></td></tr></table></figure>
+
+<p>接口测试用例举例</p>
+<table>
+<thead>
+<tr>
+<th>测试用例编号</th>
+<th>Interface_getSupportCityString_001</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接口方法名</td>
+<td>getSupportCityString</td>
+</tr>
+<tr>
+<td>接口地址</td>
+<td><a href="http://webservice.webxml.com.cn/webServices/weatherWs.asnx" target="_blank" rel="noopener external nofollow noreferrer">http://webservice.webxml.com.cn/webServices/weatherWs.asnx</a></td>
+</tr>
+<tr>
+<td></td>
+<td>theRogionCode=31101</td>
+</tr>
+<tr>
+<td></td>
+<td>&lt;soap:Envelope xmlns:seap=”<a href="http://schemas.xmlsoap.org/soap/envelope" target="_blank" rel="noopener external nofollow noreferrer">http://schemas.xmlsoap.org/soap/envelope</a></td>
+</tr>
+<tr>
+<td></td>
+<td>xmins:xsi=”<a href="http://wwww.W3.org/2001/XMLSchema-ins" target="_blank" rel="noopener external nofollow noreferrer">http://wwww.W3.org/2001/XMLSchema-ins</a> tance</td>
+</tr>
+<tr>
+<td></td>
+<td>xmlns：xsi=”<a href="http://wwww.w3.org/2001/XMLSchema&quot;&gt;" target="_blank" rel="noopener external nofollow noreferrer">http://wwww.w3.org/2001/XMLSchema&quot;&gt;</a></td>
+</tr>
+<tr>
+<td></td>
+<td><a href="soap:Body" rel="external nofollow noreferrer">soap:Body</a></td>
+</tr>
+<tr>
+<td></td>
+<td><getSupportCityStringResponse xmlns="http://webXn1.com.cn/"></getSupportCityStringResponse></td>
+</tr>
+<tr>
+<td></td>
+<td><getSupportCityStringResult></getSupportCityStringResult></td>
+</tr>
+<tr>
+<td>返回</td>
+<td><string>北京，792</string></td>
+</tr>
+<tr>
+<td></td>
+<td><string>昌平，785</string></td>
+</tr>
+<tr>
+<td></td>
+<td><string>大兴，826</string></td>
+</tr>
+<tr>
+<td></td>
+<td><string>房山，827</string></td>
+</tr>
+<tr>
+<td></td>
+<td><string>怀柔，752</string></td>
+</tr>
+<tr>
+<td></td>
+<td><string>通州，3409K/string&gt;</string></td>
+</tr>
+<tr>
+<td></td>
+<td><string>朝阳，3408</string></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>响应指标</td>
+<td>响应时间小于500ms</td>
+</tr>
+<tr>
+<td>备注</td>
+<td>通过SoapUI实现调用，断言返回条数是否为7条，并且第一条为792，返回类型为字符串</td>
+</tr>
+</tbody></table>
+<p>接口测试常用的工具</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">切换host工具：<span class="keyword">SwitchHosts</span></span><br><span class="line"><span class="keyword">抓包工具：Fillder，WireShark，httpWatch等</span></span><br><span class="line"><span class="keyword">调试工具：firebug等</span></span><br><span class="line"><span class="keyword">辅助测试工具：Postman，HttpRequester等</span></span><br><span class="line"><span class="keyword">性能测试工具：Jmeter，Loadrunner，apache </span>ab等</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><p>Http协议响应（Response）</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;HTTP响应由三个部分组成，分别是状态行、消息报头、响应正文</span><br><span class="line">状态行格式如下：</span><br><span class="line">HTTP-Version Status-Code Reason-Phras，其中HTTP-Version表示服务器HTTP协议的版本Status-Code表示服务器发回的响应状态代码；例如：</span><br><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br></pre></td></tr></table></figure>
+
+<p>Http状态码</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">状态码由三位数字组成，第一个数字定义了响应的类别，分为<span class="number">5</span>种类型：</span><br><span class="line"><span class="number">1</span>xx：指示信息--表示请求已接收，继续处理</span><br><span class="line"><span class="number">2</span>xx：成功-表示请求已被成功接收、理解、接受</span><br><span class="line"><span class="number">3</span>xx：重定-要完成请求必须进行更进一步的操作</span><br><span class="line"><span class="number">4</span>xx：客户端错误-请求有语法错误或请求无法实现</span><br><span class="line">Sxx：服务器端错误-服务器未能实现合法的请求</span><br></pre></td></tr></table></figure>
+
+<p>常见的状态码</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; 200 OK请求已成功，请求所希望的响应头或数据体将随此响应返回</span><br><span class="line">400 Bad Request语义有误，当前请求无法被服务器理解。除非进行修改，否则客户端不应该重复提交这个请求；请求参数有误</span><br><span class="line">403 Forbidden服务器已经理解请求，但是拒绝执行它4014 <span class="keyword">Not</span> Found请求失败，请求所希望得到的资源未被在服务器上发现</span><br><span class="line">&gt; 500 Internal<span class="built_in"> Server </span>Error服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。一般来说，这个问题都会在服务器端的源代码出现错误时出现。</span><br><span class="line">&gt;502 Bad Gateway作网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。</span><br><span class="line">&gt;503<span class="built_in"> Service </span>Unavailable由于临时的服务器维护或者过载，服务器当前无法处理请求。</span><br></pre></td></tr></table></figure>
+
+<p>Http响应报头</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">响应报头允许服务器传递不能放在状态行中的附加响应信息以及关于服务器的信息和对Request-URI所标识的资源进行下一步访问的信息。</span><br><span class="line">&gt;<span class="keyword">Location</span>响应报头域用于重定向接受者到一个新的位置。</span><br><span class="line"><span class="keyword">Location</span> 响应报头域常用在更换域名的时候。</span><br><span class="line">&gt;<span class="keyword">server</span>响应报头域包含了服务器用来处理请求的软件信息与<span class="keyword">User</span>-Agent请求报头域是相对应的</span><br><span class="line">eg: <span class="keyword">Server</span>: Apache-Coyote/<span class="number">1.1</span></span><br></pre></td></tr></table></figure>
+
+<p>Http响应报头</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;WWW-Authenticate响应报头域必须被包含在<span class="number">401</span>（未授权的）响应消息中，客户端收到<span class="number">401</span>响应消息时候，并发送Authorization报头域请求服务器对其进行验证时，服务端响应报头就包含该报头域。</span><br><span class="line">eg：WWW-Authenticate:Basic realm=<span class="string">"Basic Auth Test！"</span></span><br><span class="line"><span class="comment">//可以看出服务器对请求资源采用的是基本验证机制。</span></span><br></pre></td></tr></table></figure>
+
+<p>http响应报头</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">Content-Type是返回消息中非常重要的内容，它标识出这个返回内容的类型，其值为“主类型/子类型”的格式，例如最常见的就是text/html，它的意思是说返回的内容是文本类型，这个文本又是HIML格式的</span></span><br><span class="line"><span class="string">Content-Type来决定如何显示返回的消息体内容</span></span><br><span class="line"></span><br><span class="line"><span class="string">Response</span> <span class="string">Headers：</span></span><br><span class="line"><span class="string">HTTP/1.</span> <span class="number">1</span> <span class="number">200</span> <span class="string">Connection</span> <span class="string">Established</span> </span><br><span class="line"><span class="string">Miscellaneous</span> </span><br><span class="line">	<span class="attr">ClientToSeryerBytes:</span> <span class="number">1669</span></span><br><span class="line">    <span class="attr">EndTime:</span> <span class="number">146</span><span class="string">:30.504</span></span><br><span class="line">    <span class="attr">FiddlerGateway: Direct ServerToClientBytes:</span> <span class="number">33290</span></span><br><span class="line">    <span class="attr">StartTime:</span> <span class="number">19</span><span class="string">:45:00.110</span></span><br><span class="line"><span class="string">Transport</span> </span><br><span class="line">	<span class="attr">Connection:</span> <span class="string">dose</span></span><br></pre></td></tr></table></figure>
+
+<p>Http实体报头</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">请求和响应消息都可以传送一个实体。一个实体由实体报域和实体正文组成，但并不是说实体报头域和实体正文要一起发送，可以只发送实体报头域。实体报头定义了关于梁体正文（eg：有无实体正文）和请求所标识的资源的元信息</span><br><span class="line">&gt;Content-<span class="keyword">Encoding</span>实体报头域被用作媒体类型的修饰符，它的值指示了已经被应用到实体正文的附加内容的编码，因而要获得Content-<span class="keyword">Type</span>报头域中所引用的媒体类型，必须采用相应的解码机制。</span><br><span class="line"></span><br><span class="line">Content-<span class="keyword">Encoding</span>这样用于记录文档的压缩方法</span><br><span class="line">eg：Content-<span class="keyword">Encoding</span>：gzip</span><br></pre></td></tr></table></figure>
+
+<p>Http实体报头</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;Content-<span class="keyword">Language</span>实体报头域描述了资源所用的自然语言没有设置该域则认为实体内容将提供给所有的语言阅读者eg：</span><br><span class="line">&gt;Content-<span class="keyword">Language</span>:gbk Content-Length实体报头域用于指明实体正文的长度，以字节方式存储的十进制数字来表示</span><br><span class="line">&gt;Content-lype实体报头域用语指明发送给接收者的实体正文的媒体类型。eg：</span><br><span class="line">Content-<span class="keyword">Type</span>:<span class="type">text</span>/html;charset<span class="number">-1</span>SO<span class="number">-8859</span><span class="number">-1</span></span><br><span class="line">Content-<span class="keyword">Type</span>:<span class="type">text</span>/html;charset-GB2312</span><br></pre></td></tr></table></figure>
+
+<p>Cookie</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;Cookies是服务器在本地机器上存储的小段文本并随每一个请求发送至同一个服务器。网络服务器用HTTP头向客户端发送cookies，在客户终端，浏览器解析这些cookies并将它们保存为一个本地文件，它会自动将同一服务器的任何请求缚上这些cookies </span><br><span class="line">&gt;Cookie将状态保存在客户端，通过Cookies，服务器就可以清楚的知道请求<span class="number">2</span>和请求<span class="number">1</span>来自同一个客户端</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624074021107.png" alt="image-20210624074021107"></p>
+<p>JSON格式及在线解析</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="type">JSON</span>：JavaScript <span class="keyword">Object</span> &gt;Notation（JavaSeript对象表示法）</span><br><span class="line">&gt;<span class="type">JSON</span>是存储和交换文本信息的语法。类似<span class="type">XML</span>。</span><br><span class="line">&gt;<span class="type">JSON</span>比<span class="type">XML</span>更小、更快，更易解析。</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	"sites"： [&#123;</span><br><span class="line">			"name"：</span><br><span class="line">			"家之诺"，</span><br><span class="line">			"url"：</span><br><span class="line">			"www.haozhinuo.com</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			""</span><br><span class="line">			name "："</span><br><span class="line">			电话 "，</span><br><span class="line">			"telephone"：</span><br><span class="line">			"（025）83413826"</span><br><span class="line">		&#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			"name"：</span><br><span class="line">			"地址"，</span><br><span class="line">			"address"：</span><br><span class="line">			"南京市秦准区石鼓路98号阳光大厦H层F座"</span><br><span class="line">		&#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>Session</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">Session</span>机制是一种服务器端的机制，服务器使用一种类似于散列表的结构来保存信息</span><br><span class="line">&gt;服务器给每个<span class="keyword">Session</span>分配一个唯一的JSESSIONID，并通过Cookie发t给客户端。当客户端发起新的请求的时候，将在Cookie头中携带这个JSESSIOND，这样服务器能够找到这个客户端对应的<span class="keyword">Session</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/2021-06-29-performance%5Cimage-20210624074146183.png" alt="image-20210624074146183"></p>
+<p>WebService协议介绍</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> Web Service就是一个网络组件（一个可以通过网络访问的程序）</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">它有一个或多个端口（Port），这些端口用于接收客户端的请求，并返回响应</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">请求和响应的都是一种基于XML的消息。不过这种消息遵循特定的格式（SOAP）</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">每个Web Service都有一个描述文件（WSDL），它描述一个Web ervice的如下方面：</span></span><br><span class="line">（1）服务的端口（接收SOAP消息的端口）</span><br><span class="line">（2）服务提供的操作</span><br><span class="line">（3）操作的输入输出格式的定义（通过XMLSchema定义输入输出格式</span><br></pre></td></tr></table></figure>
+
+<p>XML约束</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">XML指可扩展标记语言（EXtensible Markup Language）</span><br><span class="line">XML一种标记语言，很类似HTML </span><br><span class="line">XMI的设计宗旨是传输数据，而非显示数据</span><br><span class="line">XML标签没有被预定义。您需要自行定义标</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">note</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">to</span>&gt;</span>George<span class="tag">&lt;/<span class="name">to</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">from</span>&gt;</span>John<span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">heading</span>&gt;</span>Reminder<span class="tag">&lt;/<span class="name">heading</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>Don' t forget the meeting!<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">note</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\06\29\STE\2021-06-29-STE\" rel="bookmark">STE</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2021\06\29\STE\2021-06-29-performance\" rel="bookmark">performance</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2021/06/29/STE/2021-06-29-%E6%8E%A5%E5%8F%A3/" title="接口">https://tongsiying.github.io/2021/06/29/STE/2021-06-29-接口/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/STE/" rel="tag"># STE</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/29/STE/2021-06-29-performance/" rel="prev" title="performance">
+      <i class="fa fa-chevron-left"></i> performance
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/29/STE/2021-06-29-STE/" rel="next" title="STE">
+      STE <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#接口"><span class="nav-text">接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#报头"><span class="nav-text">报头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口测试"><span class="nav-text">接口测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应"><span class="nav-text">响应</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">428</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">6.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">95:05</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
