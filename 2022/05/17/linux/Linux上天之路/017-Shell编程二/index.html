@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hedgehog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hedgehog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"tongsiying.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","b2t":true,"scrollpercent":true,"padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Linux上天之路（十七）之Shell编程二">
+<meta property="og:url" content="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/017-Shell%E7%BC%96%E7%A8%8B%E4%BA%8C/index.html">
+<meta property="og:site_name" content="tongsiying">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1476293/201909/1476293-20190928102153300-652106020.png">
+<meta property="article:published_time" content="2022-05-17T10:37:19.000Z">
+<meta property="article:modified_time" content="2022-03-10T12:40:03.463Z">
+<meta property="article:author" content="tongsiying">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1476293/201909/1476293-20190928102153300-652106020.png">
+
+<link rel="canonical" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/017-Shell%E7%BC%96%E7%A8%8B%E4%BA%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux上天之路（十七）之Shell编程二 | tongsiying</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<!-- 加入APlayer音乐播放器 -->
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+	<!-- catalog/ -->
+	<!--     <a href="/" class="brand" rel="start"> -->
+	
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tongsiying</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">阅读|运动|自律</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/017-Shell%E7%BC%96%E7%A8%8B%E4%BA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/gutianle.gif">
+      <meta itemprop="name" content="tongsiying">
+      <meta itemprop="description" content="问渠那得清如许？为有源头活水来。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tongsiying">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux上天之路（十七）之Shell编程二
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-17 18:37:19" itemprop="dateCreated datePublished" datetime="2022-05-17T18:37:19+08:00">2022-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-10 20:40:03" itemprop="dateModified" datetime="2022-03-10T20:40:03+08:00">2022-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p class="description"></p>
+<a id="more"></a>
+
+<h1 id="Shell编程二"><a href="#Shell编程二" class="headerlink" title="Shell编程二"></a>Shell编程二</h1><h2 id="1-shell常用工具"><a href="#1-shell常用工具" class="headerlink" title="1. shell常用工具"></a>1. shell常用工具</h2><h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>1.作用</p>
+<p>Linux系统中grep命令是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹 配的行打印出来。grep全称是Global Regular Expression Print，表示全局正则表达式版本，它的使用权限是所有用户。</p>
+<p>grep家族包括grep、egrep和fgrep。egrep和fgrep的命令只跟grep有很小不同。egrep是grep的扩展，支持更多的re元字符， fgrep就是fixed grep或fast grep，它们把所有的字母都看作单词，也就是说，正则表达式中的元字符表示回其自身的字面意义，不再特殊。linux使用GNU版本的grep。它功能更强，可以通过-G、-E、-F命令行选项来使用egrep和fgrep的功能。</p>
+<p>2.格式</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grep</span> [<span class="keyword">options</span>]</span><br></pre></td></tr></table></figure>
+
+<p>3.主要参数</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">grep --help</span><br><span class="line"> </span><br><span class="line">[options]主要参数：</span><br><span class="line"><span class="deletion">-c：只输出匹配行的计数。</span></span><br><span class="line"><span class="deletion">-i：不区分大小写。</span></span><br><span class="line"><span class="deletion">-h：查询多文件时不显示文件名。</span></span><br><span class="line"><span class="deletion">-l：查询多文件时只输出包含匹配字符的文件名。</span></span><br><span class="line"><span class="deletion">-n：显示匹配行及 行号。</span></span><br><span class="line"><span class="deletion">-s：不显示不存在或无匹配文本的错误信息。</span></span><br><span class="line"><span class="deletion">-v：显示不包含匹配文本的所有行。</span></span><br><span class="line"><span class="deletion">--color=auto ：可以将找到的关键词部分加上颜色的显示。</span></span><br></pre></td></tr></table></figure>
+
+<p>pattern正则表达式主要参数：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">\： 忽略正则表达式中特殊字符的原有含义。</span><br><span class="line">^：匹配正则表达式的开始行。</span><br><span class="line">$: 匹配正则表达式的结束行。</span><br><span class="line">\&lt;：从匹配正则表达 式的行开始。</span><br><span class="line">\&gt;：到匹配正则表达式的行结束。</span><br><span class="line">[ ]：单个字符，如[<span class="keyword">A</span>]即<span class="keyword">A</span>符合要求 。</span><br><span class="line">[ - ]：范围，如[<span class="keyword">A</span>-Z]，即<span class="keyword">A</span>、B、C一直到Z都符合要求 。</span><br><span class="line">.：所有的单个字符。</span><br><span class="line">*：有字符，长度可以为<span class="number">0</span>。。</span><br></pre></td></tr></table></figure>
+
+<p>4.grep命令使用简单实例</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ grep ‘test’ d*</span><br><span class="line">显示所有以d开头的文件中包含 test的行。</span><br><span class="line"> </span><br><span class="line">$ grep ‘test’ aa bb cc</span><br><span class="line">显示在aa，bb，cc文件中匹配test的行。</span><br><span class="line"> </span><br><span class="line">$ grep ‘[a-z]<span class="symbol">\&#123;</span>5<span class="symbol">\&#125;</span>’ aa</span><br><span class="line">显示所有包含每个字符串至少有5个连续小写字符的字符串的行。</span><br><span class="line"> </span><br><span class="line">$ grep ‘w<span class="symbol">\(</span>es<span class="symbol">\)</span>t.*<span class="symbol">\1</span>′ aa</span><br><span class="line">如果west被匹配，则es就被存储到内存中，并标记为1，然后搜索任意个字符(.*)，这些字符后面紧跟着 另外一个es(<span class="symbol">\1</span>)，找到就显示该行。如果用egrep或grep -E，就不用”<span class="symbol">\”</span>号进行转义，直接写成’w(es)t.*<span class="symbol">\1</span>′就可以了。</span><br></pre></td></tr></table></figure>
+
+<p>5.grep命令使用复杂实例</p>
+<p>明确要求搜索子目录：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">grep -r</span></span><br></pre></td></tr></table></figure>
+
+<p>或忽略子目录：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">grep -d skip</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有很多输出时，您可以通过管道将其转到’less’上阅读：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">grep</span> magic <span class="regexp">/usr/</span>src<span class="regexp">/Linux/</span>Documentation<span class="comment">/* | less</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，您就可以更方便地阅读。</p>
+<p>有一点要注意，您必需提供一个文件过滤方式(搜索全部文件的话用 *)。如果您忘了，’grep’会一直等着，直到该程序被中断。如果您遇到了这样的情况，按 ，然后再试。</p>
+<p>下面还有一些有意思的命令行参数：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grep</span> -i pattern <span class="keyword">files</span> ：不区分大小写地搜索。默认情况区分大小写，</span><br><span class="line"><span class="keyword">grep</span> -<span class="keyword">l</span> pattern <span class="keyword">files</span> ：只列出匹配的文件名，</span><br><span class="line"><span class="keyword">grep</span> -L pattern <span class="keyword">files</span> ：列出不匹配的文件名，</span><br><span class="line"><span class="keyword">grep</span> -<span class="keyword">w</span> pattern <span class="keyword">files</span> ：只匹配整个单词，而不是字符串的一部分(如匹配’magic’，而不是’magical’)，</span><br><span class="line"><span class="keyword">grep</span> -C <span class="keyword">number</span> pattern <span class="keyword">files</span> ：匹配的上下文分别显示[<span class="keyword">number</span>]行，</span><br><span class="line"><span class="keyword">grep</span> pattern1 | pattern2 <span class="keyword">files</span> ：显示匹配 pattern1 或 pattern2 的行，</span><br><span class="line">例如：<span class="keyword">grep</span> <span class="string">"abc\|xyz"</span> testfile    表示过滤包含<span class="keyword">abc</span>或xyz的行</span><br><span class="line"><span class="keyword">grep</span> pattern1 <span class="keyword">files</span> | <span class="keyword">grep</span> pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。</span><br><span class="line"> </span><br><span class="line"><span class="keyword">grep</span> -n pattern <span class="keyword">files</span>  即可显示行号信息</span><br><span class="line"> </span><br><span class="line"><span class="keyword">grep</span> -<span class="keyword">c</span> pattern <span class="keyword">files</span>  即可查找总行数</span><br></pre></td></tr></table></figure>
+
+<p>这里还有些用于搜索的特殊符号：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\&lt; 和 \&gt; 分别标注单词的开始与结尾。</span><br><span class="line">例如：</span><br><span class="line">grep <span class="keyword">man</span> * 会匹配 ‘Batman’、’manic’、’<span class="keyword">man</span>’等，</span><br><span class="line">grep ‘\&lt;<span class="keyword">man</span>’ * 匹配’manic’和’<span class="keyword">man</span>’，但不是’Batman’，</span><br><span class="line">grep ‘\&lt;<span class="keyword">man</span>\&gt;’ 只匹配’<span class="keyword">man</span>’，而不是’Batman’或’manic’等其他的字符串。</span><br><span class="line">‘^’：指匹配的字符串在行首，</span><br><span class="line">‘$’：指匹配的字符串在行 尾，</span><br></pre></td></tr></table></figure>
+
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>由于find具有强大的功能，所以它的选项也很多，其中大部分选项都值得我们花时间来了解一下。即使系统中含有网络文件系统( NFS)，find命令在该文件系统中同样有效，只要你具有相应的权限。</p>
+<p>在运行一个非常消耗资源的find命令时，很多人都倾向于把它放在后台执行，因为遍历一个大的文件系统可能会花费很长的时间(这里是指30G字节以上的文件系统)。</p>
+<p>一、find 命令格式</p>
+<p>1、find命令的一般形式为；</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="builtin-name">find</span> pathname -options [-<span class="builtin-name">print</span> -exec -ok <span class="built_in">..</span>.]</span><br></pre></td></tr></table></figure>
+
+<p>2、find命令的参数；</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pathname: <span class="built_in">find</span>命令所查找的目录路径。例如用.来表示当前目录，用/来表示系统根目录，递归查找。</span><br><span class="line">-print： <span class="built_in">find</span>命令将匹配的文件输出到标准输出。</span><br><span class="line">-<span class="built_in">exec</span>： <span class="built_in">find</span>命令对匹配的文件执行该参数所给出的shell命令。相应命令的形式为<span class="string">'command'</span> &#123;  &#125; \;，注意&#123;   &#125;和\；之间的空格。</span><br><span class="line">-ok： 和-<span class="built_in">exec</span>的作用相同，只不过以一种更为安全的模式来执行该参数所给出的shell命令，在执行每一个命令之前，都会给出提示，让用户来确定是否执行。</span><br></pre></td></tr></table></figure>
+
+<p>3、find命令选项</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="deletion">-name   按照文件名查找文件。</span></span><br><span class="line"><span class="deletion">-perm   按照文件权限来查找文件。</span></span><br><span class="line"><span class="deletion">-prune  使用这一选项可以使find命令不在当前指定的目录中查找，如果同时使用-depth选项，那么-prune将被find命令忽略。</span></span><br><span class="line"><span class="deletion">-user   按照文件属主来查找文件。</span></span><br><span class="line"><span class="deletion">-group  按照文件所属的组来查找文件。</span></span><br><span class="line"><span class="deletion">-mtime -n +n 按照文件的更改时间来查找文件，-n表示文件更改时间距现在n天以内，+n表示文件更改时间距现在n天以前。find命令还有-atime和-ctime 选项，但它们都和-m time选项。</span></span><br><span class="line"><span class="deletion">-nogroup 查找无有效所属组的文件，即该文件所属的组在/etc/groups中不存在。</span></span><br><span class="line"><span class="deletion">-nouser 查找无有效属主的文件，即该文件的属主在/etc/passwd中不存在。</span></span><br><span class="line"><span class="deletion">-newer file1 ! file2 查找更改时间比文件file1新但比文件file2旧的文件。</span></span><br><span class="line"><span class="deletion">-type   查找某一类型的文件，诸如：</span></span><br><span class="line">    b - 块设备文件。</span><br><span class="line">    d - 目录。</span><br><span class="line">    c - 字符设备文件。</span><br><span class="line">    p - 管道文件。</span><br><span class="line">    l - 符号链接文件。</span><br><span class="line">    f - 普通文件。</span><br><span class="line"><span class="deletion">-size n：[c] 查找文件长度为n块的文件，带有c时表示文件长度以字节计。</span></span><br><span class="line"><span class="deletion">-depth   在查找文件时，首先查找当前目录中的文件，然后再在其子目录中查找。</span></span><br><span class="line"><span class="deletion">-fstype  查找位于某一类型文件系统中的文件，这些文件系统类型通常可以在配置文件/etc/fstab中找到，该配置文件中包含了本系统中有关文件系统的信息。</span></span><br><span class="line"><span class="deletion">-mount   在查找文件时不跨越文件系统mount点。</span></span><br><span class="line"><span class="deletion">-follow  如果find命令遇到符号链接文件，就跟踪至链接所指向的文件。&lt;br&gt;&lt;br&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外,下面三个的区别:</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-amin <span class="built_in">n</span>   查找系统中最后<span class="built_in">N</span>分钟访问的文件</span><br><span class="line">-atime <span class="built_in">n</span>  查找系统中最后<span class="built_in">n</span>*<span class="number">24</span>小时访问的文件</span><br><span class="line">-cmin <span class="built_in">n</span>   查找系统中最后<span class="built_in">N</span>分钟被改变文件状态的文件</span><br><span class="line">-ctime <span class="built_in">n</span>  查找系统中最后<span class="built_in">n</span>*<span class="number">24</span>小时被改变文件状态的文件</span><br><span class="line">-mmin <span class="built_in">n</span>   查找系统中最后<span class="built_in">N</span>分钟被改变文件数据的文件</span><br><span class="line">-mtime <span class="built_in">n</span>  查找系统中最后<span class="built_in">n</span>*<span class="number">24</span>小时被改变文件数据的文件</span><br></pre></td></tr></table></figure>
+
+<p>4、使用exec或ok来执行shell命令</p>
+<p>使用find时，只要把想要的操作写在一个文件里，就可以用exec来配合find查找，很方便 在有些操作系统中只允许-exec选项执行诸如ls或ls -l这样的命令。大多数用户使用这一选项是为了查找旧文件并删除它们。建议在真正执行rm命令删除文件之前，最好先用ls命令看一下，确认它们是所要删除的文件。</p>
+<p>exec选项后面跟随着所要执行的命令或脚本，然后是一对儿{}，一个空格和一个\，最后是一个分号。为了使用exec选项，必须要同时使用print选项。如果验证一下find命令，会发现该命令只输出从当前路径起的相对路径及文件名。</p>
+<p>例如：为了用ls -l命令列出所匹配到的文件，可以把ls -l命令放在find命令的-exec选项中</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># find . -<span class="keyword">type</span> f -exec ls -l &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，find命令匹配到了当前目录下的所有普通文件，并在-exec选项中使用ls -l命令将它们列出。</p>
+<p>在/logs目录中查找更改时间在5日以前的文件并删除它们：</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find logs -<span class="keyword">type</span> f -mtime +5 -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>记住：在shell中用任何方式删除文件之前，应当先查看相应的文件，一定要小心！当使用诸如mv或rm命令时，可以使用-exec选项的安全模式。它将在对每个匹配到的文件进行操作之前提示你。</p>
+<p>在下面的例子中， find命令在当前目录中查找所有文件名以.LOG结尾、更改时间在5日以上的文件，并删除它们，只不过在删除之前先给出提示。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name <span class="string">"*.conf"</span>  -mtime +5 -ok <span class="keyword">rm</span> &#123;  &#125; \;</span><br><span class="line">&lt; <span class="keyword">rm</span> ... ./<span class="keyword">conf</span>/httpd.<span class="keyword">conf</span> &gt; ? <span class="keyword">n</span></span><br></pre></td></tr></table></figure>
+
+<p>按y键删除文件，按n键不删除。</p>
+<p>任何形式的命令都可以在-exec选项中使用。</p>
+<p>在下面的例子中我们使用grep命令。find命令首先匹配所有文件名为“ passwd*”的文件，例如passwd、passwd.old、passwd.bak，然后执行grep命令看看在这些文件中是否存在一个itcast用户。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># find /etc -name "passwd*" -exec grep "itcast" &#123;  &#125; \;</span></span><br><span class="line"> </span><br><span class="line"><span class="symbol">itcast:</span><span class="symbol">x:</span><span class="number">1000</span><span class="symbol">:</span><span class="number">1000</span><span class="symbol">:</span><span class="symbol">:/home/itcast</span><span class="symbol">:/bin/bash</span></span><br></pre></td></tr></table></figure>
+
+<p>选项详解</p>
+<p>1.使用name选项</p>
+<p>文件名选项是find命令最常用的选项，要么单独使用该选项，要么和其他选项一起使用。</p>
+<p>可以使用某种文件名模式来匹配文件，记住要用引号将文件名模式引起来。</p>
+<p>不管当前路径是什么，如果想要在自己的根目录中查找文件名符合的文件，使用作为参数，波浪号代表了你的HOME目录。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> ~ -name <span class="string">"*.txt"</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>想要在当前目录及子目录中查找所有的‘ *.txt’文件，可以用：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -name <span class="string">"*.txt"</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>想要的当前目录及子目录中查找文件名以一个大写字母开头的文件，可以用：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -name <span class="string">"[A-Z]*"</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>想要在/etc目录中查找文件名以host开头的文件，可以用：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> /etc -name <span class="string">"host*"</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>想要查找$HOME目录中的文件，可以用：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="builtin-name">find</span> ~ -name <span class="string">"*"</span> -<span class="builtin-name">print</span> 或<span class="builtin-name">find</span> . -print</span><br></pre></td></tr></table></figure>
+
+<p>要想让系统高负荷运行，就从根目录开始查找所有的文件：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> / -name <span class="string">"*"</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想在当前目录查找文件名以两个小写字母开头，跟着是两个数字，最后是.txt的文件，下面的命令就能够返回例如名为ax37.txt的文件：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$find . -name "[<span class="string">a-z</span>][<span class="symbol">a-z</span>][<span class="string">0-9</span>][<span class="symbol">0-9</span>].txt" -print</span><br></pre></td></tr></table></figure>
+
+<p>2、用perm选项</p>
+<p>按照文件权限模式用-perm选项,按文件权限模式来查找文件的话。最好使用八进制的权限表示法。</p>
+<p>如在当前目录下查找文件权限位为755的文件，即文件属主可以读、写、执行，其他用户可以读、执行的文件，可以用：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -perm <span class="number">755</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>还有一种表达方法：在八进制数字前面要加一个横杠-，表示都匹配，如-007就相当于777，-006相当于666</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">ls</span> -<span class="keyword">l</span></span><br><span class="line"># <span class="keyword">find</span> . -perm <span class="number">006</span></span><br><span class="line"># <span class="keyword">find</span> . -perm -<span class="number">006</span></span><br><span class="line"> </span><br><span class="line">-perm <span class="keyword">mode</span>:文件许可正好符合<span class="keyword">mode</span></span><br><span class="line">-perm +<span class="keyword">mode</span>:文件许可部分符合<span class="keyword">mode</span></span><br><span class="line">-perm -<span class="keyword">mode</span>: 文件许可完全符合<span class="keyword">mode</span></span><br></pre></td></tr></table></figure>
+
+<p>3、忽略某个目录</p>
+<p>如果在查找文件时希望忽略某个目录，因为你知道那个目录中没有你所要查找的文件，那么可以使用-prune选项来指出需要忽略的目录。在使用-prune选项时要当心，因为如果你同时使用了-depth选项，那么-prune选项就会被find命令忽略。</p>
+<p>如果希望在/apps目录下查找文件，但不希望在/apps/bin目录下查找，可以用：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> /apps -<span class="built_in">path</span> <span class="string">"/apps/bin"</span> -prune -o -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>4、使用find查找文件的时候怎么避开某个文件目录</p>
+<p>比如要在/home/itcast目录下查找不在dir1子目录之内的所有文件</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> /<span class="built_in">home</span>/itcast -path <span class="string">"/home/itcast/dir1"</span> -prune -o -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>避开多个文件夹</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find</span> /<span class="built_in">home</span> \( -path /<span class="built_in">home</span>/itcast/f1 -o -path /<span class="built_in">home</span>/itcast/f2 \) -prune -o -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>注意(前的,注意(后的空格。</p>
+<p>5、使用user和nouser选项</p>
+<p>按文件属主查找文件，如在$HOME目录中查找文件属主为itcast的文件，可以用：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find ~ -<span class="keyword">user</span> <span class="title">itcast</span> -print</span><br></pre></td></tr></table></figure>
+
+<p>在/etc目录下查找文件属主为uucp的文件：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /etc -<span class="keyword">user</span> <span class="title">uucp</span> -print</span><br></pre></td></tr></table></figure>
+
+<p>为了查找属主帐户已经被删除的文件，可以使用-nouser选项。这样就能够找到那些属主在/etc/passwd文件中没有有效帐户的文件。在使用-nouser选项时，不必给出用户名； find命令能够为你完成相应的工作。</p>
+<p>例如，希望在/home目录下查找所有的这类文件，可以用：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> /<span class="built_in">home</span> -nouser -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>6、使用group和nogroup选项</p>
+<p>就像user和nouser选项一样，针对文件所属于的用户组， find命令也具有同样的选项，为了在/apps目录下查找属于itcast用户组的文件，可以用：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /apps -<span class="keyword">group</span> <span class="title">itcast</span> -print</span><br></pre></td></tr></table></figure>
+
+<p>要查找没有有效所属用户组的所有文件，可以使用nogroup选项。下面的find命令从文件系统的根目录处查找这样的文件</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> / -nogroup -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>7、按照更改时间或访问时间等查找文件</p>
+<p>如果希望按照更改时间来查找文件，可以使用mtime,atime或ctime选项。如果系统突然没有可用空间了，很有可能某一个文件的长度在此期间增长迅速，这时就可以用mtime选项来查找这样的文件。</p>
+<p>用减号-来限定更改时间在距今n日以内的文件，而用加号+来限定更改时间在距今n日以前的文件。</p>
+<p>希望在系统根目录下查找更改时间在5日以内的文件，可以用：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> / -mtime <span class="number">-5</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>为了在/var/adm目录下查找更改时间在3日以前的文件，可以用：</p>
+<figure class="highlight golo"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">find</span> /<span class="keyword">var</span>/adm -mtime +<span class="number">3</span> -<span class="keyword">print</span></span><br></pre></td></tr></table></figure>
+
+<p>8、查找比某个文件新或旧的文件</p>
+<p>如果希望查找更改时间比某个文件新但比另一个文件旧的所有文件，可以使用-newer选项。它的一般形式为：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span><span class="type">est_file_name</span> ! oldest_file_name</span><br></pre></td></tr></table></figure>
+
+<p>其中，！是逻辑非符号。</p>
+<p>9、使用type选项</p>
+<p>在/etc目录下查找所有的目录，可以用：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> /etc -<span class="built_in">type</span> d -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>在当前目录下查找除目录以外的所有类型的文件，可以用：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . ! -<span class="built_in">type</span> d -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>在/etc目录下查找所有的符号链接文件，可以用</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> /etc -<span class="built_in">type</span> l -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>10、使用size选项</p>
+<p>可以按照文件长度来查找文件，这里所指的文件长度既可以用块（block）来计量，也可以用字节来计量。以字节计量文件长度的表达形式为N c；以块计量文件长度只用数字表示即可。</p>
+<p>在按照文件长度查找文件时，一般使用这种以字节表示的文件长度，在查看文件系统的大小，因为这时使用块来计量更容易转换。 在当前目录下查找文件长度大于1 M字节的文件：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -<span class="built_in">size</span> +<span class="number">1000000</span>c -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>在/home/apache目录下查找文件长度恰好为100字节的文件：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> /<span class="built_in">home</span>/apache -<span class="built_in">size</span> <span class="number">100</span>c -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>在当前目录下查找长度超过10块的文件（一块等于512字节）：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -<span class="built_in">size</span> +<span class="number">10</span> -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>11、使用depth选项</p>
+<p>在使用find命令时，可能希望先匹配所有的文件，再在子目录中查找。使用depth选项就可以使find命令这样做。这样做的一个原因就是，当在使用find命令向磁带上备份文件系统时，希望首先备份所有的文件，其次再备份子目录中的文件。</p>
+<p>在下面的例子中， find命令从文件系统的根目录开始，查找一个名为CON.FILE的文件。</p>
+<p>它将首先匹配所有的文件然后再进入子目录中查找。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> / -name <span class="string">"CON.FILE"</span> -depth -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>12、使用mount选项</p>
+<p>在当前的文件系统中查找文件（不进入其他文件系统），可以使用find命令的mount选项。</p>
+<p>从当前目录开始查找位于本文件系统中文件名以XC结尾的文件：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -name <span class="string">"*.XC"</span> -mount -<span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>练习：请找出你10天内所访问或修改过的.c和.cpp文件。</p>
+<p>find命令的例子；</p>
+<p>1、查找当前用户主目录下的所有文件：</p>
+<p>下面两种方法都可以使用</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="builtin-name">find</span> <span class="variable">$HOME</span> -print</span><br><span class="line">$ <span class="builtin-name">find</span> ~ -print</span><br></pre></td></tr></table></figure>
+
+<p>2、让当前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件；</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -<span class="keyword">type</span> f -perm 644 -exec ls -l &#123;  &#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>3、为了查找系统中所有文件长度为0的普通文件，并列出它们的完整路径；</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find / -<span class="keyword">type</span> f -size 0 -exec ls -l &#123;  &#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>4、查找/var/logs目录中更改时间在7日以前的普通文件，并在删除之前询问它们；</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find /var/logs -<span class="keyword">type</span> f -mtime +7 -ok rm &#123;  &#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>5、为了查找系统中所有属于root组的文件；</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$find . -<span class="keyword">group</span> root -<span class="keyword">exec</span> <span class="keyword">ls</span> -l &#123;  &#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>6、find命令将删除当目录中访问时间在7日以来、含有数字后缀的admin.log文件。</p>
+<p>该命令只检查三位数字，所以相应文件的后缀不要超过999。先建几个admin.log*的文件 ，才能使用下面这个命令</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . -name "admin.log[<span class="string">0-9</span>][<span class="symbol">0-9</span>][<span class="string">0-9</span>]" -atime -7  -ok rm &#123;  &#125; \;</span><br></pre></td></tr></table></figure>
+
+<p>7、为了查找当前文件系统中的所有目录并排序；</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">find</span> . -<span class="built_in">type</span> d | <span class="built_in">sort</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h3><p>xargs - build and execute command lines from standard input</p>
+<p>在使用find命令的-exec选项处理匹配到的文件时， find命令将所有匹配到的文件一起传递给exec执行。但有些系统对能够传递给exec的命令长度有限制，这样在find命令运行几分钟之后，就会出现 溢出错误。错误信息通常是“参数列太长”或“参数列溢出”。这就是xargs命令的用处所在，特别是与find命令一起使用。</p>
+<p>find命令把匹配到的文件传递给xargs命令，而xargs命令每次只获取一部分文件而不是全部，不像-exec选项那样。这样它可以先处理最先获取的一部分文件，然后是下一批，并如此继续下去。</p>
+<p>在有些系统中，使用-exec选项会为处理每一个匹配到的文件而发起一个相应的进程，并非将匹配到的文件全部作为参数一次执行；这样在有些情况下就会出现进程过多，系统性能下降的问题，因而效率不高；</p>
+<p>而使用xargs命令则只有一个进程。另外，在使用xargs命令时，究竟是一次获取所有的参数，还是分批取得参数，以及每一次获取参数的数目都会根据该命令的选项及系统内核中相应的可调参数来确定。</p>
+<p>来看看xargs命令是如何同find命令一起使用的，并给出一些例子。</p>
+<p>下面的例子查找系统中的每一个普通文件，然后使用xargs命令来测试它们分别属于哪类文 件</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#<span class="built_in">find</span> . -<span class="built_in">type</span> f -<span class="built_in">print</span> | xargs file</span><br></pre></td></tr></table></figure>
+
+<p>在当前目录下查找所有用户具有读、写和执行权限的文件，并收回相应的写权限：</p>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># ls -l</span></span><br><span class="line"><span class="meta"># find . -perm -7 -print | xargs chmod o-w</span></span><br><span class="line"><span class="meta"># ls -l</span></span><br></pre></td></tr></table></figure>
+
+<p>用grep命令在所有的普通文件中搜索hello这个词：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">find</span> . -<span class="built_in">type</span> <span class="keyword">f</span> -<span class="keyword">print</span> | xargs <span class="keyword">grep</span> <span class="string">"hello"</span></span><br></pre></td></tr></table></figure>
+
+<p>用grep命令在当前目录下的所有普通文件中搜索hello这个词：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">find</span> . -name \* -<span class="built_in">type</span> <span class="keyword">f</span> -<span class="keyword">print</span> | xargs <span class="keyword">grep</span> <span class="string">"hello"</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，在上面的例子中， \用来取消find命令中的*在shell中的特殊含义。</p>
+<p>find命令配合使用exec和xargs可以使用户对所匹配到的文件执行几乎所有的命令。</p>
+<h3 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h3><p>sed意为流编辑器（Stream Editor），在Shell脚本和Makefile中作为过滤器使用非常普遍，也就是把前一个程序的输出引入sed的输入，经过一系列编辑命令转换为另一种格式输出。sed和vi都源于早期UNIX的ed工具，所以很多sed命令和vi的末行命令是相同的。</p>
+<p>sed命令行的基本格式为</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">sed</span></span> <span class="keyword">option</span> <span class="string">'script'</span> file1 file2 ...</span><br><span class="line"><span class="function"><span class="title">sed</span></span> <span class="keyword">option</span> -f scriptfile file1 file2 ...</span><br></pre></td></tr></table></figure>
+
+<p>选项含义：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">--version            显示sed版本。</span><br><span class="line">--help               显示帮助文档。</span><br><span class="line">-n,--quiet,--silent  静默输出，默认情况下，sed程序在所有的脚本指令执行完毕后，将自动打印模式空间中的内容，这些选项可以屏蔽自动打印。</span><br><span class="line">-e<span class="built_in"> script </span>           允许多个脚本指令被执行。</span><br><span class="line">-f script-file,</span><br><span class="line"><span class="attribute">--file</span>=script-file   从文件中读取脚本指令，对编写自动脚本程序来说很棒！</span><br><span class="line">-i,--in-place        直接修改源文件，经过脚本指令处理后的内容将被输出至源文件（源文件被修改）慎用！</span><br><span class="line">-l N, <span class="attribute">--line-length</span>=N 该选项指定l指令可以输出的行长度，l指令用于输出非打印字符。</span><br><span class="line">--posix             禁用GNU sed扩展功能。</span><br><span class="line">-r, --regexp-extended  在脚本指令中使用扩展正则表达式</span><br><span class="line">-s, --separate      默认情况下，sed将把命令行指定的多个文件名作为一个长的连续的输入流。而GNU sed则允许把他们当作单独的文件，这样如正则表达式则不进行跨文件匹配。</span><br><span class="line">-u, --unbuffered    最低限度的缓存输入与输出。</span><br></pre></td></tr></table></figure>
+
+<p>以上仅是sed程序本身的选项功能说明，至于具体的脚本指令（即对文件内容做的操作）后面我们会详细描述，这里就简单介绍几个脚本指令操作作为sed程序的例子。</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">a,</span>append        追加</span><br><span class="line"><span class="built_in">i,</span>insert        插入</span><br><span class="line"><span class="built_in">d,</span>delete        删除</span><br><span class="line"><span class="built_in">s,</span>substitution  替换</span><br></pre></td></tr></table></figure>
+
+<p>如：$ sed “2a itcast” ./testfile 在输出testfile内容的第二行后添加”itcast”。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sed <span class="string">"2,5d"</span> testfile</span><br></pre></td></tr></table></figure>
+
+<p>sed处理的文件既可以由标准输入重定向得到，也可以当命令行参数传入，命令行参数可以一次传入多个文件，sed会依次处理。sed的编辑命令可以直接当命令行参数传入，也可以写成一个脚本文件然后用-f参数指定，编辑命令的格式为</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/pattern/</span>action</span><br></pre></td></tr></table></figure>
+
+<p>其中pattern是正则表达式，action是编辑操作。sed程序一行一行读出待处理文件，如果某一行与pattern匹配，则执行相应的action，如果一条命令没有pattern而只有action，这个action将作用于待处理文件的每一行。</p>
+<ul>
+<li>常用的sed命令</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/pattern/p  打印匹配pattern的行</span><br><span class="line">/pattern/d  删除匹配pattern的行</span><br><span class="line">/pattern/<span class="regexp">s/pattern1/pattern2/</span>   查找符合pattern的行，将该行第一个匹配pattern1的字符串替换为pattern2</span><br><span class="line">/pattern/<span class="regexp">s/pattern1/pattern2/g</span>  查找符合pattern的行，将该行所有匹配pattern1的字符串替换为pattern2</span><br></pre></td></tr></table></figure>
+
+<p>使用p命令需要注意，sed是把待处理文件的内容连同处理结果一起输出到标准输出的，因此p命令表示除了把文件内容打印出来之外还额外打印一遍匹配pattern的行。比如一个文件testfile的内容是</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123</span></span><br><span class="line">abc</span><br><span class="line"><span class="number">456</span></span><br></pre></td></tr></table></figure>
+
+<p>打印其中包含abc的行</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sed <span class="string">'/abc/p'</span> testfile</span><br><span class="line"><span class="number">123</span></span><br><span class="line"><span class="keyword">abc</span></span><br><span class="line"><span class="keyword">abc</span></span><br><span class="line"><span class="number">456</span></span><br></pre></td></tr></table></figure>
+
+<p>要想只输出处理结果，应加上-n选项，这种用法相当于grep命令</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sed -n <span class="string">'/abc/p'</span> testfile</span><br><span class="line">abc</span><br></pre></td></tr></table></figure>
+
+<p>使用d命令就不需要-n参数了，比如删除含有abc的行</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sed <span class="string">'/abc/d'</span> testfile</span><br><span class="line"><span class="number">123</span></span><br><span class="line"><span class="number">456</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，sed命令不会修改原文件，删除命令只表示某些行不打印输出，而不是从原文件中删去。</p>
+<p>使用查找替换命令时，可以把匹配pattern1的字符串复制到pattern2中，比如：</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sed <span class="string">'s/bc/-&amp;-/'</span> testfile</span><br><span class="line"><span class="number">123</span></span><br><span class="line">a-bc-</span><br><span class="line"><span class="number">456</span></span><br><span class="line">patter<span class="symbol">n2</span>中的&amp;表示原文件的当前行中与patter<span class="symbol">n1</span>相匹配的字符串</span><br></pre></td></tr></table></figure>
+
+<p>再比如：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sed 's/\([<span class="number">0</span><span class="number">-9</span>]\)\([<span class="number">0</span><span class="number">-9</span>]\)/-\<span class="number">1</span>-~\<span class="number">2</span>~/' testfile</span><br><span class="line"><span class="number">-1</span>-~<span class="number">2</span>~<span class="number">3</span></span><br><span class="line">abc</span><br><span class="line"><span class="number">-4</span>-~<span class="number">5</span>~<span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<p>pattern2中的\1表示与pattern1的第一个()括号相匹配的内容，\2表示与pattern1的第二个()括号相匹配的内容。sed默认使用Basic正则表达式规范，如果指定了-r选项则使用Extended规范，那么()括号就不必转义了。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sed  <span class="string">'s/yes/no/;s/static/dhcp/'</span>  ./testfile</span><br><span class="line">注：使用分号隔开指令。</span><br><span class="line"> </span><br><span class="line"><span class="variable">$ </span>sed -e <span class="string">'s/yes/no/'</span> -e <span class="string">'s/static/dhcp/'</span> testfile</span><br><span class="line">注：使用-e选项。</span><br></pre></td></tr></table></figure>
+
+<p>如果testfile的内容是</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span>Welcome to the world of regexp!<span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>现在要去掉所有的HTML标签，使输出结果为</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello World</span><br><span class="line">Welcome <span class="built_in">to</span> <span class="keyword">the</span> world <span class="keyword">of</span> regexp!</span><br></pre></td></tr></table></figure>
+
+<p>怎么做呢？如果用下面的命令</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sed <span class="string">'s/&lt;.*&gt;//g'</span> testfile</span><br></pre></td></tr></table></figure>
+
+<p>结果是两个空行，把所有字符都过滤掉了。这是因为，正则表达式中的数量限定符会匹配尽可能长的字符串，这称为贪心的(Greedy)。比如sed在处理第一行时，&lt;.*&gt;匹配的并不是或这样的标签，而是</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>Hello World<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样一整行，因为这一行开头是&lt;，中间是若干个任意字符，末尾是&gt;。那么这条命令怎么改才对呢？留给同学们思考练习。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@centos</span> shell_learn]<span class="meta"># sed <span class="string">'s/&lt;[^&gt;]*&gt;//g'</span> test.html</span></span><br><span class="line">Hello World</span><br><span class="line">Welcome <span class="keyword">to</span> the world of regexp!</span><br></pre></td></tr></table></figure>
+
+<h3 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h3><p>sed以行为单位处理文件，awk比sed强的地方在于不仅能以行为单位还能以列为单位处理文件。awk缺省的行分隔符是换行，缺省的列分隔符是连续的空格和Tab，但是行分隔符和列分隔符都可以自定义，比如/etc/passwd文件的每一行有若干个字段，字段之间以:分隔，就可以重新定义awk的列分隔符为:并以列为单位处理这个文件。awk实际上是一门很复杂的脚本语言，还有像C语言一样的分支和循环结构，但是基本用法和sed类似，awk命令行的基本形式为：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">awk</span></span> <span class="keyword">option</span> <span class="string">'script'</span> file1 file2 ...</span><br><span class="line"><span class="function"><span class="title">awk</span></span> <span class="keyword">option</span> -f scriptfile file1 file2 ...</span><br></pre></td></tr></table></figure>
+
+<p>和sed一样，awk处理的文件既可以由标准输入重定向得到，也可以当命令行参数传入，编辑命令可以直接当命令行参数传入，也可以用-f参数指定一个脚本文件，编辑命令的格式为：</p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">/pattern/</span><span class="template-variable">&#123;actions&#125;</span></span><br><span class="line"><span class="xml">condition</span><span class="template-variable">&#123;actions&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>和sed类似，pattern是正则表达式，actions是一系列操作。awk程序一行一行读出待处理文件，如果某一行与pattern匹配，或者满足condition条件，则执行相应的actions，如果一条awk命令只有actions部分，则actions作用于待处理文件的每一行。比如文件testfile的内容表示某商店的库存量：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ProductA  <span class="number">30</span></span><br><span class="line">ProductB  <span class="number">76</span></span><br><span class="line">ProductC  <span class="number">55</span></span><br></pre></td></tr></table></figure>
+
+<p>打印每一行的第二列:</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ awk '&#123;print $<span class="number">2</span>;&#125;' testfile</span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="number">76</span></span><br><span class="line"><span class="number">55</span></span><br></pre></td></tr></table></figure>
+
+<p>自动变量、2分别表示第一列、第二列等，类似于Shell脚本的位置参数，而$0表示整个当前行。再比如，如果某种产品的库存量低于75则在行末标注需要订货：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ awk '$<span class="number">2</span>&lt;<span class="number">75</span> &#123;printf <span class="string">"%s<span class="subst">\t</span>%s<span class="subst">\n</span>"</span>, $<span class="number">0</span>, <span class="string">"REORDER"</span>;&#125; $<span class="number">2</span>&gt;=<span class="number">75</span> &#123;print $<span class="number">0</span>;&#125;' testfile</span><br><span class="line">ProductA  <span class="number">30</span>    REORDER</span><br><span class="line">ProductB  <span class="number">76</span></span><br><span class="line">ProductC  <span class="number">55</span>    REORDER</span><br></pre></td></tr></table></figure>
+
+<p>可见awk也有和C语言非常相似的printf函数。awk命令的condition部分还可以是两个特殊的condition－BEGIN和END，对于每个待处理文件，BEGIN后面的actions在处理整个文件之前执行一次，END后面的actions在整个文件处理完之后执行一次。</p>
+<p>awk命令可以像C语言一样使用变量（但不需要定义变量），比如统计一个文件中的空行数</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>awk <span class="string">'/^ *$/ &#123;x=x+1;&#125; END &#123;print x;&#125;'</span> testfile</span><br></pre></td></tr></table></figure>
+
+<p>就像Shell的环境变量一样，有些awk变量是预定义的有特殊含义的：</p>
+<p>awk常用的内建变量</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">FILENAME</span>  <span class="string">当前输入文件的文件名，该变量是只读的</span></span><br><span class="line"><span class="attr">NR</span>  <span class="string">当前行的行号，该变量是只读的，R代表record</span></span><br><span class="line"><span class="attr">NF</span>  <span class="string">当前行所拥有的列数，该变量是只读的，F代表field</span></span><br><span class="line"><span class="attr">OFS</span> <span class="string">输出格式的列分隔符，缺省是空格</span></span><br><span class="line"><span class="attr">FS</span>  <span class="string">输入文件的列分融符，缺省是连续的空格和Tab</span></span><br><span class="line"><span class="attr">ORS</span> <span class="string">输出格式的行分隔符，缺省是换行符</span></span><br><span class="line"><span class="attr">RS</span>  <span class="string">输入文件的行分隔符，缺省是换行符</span></span><br></pre></td></tr></table></figure>
+
+<p>例如打印系统中的用户帐号列表</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ awk 'BEGIN &#123;FS=<span class="string">":"</span>&#125; &#123;<span class="keyword">print</span> <span class="variable">$1</span>;&#125;' /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Linux核心命令"><a href="#2-Linux核心命令" class="headerlink" title="2. Linux核心命令　"></a>2. Linux核心命令　</h2><p><img src="https://img2018.cnblogs.com/blog/1476293/201909/1476293-20190928102153300-652106020.png" alt="img"></p>
+<ul>
+<li>strace</li>
+<li>netstat</li>
+<li>perf</li>
+<li>top</li>
+<li>pidstat</li>
+<li>mpstat</li>
+<li>dstat</li>
+<li>vmstat</li>
+<li>slabtop</li>
+<li>free</li>
+<li>top</li>
+<li>tcpdump</li>
+<li>ip</li>
+<li>nicstat</li>
+<li>dtrace</li>
+<li>ping</li>
+<li>dtrace</li>
+<li>blktrace</li>
+<li>iptop</li>
+<li>iostat</li>
+<li>stap</li>
+</ul>
+<p>文本处理类的命令：</p>
+<ul>
+<li>wc</li>
+</ul>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wc [option] [file]...</span><br><span class="line">    -<span class="ruby"><span class="symbol">l:</span> 统计行数</span></span><br><span class="line"><span class="ruby">    -<span class="symbol">c:</span> 统计字节数</span></span><br><span class="line"><span class="ruby">    -w；统计单词数</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>tr</li>
+</ul>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">tr</span>: 转换字符或删除字符</span><br><span class="line">    <span class="keyword">tr</span> <span class="string">'集合1'</span> <span class="string">'集合2'</span></span><br><span class="line">    <span class="keyword">tr</span> -d <span class="string">'字符集合'</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cut</li>
+</ul>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">This is a test line.</span><br><span class="line">-<span class="ruby">d字符：指定分隔符</span></span><br><span class="line"><span class="ruby">-f<span class="comment">#: 指定要显示字段</span></span></span><br><span class="line"><span class="ruby">    单个数字：一个字段</span></span><br><span class="line"><span class="ruby">    逗号分隔的多个数字：指定多个离散字段</span></span><br><span class="line"><span class="ruby">    -：连续字段，如<span class="number">3</span>-<span class="number">5</span>；</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>sort</li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">按字符进行比较</span><br><span class="line">sort [option] file...</span><br><span class="line">    -<span class="string">f:</span> 忽略字符大小写；</span><br><span class="line">    -<span class="string">n:</span> 比较数值大小；</span><br><span class="line">    -<span class="string">t:</span> 指定分隔符</span><br><span class="line">    -<span class="string">k:</span> 指定分隔后进行比较字段</span><br><span class="line">    -<span class="string">u:</span> 重复的行，只显示一次；</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>uniq</li>
+</ul>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">移除重复的行</span><br><span class="line"><span class="deletion">-c：显示每行重复的次数</span></span><br><span class="line"><span class="deletion">-d：仅显示重复过的行</span></span><br><span class="line"><span class="deletion">-u: 仅显示不曾重复的行</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>工具速查链接</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>linuxtools-rst.readthedocs.io<span class="regexp">/zh_CN/</span>latest<span class="regexp">/tool/i</span>ndex.html</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2007\01\16\linux\2007-01-16-linux-LinuxDeploy\" rel="bookmark">安卓Linux</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\000-Linux上天之路系列目录\" rel="bookmark">Linux上天之路系列目录</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\001-Linux前世今生\" rel="bookmark">001-Linux前世今生</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux上天之路\002-Linux安装\" rel="bookmark">Linux上天之路（二）之Linux安装</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="\2022\05\17\linux\Linux\" rel="bookmark">001-Linux前世今生</a></div>
+    </li>
+  </ul>
+
+        <div class="reward-container">
+  <div>赞赏一下吧～</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="tongsiying 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>tongsiying
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://tongsiying.github.io/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/017-Shell%E7%BC%96%E7%A8%8B%E4%BA%8C/" title="Linux上天之路（十七）之Shell编程二">https://tongsiying.github.io/2022/05/17/linux/Linux上天之路/017-Shell编程二/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener external nofollow noreferrer" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/018-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/" rel="prev" title="Linux上天之路（十八）之自动化部署">
+      <i class="fa fa-chevron-left"></i> Linux上天之路（十八）之自动化部署
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/17/linux/Linux%E4%B8%8A%E5%A4%A9%E4%B9%8B%E8%B7%AF/016-Shell%E7%BC%96%E7%A8%8B%E4%B8%80/" rel="next" title="Linux上天之路（十六）之Shell编程一">
+      Linux上天之路（十六）之Shell编程一 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell编程二"><span class="nav-text">Shell编程二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-shell常用工具"><span class="nav-text">1. shell常用工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep"><span class="nav-text">grep</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find"><span class="nav-text">find</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xargs"><span class="nav-text">xargs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed"><span class="nav-text">sed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#awk"><span class="nav-text">awk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Linux核心命令"><span class="nav-text">2. Linux核心命令　</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tongsiying"
+      src="/images/gutianle.gif">
+  <p class="site-author-name" itemprop="name">tongsiying</p>
+  <div class="site-description" itemprop="description">问渠那得清如许？为有源头活水来。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">436</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tongsiying" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tongsiying" rel="noopener external nofollow noreferrer" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wxtlucky1015@163.com" title="E-Mail → mailto:wxtlucky1015@163.com" rel="noopener external nofollow noreferrer" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/2964109344" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2964109344" rel="noopener external nofollow noreferrer" target="_blank"><i class="weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/" title="tongsiying → https:&#x2F;&#x2F;tongsiying.github.io"><i class="wrench fa-fw"></i>tongsiying</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/ReadingNotes/" title="ReadingNotes → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;ReadingNotes&#x2F;"><i class="book fa-fw"></i>ReadingNotes</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/" title="blog → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;"><i class="book fa-fw"></i>blog</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/blog/tools/" title="tools → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;blog&#x2F;tools&#x2F;"><i class="wrench fa-fw"></i>tools</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/lanlan/" title="lanlan → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;lanlan&#x2F;"><i class="wrench fa-fw"></i>lanlan</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/Music/" title="note → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;Music&#x2F;"><i class="wrench fa-fw"></i>note</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/sound/" title="Music → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;sound&#x2F;"><i class="wrench fa-fw"></i>Music</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/JSONFormat/" title="JSONFormat → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;JSONFormat&#x2F;"><i class="wrench fa-fw"></i>JSONFormat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/HTML5-Canvas/" title="Canvas → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;HTML5-Canvas&#x2F;"><i class="wrench fa-fw"></i>Canvas</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/games/" title="games → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;games&#x2F;"><i class="wrench fa-fw"></i>games</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://tongsiying.github.io/love/" title="love → https:&#x2F;&#x2F;tongsiying.github.io&#x2F;love&#x2F;"><i class="wrench fa-fw"></i>love</a>
+      </span>
+  </div>
+
+
+
+		<div style="">
+  <canvas id="canvas" style="width:60%;">��ǰ�������֧��canvas������������������</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //����canvas�Ŀ���
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //�洢ʱ������
+    var data = [];
+    //�洢�˶���С��
+    var balls = [];
+    //�������Ӱ뾶
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //�洢ʱ�����֣���ʮλСʱ����λСʱ��ð�š�ʮλ���ӡ���λ���ӡ�ð�š�ʮλ���ӡ���λ������7���������
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*���ɵ�������*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*����ʱ��*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //ʱ�䷢���仯
+            if(NewData[i] !== data[i]){
+                //���仯������ֵ����data�����е������洢��changeNumArray������
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //����С��
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*����С��״̬*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*����Ҫ�˶���С��*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*��Ⱦ*/
+    function render(){
+        //���û������ȣ��ﵽ��ջ�����Ч��
+        canvas.height = 100;
+        //��Ⱦʱ��
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //��ȾС��
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //����ʱ��
+        updateDigitTime();
+        //����С��״̬
+        updateBalls();
+        //��Ⱦ
+        render();
+    },50);
+}
+
+})();
+</script>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; Weeny – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tongsiying</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">7.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">116:27</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
